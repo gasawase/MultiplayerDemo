@@ -15,7 +15,7 @@ C:/Users/gasawase/Documents/GitHub/NetworkGD2022/URPNGD
 -logFile
 Logs/AssetImportWorker3.log
 -srvPort
-65049
+63047
 Successfully changed project path to: C:/Users/gasawase/Documents/GitHub/NetworkGD2022/URPNGD
 C:/Users/gasawase/Documents/GitHub/NetworkGD2022/URPNGD
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -47,7 +47,7 @@ C:/Users/gasawase/Documents/GitHub/NetworkGD2022/URPNGD
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Refreshing native plugins compatible for Editor in 112.26 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 180.06 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.3.5f1 (40eb3a945986)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.3.5f1/Editor/Data/Resources/UnitySubsystems
@@ -63,93 +63,93 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.3.5f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.3.5f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.3.5f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56908
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56380
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.5f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.008610 seconds.
+Registered in 0.011888 seconds.
 Native extension for WindowsStandalone target not found
 Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 84.96 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 139.43 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.536 seconds
+- Completed reload, in  0.854 seconds
 Domain Reload Profiling:
-	ReloadAssembly (536ms)
-		BeginReloadAssembly (70ms)
+	ReloadAssembly (855ms)
+		BeginReloadAssembly (109ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (371ms)
-			LoadAssemblies (69ms)
+		EndReloadAssembly (590ms)
+			LoadAssemblies (106ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (85ms)
+			SetupTypeCache (126ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (18ms)
-			SetupLoadedEditorAssemblies (229ms)
+			RebuildScriptCaches (31ms)
+			SetupLoadedEditorAssemblies (369ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (43ms)
+				InitializePlatformSupportModulesInManaged (73ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (85ms)
+				RefreshPlugins (140ms)
 				BeforeProcessingInitializeOnLoad (1ms)
-				ProcessInitializeOnLoadAttributes (67ms)
-				ProcessInitializeOnLoadMethodAttributes (32ms)
+				ProcessInitializeOnLoadAttributes (101ms)
+				ProcessInitializeOnLoadMethodAttributes (55ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.014436 seconds.
-Android Extension - Scanning For ADB Devices 755 ms
+Registered in 0.020678 seconds.
+Android Extension - Scanning For ADB Devices 858 ms
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory doesn't match image C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 Native extension for WindowsStandalone target not found
 Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 96.42 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 132.11 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.066 seconds
+- Completed reload, in  1.719 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1066ms)
-		BeginReloadAssembly (100ms)
+	ReloadAssembly (1720ms)
+		BeginReloadAssembly (152ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (4ms)
+			DisableScriptedObjects (5ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (18ms)
-		EndReloadAssembly (870ms)
-			LoadAssemblies (95ms)
+			CreateAndSetChildDomain (26ms)
+		EndReloadAssembly (1417ms)
+			LoadAssemblies (161ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (223ms)
-			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (51ms)
-			SetupLoadedEditorAssemblies (479ms)
+			SetupTypeCache (399ms)
+			ReleaseScriptCaches (3ms)
+			RebuildScriptCaches (80ms)
+			SetupLoadedEditorAssemblies (740ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (11ms)
+				InitializePlatformSupportModulesInManaged (23ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (97ms)
-				BeforeProcessingInitializeOnLoad (106ms)
-				ProcessInitializeOnLoadAttributes (189ms)
-				ProcessInitializeOnLoadMethodAttributes (70ms)
-				AfterProcessingInitializeOnLoad (6ms)
+				RefreshPlugins (132ms)
+				BeforeProcessingInitializeOnLoad (131ms)
+				ProcessInitializeOnLoadAttributes (331ms)
+				ProcessInitializeOnLoadMethodAttributes (112ms)
+				AfterProcessingInitializeOnLoad (10ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (5ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
-Refreshing native plugins compatible for Editor in 0.89 ms, found 3 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.08 seconds
+Refreshing native plugins compatible for Editor in 1.29 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5456 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 40 unused Assets / (0.7 MB). Loaded Objects now: 5904.
-Memory consumption went from 213.7 MB to 213.0 MB.
-Total: 3.030800 ms (FindLiveObjects: 0.373700 ms CreateObjectMapping: 0.244400 ms MarkObjects: 2.178400 ms  DeleteObjects: 0.233400 ms)
+Unloading 5616 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 53 unused Assets / (0.8 MB). Loaded Objects now: 6065.
+Memory consumption went from 219.3 MB to 218.6 MB.
+Total: 6.548900 ms (FindLiveObjects: 0.688600 ms CreateObjectMapping: 0.530200 ms MarkObjects: 4.858700 ms  DeleteObjects: 0.468500 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -163,52 +163,58 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 675148.024046 seconds.
-  path: Assets/PolygonFantasyCharacters/Prefabs/FixedScaleCharacters/Character_Female_Peasant_02.prefab
-  artifactKey: Guid(63c8d29e2141cad4d8cb0b3c8294778e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyCharacters/Prefabs/FixedScaleCharacters/Character_Female_Peasant_02.prefab using Guid(63c8d29e2141cad4d8cb0b3c8294778e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '885130be391352256a787e2dce6991b5') in 0.236622 seconds 
+  Time since last request: 25794.133593 seconds.
+  path: Assets/PolygonFantasyCharacters/Models/FixedScaleCharacters/Characters.fbx
+  artifactKey: Guid(c9a34c70f1c0d00409f41fcfbb2a6871) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PolygonFantasyCharacters/Models/FixedScaleCharacters/Characters.fbx using Guid(c9a34c70f1c0d00409f41fcfbb2a6871) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7e2638753a444c6c2a333f16f8936360') in 0.871117 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 22.701656 seconds.
-  path: Assets/PolygonFantasyCharacters/Textures/Polygon_Fantasy_Characters_Texture_02_A.png
-  artifactKey: Guid(29c74919c4f112947abae1266a4ec606) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyCharacters/Textures/Polygon_Fantasy_Characters_Texture_02_A.png using Guid(29c74919c4f112947abae1266a4ec606) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fca1f77ac8a86765aae27659f2f69567') in 0.020140 seconds 
+  Time since last request: 10.592639 seconds.
+  path: Assets/Animations/cover to stand.fbx
+  artifactKey: Guid(51894bcde5e95f44ba195cea9b799912) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/cover to stand.fbx using Guid(51894bcde5e95f44ba195cea9b799912) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd934d59c8e0447135130109202659318') in 0.020333 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000029 seconds.
-  path: Assets/PolygonFantasyCharacters/Textures/Polygon_Fantasy_Characters_Texture_03_B.png
-  artifactKey: Guid(5345e111666de3a43839c3766bb22708) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyCharacters/Textures/Polygon_Fantasy_Characters_Texture_03_B.png using Guid(5345e111666de3a43839c3766bb22708) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aec8f4b40afad70510a784052a20ba0b') in 0.010446 seconds 
+  Time since last request: 0.000058 seconds.
+  path: Assets/Animations/hard landing.fbx
+  artifactKey: Guid(83dd590ea79f1804798d2b617f6d35b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/hard landing.fbx using Guid(83dd590ea79f1804798d2b617f6d35b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f32c1e67a8f1d9bcbf34e32ec1b66d04') in 0.018638 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000029 seconds.
-  path: Assets/PolygonFantasyCharacters/Textures/Polygon_Fantasy_Characters_Texture_04_B.png
-  artifactKey: Guid(d57cd9efe145fb241acaef0fd3663efe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyCharacters/Textures/Polygon_Fantasy_Characters_Texture_04_B.png using Guid(d57cd9efe145fb241acaef0fd3663efe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8b3f0150fd6b8681b78853535ca4f0ca') in 0.011234 seconds 
+  Time since last request: 0.000039 seconds.
+  path: Assets/Animations/idle (4).fbx
+  artifactKey: Guid(f7f5fd0ea60a05a4ebde866c08c9e6c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/idle (4).fbx using Guid(f7f5fd0ea60a05a4ebde866c08c9e6c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a674494509aba1c530d13adec7f5b428') in 0.018881 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000030 seconds.
-  path: Assets/PolygonFantasyCharacters/Textures/Polygon_Fantasy_Characters_Texture_02_C.png
-  artifactKey: Guid(6b4b4d5b580ae8b4ca86f5c440b10f55) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyCharacters/Textures/Polygon_Fantasy_Characters_Texture_02_C.png using Guid(6b4b4d5b580ae8b4ca86f5c440b10f55) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0a92a57a3a3ca8dbc7e9c4dd6b871f5d') in 0.011458 seconds 
+  Time since last request: 0.000042 seconds.
+  path: Assets/Animations/falling to roll.fbx
+  artifactKey: Guid(5d4e2bccb5065394ca4900bb65ecbde6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/falling to roll.fbx using Guid(5d4e2bccb5065394ca4900bb65ecbde6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '52a81e589c66580f9aaadb287d9384d5') in 0.019503 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 23.690284 seconds.
-  path: Assets/PolygonFantasyCharacters/Materials/Polygon_Fantasy_Characters_Mat_02_B.mat
-  artifactKey: Guid(94c294e096c783f4c8d934086b6ad063) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyCharacters/Materials/Polygon_Fantasy_Characters_Mat_02_B.mat using Guid(94c294e096c783f4c8d934086b6ad063) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cfd950c5536646bd50c538f63a69f967') in 0.025521 seconds 
+  Time since last request: 0.000098 seconds.
+  path: Assets/Animations/falling idle.fbx
+  artifactKey: Guid(7577527286828054bbddf7ce8a3257a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/falling idle.fbx using Guid(7577527286828054bbddf7ce8a3257a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bfc06dde9e425c25a66100c1e42a3066') in 0.016954 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000028 seconds.
-  path: Assets/PolygonFantasyCharacters/Materials/Polygon_Fantasy_Characters_Mat_02_C.mat
-  artifactKey: Guid(91e2878374a4a184aa285a72a4f938c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyCharacters/Materials/Polygon_Fantasy_Characters_Mat_02_C.mat using Guid(91e2878374a4a184aa285a72a4f938c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '24ff1c6dc04c455a1abb7dca42602e9c') in 0.011589 seconds 
+  Time since last request: 0.000077 seconds.
+  path: Assets/Animations/idle.fbx
+  artifactKey: Guid(7ced151cda48a4a4bb1073141b52d1d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/idle.fbx using Guid(7ced151cda48a4a4bb1073141b52d1d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ead7901b1a83c758330154b639fa968e') in 0.012045 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000021 seconds.
-  path: Assets/PolygonFantasyCharacters/Materials/Polygon_Fantasy_Characters_Mat_04_C.mat
-  artifactKey: Guid(6ee0d636dbe1a5f4fba788b544591fd0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyCharacters/Materials/Polygon_Fantasy_Characters_Mat_04_C.mat using Guid(6ee0d636dbe1a5f4fba788b544591fd0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f762e9d45966a16d0842d61ee1ddd200') in 0.012695 seconds 
+  Time since last request: 0.000043 seconds.
+  path: Assets/Animations/idle (2).fbx
+  artifactKey: Guid(d0fa904d47aad3f479721a46f772805d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/idle (2).fbx using Guid(d0fa904d47aad3f479721a46f772805d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '96557bbc56af54ab971b6894bab85fe9') in 0.012756 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/Animations/left turn.fbx
+  artifactKey: Guid(75a575a7ef33fe5448c460c8ec97ffec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/left turn.fbx using Guid(75a575a7ef33fe5448c460c8ec97ffec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b9debac259608caf47cd426a99957471') in 0.019104 seconds 
 Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
 AssetImportWorker is now disconnected from the server
 Process exiting
