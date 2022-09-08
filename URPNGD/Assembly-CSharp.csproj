@@ -42,6 +42,11 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Player.cs" />
+     <Compile Include="Assets\Scripts\StartMenu.cs" />
+     <Compile Include="Assets\Scripts\LobbyScript.cs" />
+     <Compile Include="Assets\Scripts\PlayerSelector.cs" />
+     <Compile Include="Assets\Scripts\LobbyPlayerPanel.cs" />
+     <Compile Include="Assets\Scripts\PlayerInfo.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
@@ -753,6 +758,12 @@
      <Reference Include="Unity.Netcode.Components">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Netcode.Components.dll</HintPath>
      </Reference>
+     <Reference Include="Cinemachine">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Cinemachine.dll</HintPath>
+     </Reference>
+     <Reference Include="com.unity.cinemachine.editor">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
      </Reference>
@@ -836,12 +847,6 @@
      </Reference>
      <Reference Include="Unity.VisualScripting.State">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
-     </Reference>
-     <Reference Include="com.unity.cinemachine.editor">
-     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Cinemachine">
-     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Cinemachine.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>
