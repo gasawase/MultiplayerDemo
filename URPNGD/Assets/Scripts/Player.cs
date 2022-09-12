@@ -16,10 +16,14 @@ public class Player : NetworkBehaviour
     public Transform camT;
 
     private CharacterController _mpCharacterController;
+    [SerializeField] private Mesh[] characterChoicesMesh;
 
     private float mouseSensitivity; //move this to player settings later
 
     private Animator animator;
+    private NetworkVariable<Byte> charIndex = new NetworkVariable<byte>();
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -80,4 +84,46 @@ public class Player : NetworkBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
     }
+    
+    //setting the player character mesh
+    private void OnEnable()
+    {
+        //start listening for the char index being updated
+        charIndex.OnValueChanged += OnPlayerTypeSelected;
+    }
+
+    private void OnDisable()
+    {
+        // stop listening for the char index being updated
+        charIndex.OnValueChanged -= OnPlayerTypeSelected;
+    }
+
+    private void OnPlayerTypeSelected(byte oldCharIndex, byte newCharIndex)
+    {
+        //only clients need to update the renderer
+        if (!IsClient)
+        {
+            return; 
+        }
+        
+        //update the mesh based on player's choice
+        GetComponent<SkinnedMeshRenderer>().sharedMesh = characterChoicesMesh[newCharIndex];
+
+    }
+    
+    
+    ///
+    /// SERVER RPC
+    /// 
+    
+    [ServerRpc]
+    public void SetPlayerServerRpc(byte newPlayerCharIndex)//could use a byte if the network gets slow
+    {
+        //make sure hte newcharindex is valid
+        if (newPlayerCharIndex > 11) { return; }
+    
+        //update the new charindex networkVariable
+        charIndex.Value = newPlayerCharIndex;
+    }
+    
 }

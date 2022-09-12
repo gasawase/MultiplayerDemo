@@ -9,5 +9,5 @@ public class LobbyScript : NetworkBehaviour
     [SerializeField] private LobbyPlayerPanel[] lobbyPlayers;
     [SerializeField] private GameObject playerPrefab;
     //holds a list of network players
-    private NetworkList<PlayerInfo>
+    //private NetworkList<PlayerInfo> nwPlayers = new NetworkList<PlayerInfo>();
 }
