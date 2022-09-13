@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
+// This script stores each players information ON THE SERVER
 public struct PlayerInfo : INetworkSerializable
 {
     public ulong networkClientID;
