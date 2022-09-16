@@ -10,4 +10,6 @@ public class ConnectionPayload
     public ulong networkClientID;
     public string networkPlayerName;
     public bool networkPlayerReady;
+    
+    
 }

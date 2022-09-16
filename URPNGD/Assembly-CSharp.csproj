@@ -42,13 +42,15 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\LobbyPlayerPanel.cs" />
+     <Compile Include="Assets\Scripts\ConnectionPayload.cs" />
+     <Compile Include="Assets\Scripts\GameNetworkManager.cs" />
      <Compile Include="Assets\Scripts\PlayerInfo.cs" />
      <Compile Include="Assets\Scripts\PlayerSelector.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
+     <Compile Include="Assets\ParrelSync\Examples\CustomArgumentExample.cs" />
      <Compile Include="Assets\Scripts\StartMenu.cs" />
      <Compile Include="Assets\Scripts\LobbyScript.cs" />
-     <Compile Include="Assets\Scripts\ConnectionPayload.cs" />
-     <Compile Include="Assets\Scripts\GameNetworkManager.cs" />
+     <Compile Include="Assets\Scripts\NetworkNameState.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
@@ -852,6 +854,10 @@
      </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="ParrelSync.csproj">
+      <Project>{12c27118-fc7d-d799-e512-c8c1da6eaab3}</Project>
+      <Name>ParrelSync</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
