@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Netcode;
-using UnityEngine;
 
 namespace Summer.Multiplayer
 {
@@ -10,9 +7,9 @@ namespace Summer.Multiplayer
     public struct PlayerInfo : INetworkSerializable, IEquatable<PlayerInfo>
     {
         public ulong networkClientID;
-        //public string networkPlayerName;
+        //private string networkPlayerName;
         public bool networkPlayerReady;
-        private NetworkNameState.FixedPlayerName m_PlayerName;
+        public NetworkNameState.FixedPlayerName m_PlayerName;
         
 
         public PlayerInfo(ulong clientId, string nwPName, bool playerReady)
@@ -38,9 +35,13 @@ namespace Summer.Multiplayer
 
         public bool Equals(PlayerInfo other)
         {
-            return networkClientID == other.networkClientID && networkPlayerReady == other.networkPlayerReady && m_PlayerName.Equals(other.m_PlayerName);
+            return networkClientID == other.networkClientID &&
+                   networkPlayerReady == other.networkPlayerReady &&
+                   m_PlayerName.Equals(other.m_PlayerName);
         }
         
+
+
     }    
 }
 

@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using Unity.Netcode;
 
 namespace Summer.Multiplayer
@@ -24,6 +20,7 @@ namespace Summer.Multiplayer
             NetworkManager.Singleton.OnClientConnectedCallback += HandleClientConnected;
         }
 
+        /*
         public override void NetworkStart()
         {
             Debug.Log("Starting Server");
@@ -43,6 +40,7 @@ namespace Summer.Multiplayer
                 }
             }
         }
+        */
 
         private void HandleClientConnected (ulong clientId)
         {
