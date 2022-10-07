@@ -6,11 +6,7 @@ using UnityEngine.SceneManagement;
 public class StartMenu : NetworkBehaviour
 {
     [SerializeField] private TMP_InputField playerName;
-
-    private void Start()
-    {
-
-    }
+    
 
     public void HostButtClicked()
     {

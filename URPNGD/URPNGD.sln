@@ -3,7 +3,33 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{b6718c24-952c-ba10-32bc-76153714797b}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC", "QFSW.QC.csproj", "{eef2a126-120a-9dc6-41b1-28acb3b39caa}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.Serializers", "QFSW.QC.Serializers.csproj", "{62bf460a-6d8e-7922-20ac-7ce8152b370a}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.Extras", "QFSW.QC.Extras.csproj", "{8fb51fbf-1dbf-b700-38ce-d7088596dc50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.Suggestors", "QFSW.QC.Suggestors.csproj", "{65812ced-d991-25a1-eac6-cf85a60b5267}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.Grammar", "QFSW.QC.Grammar.csproj", "{b8d5bbe3-a513-11df-2af7-68922a01ec0e}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.UI", "QFSW.QC.UI.csproj", "{7538366d-5336-2c21-f9a5-17ab48a220ca}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.Parsers", "QFSW.QC.Parsers.csproj", "{01f6c057-8be0-dcd1-c3a9-4c9938288730}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.ScanRules", "QFSW.QC.ScanRules.csproj", "{874b27ac-2398-0536-8981-6e50e54f23fa}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.Demo", "QFSW.QC.Demo.csproj", "{235b0a5f-a24b-1bbf-2efc-053d92299fa5}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParrelSync", "ParrelSync.csproj", "{12c27118-fc7d-d799-e512-c8c1da6eaab3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.Editor", "QFSW.QC.Editor.csproj", "{3f2a591b-4d83-773b-ac04-09fd430fa1cc}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.Editor.Tools", "QFSW.QC.Editor.Tools.csproj", "{72362a1a-862d-e56f-d646-c63ab0db16fb}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.QGUI", "QFSW.QC.QGUI.csproj", "{83471245-d5b4-f7c2-c4d0-635b39008f45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{0543572d-7205-0d48-5bbf-0e1d7b09b9b2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,8 +38,34 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{b6718c24-952c-ba10-32bc-76153714797b}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{b6718c24-952c-ba10-32bc-76153714797b}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{eef2a126-120a-9dc6-41b1-28acb3b39caa}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{eef2a126-120a-9dc6-41b1-28acb3b39caa}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62bf460a-6d8e-7922-20ac-7ce8152b370a}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62bf460a-6d8e-7922-20ac-7ce8152b370a}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8fb51fbf-1dbf-b700-38ce-d7088596dc50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8fb51fbf-1dbf-b700-38ce-d7088596dc50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65812ced-d991-25a1-eac6-cf85a60b5267}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65812ced-d991-25a1-eac6-cf85a60b5267}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{b8d5bbe3-a513-11df-2af7-68922a01ec0e}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{b8d5bbe3-a513-11df-2af7-68922a01ec0e}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7538366d-5336-2c21-f9a5-17ab48a220ca}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7538366d-5336-2c21-f9a5-17ab48a220ca}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01f6c057-8be0-dcd1-c3a9-4c9938288730}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01f6c057-8be0-dcd1-c3a9-4c9938288730}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{874b27ac-2398-0536-8981-6e50e54f23fa}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{874b27ac-2398-0536-8981-6e50e54f23fa}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{235b0a5f-a24b-1bbf-2efc-053d92299fa5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{235b0a5f-a24b-1bbf-2efc-053d92299fa5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12c27118-fc7d-d799-e512-c8c1da6eaab3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{12c27118-fc7d-d799-e512-c8c1da6eaab3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3f2a591b-4d83-773b-ac04-09fd430fa1cc}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3f2a591b-4d83-773b-ac04-09fd430fa1cc}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72362a1a-862d-e56f-d646-c63ab0db16fb}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72362a1a-862d-e56f-d646-c63ab0db16fb}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83471245-d5b4-f7c2-c4d0-635b39008f45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83471245-d5b4-f7c2-c4d0-635b39008f45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0543572d-7205-0d48-5bbf-0e1d7b09b9b2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0543572d-7205-0d48-5bbf-0e1d7b09b9b2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

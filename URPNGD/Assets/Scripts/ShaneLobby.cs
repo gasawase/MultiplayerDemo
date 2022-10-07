@@ -3,6 +3,7 @@ using Summer.Multiplayer;
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 
 public class ShaneLobby : NetworkBehaviour
@@ -19,11 +20,12 @@ public class ShaneLobby : NetworkBehaviour
 
     void Start()
     {
-        UpdateConnListServerRpc(NetworkManager.LocalClientId);
+        //UpdateConnListServerRpc(NetworkManager.LocalClientId); //doing this in the start so the host can add their information to the network list
         //Debug.Log(PlayerPrefs.GetString("PName"));
         //Debug.Log(nwPlayers[0].PlayerName);
         NetworkManager.Singleton.OnClientConnectedCallback += HandleClientConnected;
     }
+    
 
     public override void OnNetworkSpawn()
     {
@@ -92,16 +94,19 @@ public class ShaneLobby : NetworkBehaviour
     //HANDLES
     private void HandleClientConnected(ulong clientId)
     {
+        /*GameObject playerSpawn = Instantiate(playerPrefab, new Vector3(1.492f, 0f, -0.681f), Quaternion.identity);
+        playerSpawn.GetComponent<NetworkObject>().SpawnWithOwnership(OwnerClientId);*/
         UpdateConnListServerRpc(clientId);
         Debug.Log("A Player has connected ID: " + clientId);
-        Debug.Log(nwPlayers[0].m_PlayerName);
+        // create client rpc send i got this statement to whichever clientId this is
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)] 
 
     private void UpdateConnListServerRpc(ulong clientId)
     {
         nwPlayers.Add(new PlayerInfo(clientId, PlayerPrefs.GetString("PName"), false));
+        Debug.Log(nwPlayers[0].m_PlayerName);
     }
 
     private void ClientDisconnectedHandle(ulong clientId)
@@ -113,5 +118,6 @@ public class ShaneLobby : NetworkBehaviour
     {
         throw new NotImplementedException();
     }
+    
 
 }

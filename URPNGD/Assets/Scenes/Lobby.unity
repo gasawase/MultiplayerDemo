@@ -256,7 +256,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &83889704
 RectTransform:
   m_ObjectHideFlags: 0
@@ -386,6 +386,7 @@ GameObject:
   - component: {fileID: 192397428}
   - component: {fileID: 192397432}
   - component: {fileID: 192397433}
+  - component: {fileID: 192397434}
   m_Layer: 5
   m_Name: LobbyMainCanvas
   m_TagString: Untagged
@@ -506,6 +507,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fc18b6dfab9e12419e9de96854eb8b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &192397434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192397427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f76b73aeb616d034fbc3416920e4538c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lobbyPlayers:
+  - {fileID: 996935803018386695}
+  - {fileID: 1036044887}
+  playerPrefab: {fileID: 4786539203683795154, guid: 31ef7309624cf724382051d4ca8de737,
+    type: 3}
 --- !u!1001 &222580597
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -576,6 +594,17 @@ PrefabInstance:
     - target: {fileID: 6289141745331715588, guid: b36b4b8300740f342a635afc1c276325,
         type: 3}
       propertyPath: NetworkConfig.PlayerPrefab
+      value: 
+      objectReference: {fileID: 4786539203683795154, guid: 31ef7309624cf724382051d4ca8de737,
+        type: 3}
+    - target: {fileID: 6289141745331715588, guid: b36b4b8300740f342a635afc1c276325,
+        type: 3}
+      propertyPath: NetworkConfig.NetworkPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6289141745331715588, guid: b36b4b8300740f342a635afc1c276325,
+        type: 3}
+      propertyPath: NetworkConfig.NetworkPrefabs.Array.data[0].Prefab
       value: 
       objectReference: {fileID: 4786539203683795154, guid: 31ef7309624cf724382051d4ca8de737,
         type: 3}
@@ -1137,7 +1166,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1713751670}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ShaneLobby, Assembly-CSharp
         m_MethodName: StartGame
         m_Mode: 1
@@ -2039,7 +2068,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1538426611
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2290,70 +2319,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1620293756}
   m_CullTransparentMesh: 1
---- !u!1 &1713751668
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1713751671}
-  - component: {fileID: 1713751670}
-  - component: {fileID: 1713751669}
-  m_Layer: 0
-  m_Name: LobbyScriptHolder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1713751669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1713751668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 868349643
-  AlwaysReplicateAsRoot: 0
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
---- !u!114 &1713751670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1713751668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f76b73aeb616d034fbc3416920e4538c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lobbyPlayers: []
-  playerPrefab: {fileID: 4786539203683795154, guid: 31ef7309624cf724382051d4ca8de737,
-    type: 3}
---- !u!4 &1713751671
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1713751668}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 960, y: 540, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1893729442
 PrefabInstance:
   m_ObjectHideFlags: 0

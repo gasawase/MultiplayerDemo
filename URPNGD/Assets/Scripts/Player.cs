@@ -86,7 +86,7 @@ public class Player : NetworkBehaviour
     }
     
     //setting the player character mesh
-    private void OnEnable()
+    /*private void OnEnable()
     {
         //start listening for the char index being updated
         charIndex.OnValueChanged += OnPlayerTypeSelected;
@@ -96,7 +96,7 @@ public class Player : NetworkBehaviour
     {
         // stop listening for the char index being updated
         charIndex.OnValueChanged -= OnPlayerTypeSelected;
-    }
+    }*/
 
     private void OnPlayerTypeSelected(byte oldCharIndex, byte newCharIndex)
     {
