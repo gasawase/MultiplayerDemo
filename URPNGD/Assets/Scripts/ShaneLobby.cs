@@ -96,8 +96,9 @@ public class ShaneLobby : NetworkBehaviour
     {
         /*GameObject playerSpawn = Instantiate(playerPrefab, new Vector3(1.492f, 0f, -0.681f), Quaternion.identity);
         playerSpawn.GetComponent<NetworkObject>().SpawnWithOwnership(OwnerClientId);*/
-        UpdateConnListServerRpc(clientId);
+       
         Debug.Log("A Player has connected ID: " + clientId);
+        UpdateConnListServerRpc(clientId);
         // create client rpc send i got this statement to whichever clientId this is
     }
 
