@@ -1,8 +1,6 @@
 using System;
 using Unity.Netcode;
 
-namespace Summer.Multiplayer
-{
     // This script stores each players information ON THE SERVER
     public struct PlayerInfo : INetworkSerializable, System.IEquatable<PlayerInfo> 
     {
@@ -63,6 +61,5 @@ namespace Summer.Multiplayer
 
 
     }    
-}
 
 

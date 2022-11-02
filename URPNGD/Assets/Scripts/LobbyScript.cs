@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Summer.Multiplayer
-{
     public class LobbyScript : NetworkBehaviour
     {
         public LobbyPlayerPanel playerPanelPrefab;
@@ -17,8 +16,9 @@ namespace Summer.Multiplayer
         public Button btnReady;
         public Player playerPrefab;
 
-        private NetworkList<PlayerInfo> allPlayers = new NetworkList<PlayerInfo>();
+        public NetworkList<PlayerInfo> allPlayers = new NetworkList<PlayerInfo>();
         private List<LobbyPlayerPanel> playerPanels = new List<LobbyPlayerPanel>();
+        private Scene m_LoadedScene;
 
         public void Start()
         {
@@ -27,6 +27,7 @@ namespace Summer.Multiplayer
                 AddPlayerToList(NetworkManager.LocalClientId);
                 RefreshPlayerPanels();
             }
+            btnStart.onClick.AddListener(StartGame);
         }
 
         public override void OnNetworkSpawn()
@@ -50,6 +51,13 @@ namespace Summer.Multiplayer
 
             txtPlayerNumber.text = $"Player #{NetworkManager.LocalClientId}";
         }
+
+        public void StartGame()
+        {
+            NetworkManager.SceneManager.LoadScene("MainLevel", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        }
+        
+        
 
         [ServerRpc(RequireOwnership = false)]
 
@@ -128,6 +136,7 @@ namespace Summer.Multiplayer
         private void AddPlayerToList(ulong clientId)
         {
             allPlayers.Add(new PlayerInfo(clientId, false));
+            GameManager.instance.playerList.Add(new PlayerInfo(clientId, false));
         }
 
         private void AddPlayerPanel(PlayerInfo info)
@@ -159,4 +168,3 @@ namespace Summer.Multiplayer
             }
         }
     }
-}
