@@ -30,7 +30,7 @@ public class MainMenu : NetworkBehaviour
         Debug.Log("Started Host");
         UpdateConnListServerRpc(NetworkManager.LocalClientId);
         Debug.Log(PlayerPrefs.GetString("PName"));
-        Debug.Log(nwPlayers[0].PlayerName);
+        //Debug.Log(nwPlayers[0].PlayerName);
         SceneManager.LoadScene("Lobby");
         
         //have them select a character here
@@ -43,7 +43,7 @@ public class MainMenu : NetworkBehaviour
         Debug.Log("Started client");
         UpdateConnListServerRpc(NetworkManager.LocalClientId);
         Debug.Log(PlayerPrefs.GetString("PName"));
-        Debug.Log(nwPlayers[0].PlayerName);
+        //Debug.Log(nwPlayers[0].PlayerName);
 
         //wait for the host to select before switching to the new scene
         
@@ -78,7 +78,7 @@ public class MainMenu : NetworkBehaviour
     
     private void UpdateConnListServerRpc(ulong clientId)
     {
-        nwPlayers.Add(new PlayerInfo(clientId, PlayerPrefs.GetString("PName"), false));
+        //nwPlayers.Add(new PlayerInfo(clientId, PlayerPrefs.GetString("PName"), false));
     }
     
 }

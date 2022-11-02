@@ -42,26 +42,26 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\LobbyPlayerPanel.cs" />
+     <Compile Include="Assets\Scripts\ChrispyScripts\ServerCamera.cs" />
+     <Compile Include="Assets\Scripts\ChrispyScripts\Main.cs" />
      <Compile Include="Assets\Scripts\ConnectionPayload.cs" />
      <Compile Include="Assets\Scripts\GameNetworkManager.cs" />
      <Compile Include="Assets\Scripts\PlayerInfo.cs" />
+     <Compile Include="Assets\Scripts\ChrispyScripts\PlayerCB.cs" />
+     <Compile Include="Assets\Scripts\ChrispyScripts\LobbyPlayerPanelCB.cs" />
      <Compile Include="Assets\Scripts\ShaneLobby.cs" />
      <Compile Include="Assets\Troubleshooting\Scripts\TroubleshootLobby.cs" />
      <Compile Include="Assets\Scripts\PlayerSelector.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
+     <Compile Include="Assets\Scripts\ChrispyScripts\LobbyManager.cs" />
+     <Compile Include="Assets\Scripts\ChrispyScripts\GameManager.cs" />
      <Compile Include="Assets\Troubleshooting\Scripts\TroubleshootingMainMenu.cs" />
      <Compile Include="Assets\Scripts\NetworkNameState.cs" />
      <Compile Include="Assets\ParrelSync\Examples\CustomArgumentExample.cs" />
      <Compile Include="Assets\Scripts\StartMenu.cs" />
      <Compile Include="Assets\Scripts\NewScripts\MainMenu.cs" />
      <Compile Include="Assets\Scripts\LobbyScript.cs" />
-     <Compile Include="Assets\Scripts\ChrispyScripts\Main.cs" />
-     <Compile Include="Assets\Scripts\ChrispyScripts\GameManager.cs" />
-     <Compile Include="Assets\Scripts\ChrispyScripts\LobbyManager.cs" />
-     <Compile Include="Assets\Scripts\ChrispyScripts\LobbyPlayerPanelCB.cs" />
-     <Compile Include="Assets\Scripts\ChrispyScripts\PlayerCB.cs" />
      <Compile Include="Assets\Scripts\ChrispyScripts\PlayerInfo.cs" />
-     <Compile Include="Assets\Scripts\ChrispyScripts\ServerCamera.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
