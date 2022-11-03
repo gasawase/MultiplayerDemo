@@ -919,7 +919,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 5
   rotationSpeed: 100
-  camObj: {fileID: 3842001864667935252}
+  camObj: {fileID: 8120908573674633803}
   camT: {fileID: 2640412351766133028}
   characterChoicesMesh: []
 --- !u!114 &4935766869628110621
@@ -4784,7 +4784,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6895324905291603682}
-  m_LocalRotation: {x: 0.0451981, y: -0.6283436, z: 0.036609247, w: 0.77575856}
+  m_LocalRotation: {x: 0.045198098, y: -0.6283436, z: 0.03660925, w: 0.7757585}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5137,7 +5137,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8120908573674633803}
-  m_LocalRotation: {x: 0.0451981, y: -0.62834364, z: 0.036609255, w: 0.7757585}
+  m_LocalRotation: {x: 0.045198098, y: -0.62834364, z: 0.036609247, w: 0.7757585}
   m_LocalPosition: {x: 9.899334, y: 1.53, z: -2.101804}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

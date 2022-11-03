@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
@@ -12,7 +13,7 @@ public class Player : NetworkBehaviour
 {
     public float movementSpeed = 5f;
     public float rotationSpeed = 100f;
-    public Camera camObj;
+    public GameObject camObj;
     public Transform camT;
 
     private CharacterController _mpCharacterController;
@@ -36,21 +37,25 @@ public class Player : NetworkBehaviour
             //TODO: let player choose their avatar; have to figure out selecting a mesh and assigning to a specific client id
             //set a mesh
         }
-        else
+
+    }
+
+    private void Awake()
+    {
+        if (IsOwner)
         {
-            camObj.enabled = false;
-
+            camObj.GetComponent<Camera>().enabled = true;
         }
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (IsLocalPlayer)
+        if (!IsOwner)
         {
             Move();
         }
+        
     }
 
     public void Move()
