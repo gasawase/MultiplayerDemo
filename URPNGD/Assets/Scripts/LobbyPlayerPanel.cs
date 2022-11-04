@@ -1,32 +1,33 @@
-using System;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
+
+
 
 public class LobbyPlayerPanel : MonoBehaviour
 {
-    [SerializeField] public TMP_Text txtName;
-    [SerializeField] public TMP_Text txtReady;
-    //[SerializeField] public GameObject playerModel; 
-    //[SerializeField] public Toggle readyIcon;
-    //[SerializeField] public GameObject waitingPanel;
-    //[SerializeField] public GameObject playerInfoPanel;
+    [SerializeField] public TMPro.TMP_Text txtName;
+    [SerializeField] public TMPro.TMP_Text txtReady;
+    [SerializeField] public GameObject pnlColor;
 
     private bool isReady = false;
 
-    private void Start()
+    public void Start()
     {
         SetReady(isReady);
     }
 
-    public void SetName(string newName)
-    {
+    public void SetName(string newName) {
         txtName.text = newName;
     }
 
-    public string GetName()
-    {
+    public string GetName() {
         return txtName.text;
+    }
+
+    public void SetColor(Color c) {
+        pnlColor.GetComponent<Image>().color = c;
     }
 
     public void SetReady(bool ready)
@@ -41,10 +42,4 @@ public class LobbyPlayerPanel : MonoBehaviour
             txtReady.text = "Not Ready";
         }
     }
-
-
-    // internal void UpdatePlayerName(TMP_Text playerNameIn)
-    // {
-    //     playerName = playerNameIn;
-    // }
 }

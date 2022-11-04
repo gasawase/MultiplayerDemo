@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{b6718c24-952c-ba10-32bc-76153714797b}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.Grammar", "QFSW.QC.Grammar.csproj", "{b8d5bbe3-a513-11df-2af7-68922a01ec0e}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC", "QFSW.QC.csproj", "{eef2a126-120a-9dc6-41b1-28acb3b39caa}"
@@ -18,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.Demo", "QFSW.QC.Demo.csproj", "{235b0a5f-a24b-1bbf-2efc-053d92299fa5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.Parsers", "QFSW.QC.Parsers.csproj", "{01f6c057-8be0-dcd1-c3a9-4c9938288730}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{b6718c24-952c-ba10-32bc-76153714797b}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.ScanRules", "QFSW.QC.ScanRules.csproj", "{874b27ac-2398-0536-8981-6e50e54f23fa}"
 EndProject
@@ -36,8 +36,6 @@ Global
 		Debug|Any CPU = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{b6718c24-952c-ba10-32bc-76153714797b}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{b6718c24-952c-ba10-32bc-76153714797b}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{b8d5bbe3-a513-11df-2af7-68922a01ec0e}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{b8d5bbe3-a513-11df-2af7-68922a01ec0e}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{eef2a126-120a-9dc6-41b1-28acb3b39caa}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -54,6 +52,8 @@ Global
 		{235b0a5f-a24b-1bbf-2efc-053d92299fa5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01f6c057-8be0-dcd1-c3a9-4c9938288730}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{01f6c057-8be0-dcd1-c3a9-4c9938288730}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{b6718c24-952c-ba10-32bc-76153714797b}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{b6718c24-952c-ba10-32bc-76153714797b}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{874b27ac-2398-0536-8981-6e50e54f23fa}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{874b27ac-2398-0536-8981-6e50e54f23fa}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12c27118-fc7d-d799-e512-c8c1da6eaab3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

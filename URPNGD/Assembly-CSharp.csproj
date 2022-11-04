@@ -41,20 +41,20 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\LobbyPlayerPanel.cs" />
-     <Compile Include="Assets\Scripts\PlayerInfo.cs" />
-     <Compile Include="Assets\Scripts\GameManager.cs" />
-     <Compile Include="Assets\Scripts\ShaneLobby.cs" />
      <Compile Include="Assets\Troubleshooting\Scripts\TroubleshootLobby.cs" />
-     <Compile Include="Assets\Scripts\PlayerSelector.cs" />
-     <Compile Include="Assets\Scripts\Player.cs" />
-     <Compile Include="Assets\Scripts\MainLevel.cs" />
      <Compile Include="Assets\Troubleshooting\Scripts\TroubleshootingMainMenu.cs" />
-     <Compile Include="Assets\Scripts\NetworkNameState.cs" />
      <Compile Include="Assets\ParrelSync\Examples\CustomArgumentExample.cs" />
-     <Compile Include="Assets\Scripts\StartMenu.cs" />
-     <Compile Include="Assets\Scripts\NewScripts\MainMenu.cs" />
-     <Compile Include="Assets\Scripts\LobbyScript.cs" />
+     <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Player.cs" />
+     <Compile Include="Assets\Scripts\PlayerInfo.cs" />
+     <Compile Include="Assets\Scripts\LobbyManager.cs" />
+     <Compile Include="Assets\Scripts\GameData.cs" />
+     <Compile Include="Assets\Scripts\LobbyPlayerPanel.cs" />
+     <Compile Include="Assets\Scripts\Bullet.cs" />
+     <Compile Include="Assets\Scripts\BulletSpawner.cs" />
+     <Compile Include="Assets\Scripts\ChatUI.cs" />
+     <Compile Include="Assets\Scripts\Main.cs" />
+     <Compile Include="Assets\Scripts\ServerCamera.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
@@ -727,14 +727,32 @@
      <Reference Include="Unity.RenderPipelines.Universal.Shaders">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.Multiplayer.Tools.NetStatsMonitor.Editor">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Multiplayer.Tools.NetStatsMonitor.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Multiplayer.Tools.NetStatsMonitor.Configuration">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Multiplayer.Tools.NetStatsMonitor.Configuration.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.TextMeshPro.Editor">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.InternalAPIEngineBridge.007">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.InternalAPIEngineBridge.007.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Multiplayer.Tools.NetworkProfiler.Runtime">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Multiplayer.Tools.NetworkProfiler.Runtime.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VisualScripting.State.Editor">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.Multiplayer.Samples.Utilities.ClientAuthority">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Multiplayer.Samples.Utilities.ClientAuthority.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.Searcher.Editor">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Multiplayer.Tools.MetricTypes">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Multiplayer.Tools.MetricTypes.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
@@ -754,11 +772,26 @@
      <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.Multiplayer.Tools.NetStatsReporting">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Multiplayer.Tools.NetStatsReporting.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Services.Relay">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Services.Relay.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.EditorCoroutines.Editor">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.EditorCoroutines.Editor.dll</HintPath>
+     </Reference>
      <Reference Include="UnityEngine.UI">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Networking.Transport">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Networking.Transport.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Multiplayer.Tools.Common">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Multiplayer.Tools.Common.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Services.Authentication">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Services.Authentication.dll</HintPath>
      </Reference>
      <Reference Include="Unity.ShaderGraph.Editor">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
@@ -784,8 +817,20 @@
      <Reference Include="Unity.Netcode.Editor.PackageChecker">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Netcode.Editor.PackageChecker.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.Multiplayer.Tools.NetStats">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Multiplayer.Tools.NetStats.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Tutorials.Core">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Tutorials.Core.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.VisualScripting.Flow.Editor">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.VisualScripting.Flow.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Multiplayer.Tools.NetworkSolutionInterface">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Multiplayer.Tools.NetworkSolutionInterface.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.InternalAPIEditorBridge.007">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.007.dll</HintPath>
      </Reference>
      <Reference Include="Unity.RenderPipelines.Universal.Runtime">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
@@ -796,17 +841,29 @@
      <Reference Include="Unity.VisualStudio.Editor">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.Multiplayer.Tools.Editor">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Multiplayer.Tools.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Profiling.Core">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Profiling.Core.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.Timeline">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.VisualScripting.Core.Editor">
-     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.VisualScripting.Core.Editor.dll</HintPath>
+     <Reference Include="Unity.Multiplayer.Tools.NetworkProfiler.Editor">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Multiplayer.Tools.NetworkProfiler.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.TextMeshPro">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.VisualScripting.Core.Editor">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.VisualScripting.Core.Editor.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.Burst.Editor">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Multiplayer.Tools.NetStatsMonitor.Component">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Multiplayer.Tools.NetStatsMonitor.Component.dll</HintPath>
      </Reference>
      <Reference Include="Unity.RenderPipelines.Core.Runtime">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
@@ -820,11 +877,20 @@
      <Reference Include="Unity.Netcode.Runtime">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Netcode.Runtime.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.Multiplayer.Samples.Utilities.RNSM">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Multiplayer.Samples.Utilities.RNSM.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Tutorials.Core.Editor">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Tutorials.Core.Editor.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.Services.Core">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Services.Core.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VisualScripting.Core">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.VisualScripting.Core.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Multiplayer.Samples.Utilities">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Multiplayer.Samples.Utilities.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Mathematics">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
@@ -850,6 +916,12 @@
      <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.Services.QoS">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Services.QoS.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Multiplayer.Tools.NetStatsMonitor.Implementation">
+     <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.Multiplayer.Tools.NetStatsMonitor.Implementation.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.RenderPipelines.Core.Editor">
      <HintPath>C:\Users\gasawase\Documents\GitHub\NetworkGD2022\URPNGD\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
      </Reference>
@@ -862,13 +934,13 @@
       <Project>{7538366d-5336-2c21-f9a5-17ab48a220ca}</Project>
       <Name>QFSW.QC.UI</Name>
     </ProjectReference>
-    <ProjectReference Include="QFSW.QC.ScanRules.csproj">
-      <Project>{874b27ac-2398-0536-8981-6e50e54f23fa}</Project>
-      <Name>QFSW.QC.ScanRules</Name>
-    </ProjectReference>
     <ProjectReference Include="QFSW.QC.Editor.csproj">
       <Project>{3f2a591b-4d83-773b-ac04-09fd430fa1cc}</Project>
       <Name>QFSW.QC.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.ScanRules.csproj">
+      <Project>{874b27ac-2398-0536-8981-6e50e54f23fa}</Project>
+      <Name>QFSW.QC.ScanRules</Name>
     </ProjectReference>
     <ProjectReference Include="QFSW.QC.Demo.csproj">
       <Project>{235b0a5f-a24b-1bbf-2efc-053d92299fa5}</Project>

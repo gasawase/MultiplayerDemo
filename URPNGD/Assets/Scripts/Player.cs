@@ -1,134 +1,159 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
-using System.Runtime.CompilerServices;
+﻿using System;
+using TMPro;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-using Quaternion = UnityEngine.Quaternion;
-using Vector3 = UnityEngine.Vector3;
-
-public class Player : NetworkBehaviour
-{
-    public float movementSpeed = 5f;
-    public float rotationSpeed = 100f;
-    public GameObject camObj;
-    public Transform camT;
-
-    private CharacterController _mpCharacterController;
-    [SerializeField] private Mesh[] characterChoicesMesh;
-
-    private float mouseSensitivity; //move this to player settings later
-
-    private Animator animator;
-    private NetworkVariable<Byte> charIndex = new NetworkVariable<byte>();
 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        _mpCharacterController = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
-        
-        
-        if(IsLocalPlayer)
-        {
-            //TODO: let player choose their avatar; have to figure out selecting a mesh and assigning to a specific client id
-            //set a mesh
-        }
+public class Player : NetworkBehaviour {
 
-    }
 
-    private void Awake()
-    {
-        if (IsOwner)
-        {
-            camObj.GetComponent<Camera>().enabled = true;
-        }
-    }
+    public NetworkVariable<Vector3> PositionChange = new NetworkVariable<Vector3>();
+    public NetworkVariable<Vector3> RotationChange = new NetworkVariable<Vector3>();
+    //public NetworkVariable<Color> PlayerColor = new NetworkVariable<Color>(Color.red);
+    public NetworkVariable<int> pScore = new NetworkVariable<int>(50);
+    public TMP_Text txtScoreDisplay;
+    
+    private GameManager _gameMgr;
+    private Camera _camera;
+    public float movementSpeed = .5f;
+    private float rotationSpeed = 1f;
+    //private BulletSpawner _bulletSpawner;
+    
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (!IsOwner)
-        {
-            Move();
-        }
-        
-    }
-
-    public void Move()
-    {
-        
-        //transform.Rotate(Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime, Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime, 0);
-        Vector3 moveVect = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-
-        moveVect = Quaternion.AngleAxis(camT.rotation.eulerAngles.y, Vector3.up) * moveVect;
-        _mpCharacterController.SimpleMove(moveVect * movementSpeed);
-
-        if (moveVect != Vector3.zero)
-        {
-            animator.SetBool("isMoving", true);
-        }
-        else
-        {
-            animator.SetBool("isMoving", false);
-        }
-        
-    }
-
-    private void OnApplicationFocus(bool hasFocus)
-    {
-        if (hasFocus)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
+    private void Start() {
+        //ApplyPlayerColor();
+        //PlayerColor.OnValueChanged += OnPlayerColorChanged;
     }
     
-    //setting the player character mesh
-    /*private void OnEnable()
-    {
-        //start listening for the char index being updated
-        charIndex.OnValueChanged += OnPlayerTypeSelected;
+    void Update() {
+        if (IsOwner) {
+            Vector3[] results = CalcMovement();
+            RequestPositionForMovementServerRpc(results[0], results[1]);
+            // if (Input.GetButtonDown("Fire1")) {
+            //     _bulletSpawner.FireServerRpc();
+            // }
+        }
+
+        if(!IsOwner || IsHost){
+            transform.Translate(PositionChange.Value);
+            transform.Rotate(RotationChange.Value);
+        }
     }
 
-    private void OnDisable()
-    {
-        // stop listening for the char index being updated
-        charIndex.OnValueChanged -= OnPlayerTypeSelected;
-    }*/
+    public override void OnNetworkSpawn() {
+        _camera = transform.Find("Camera").GetComponent<Camera>();
+        _camera.enabled = IsOwner;
 
-    private void OnPlayerTypeSelected(byte oldCharIndex, byte newCharIndex)
+        //pScore.OnValueChanged += ClientOnScoreChanged;
+        //Make a more effecient way to find the spawner. Player>PlayerMeshes>Root>Hips>Spine_01>Spine_02>Spine_03>Clavicle_R>Shoulder_R>Elbow_R>Hand_R>ItemSpawningLocation
+        //_bulletSpawner = transform.Find("RArm").transform.Find("BulletSpawner").GetComponent<BulletSpawner>();
+        // if (IsHost)
+        // {
+        //     _bulletSpawner.bulletDamage.Value = 1;
+        // }
+
+        //DisplayScore();
+    }
+
+    private void HostHandleBulletCollision(GameObject bullet)
     {
-        //only clients need to update the renderer
-        if (!IsClient)
-        {
-            return; 
-        }
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+        pScore.Value -= bulletScript.damage.Value;
+
+        ulong ownerClientId = bullet.GetComponent<NetworkObject>().OwnerClientId;
+        Player otherPlayer = NetworkManager.Singleton.ConnectedClients[ownerClientId].PlayerObject.GetComponent<Player>();
+        otherPlayer.pScore.Value += 1;
         
-        //update the mesh based on player's choice
-        GetComponent<SkinnedMeshRenderer>().sharedMesh = characterChoicesMesh[newCharIndex];
+        Destroy(bullet);          
+    }
+
+    private void HostHandleDamageBoostPickup(Collider collision)
+    {
+        // if (!_bulletSpawner.isAtMaxDamage())
+        // {
+        //     _bulletSpawner.IncreaseDamage();
+        //     collision.GetComponent<NetworkObject>().Despawn();
+        // }
 
     }
     
-    
-    ///
-    /// SERVER RPC
-    /// 
-    
+    // private void ClientOnScoreChanged(int previous, int current)
+    // {
+    //     DisplayScore();
+    // }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (IsHost)
+        {
+            if (collision.gameObject.CompareTag("Bullet"))
+            {
+                HostHandleBulletCollision(collision.gameObject);
+            }
+
+        }
+    }
+
+    public void OnTriggerEnter(Collider collision)
+    {
+        if (IsHost)
+        {
+            if (collision.gameObject.CompareTag("DamageBoost"))
+            {
+                HostHandleDamageBoostPickup(collision);
+            }
+        }
+    }
+
     [ServerRpc]
-    public void SetPlayerServerRpc(byte newPlayerCharIndex)//could use a byte if the network gets slow
+    void RequestPositionForMovementServerRpc(Vector3 posChange, Vector3 rotChange) {
+        if (!IsServer && !IsHost) return;
+
+        PositionChange.Value = posChange;
+        RotationChange.Value = rotChange;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void RequestSetScoreServerRpc(int value)
     {
-        //make sure hte newcharindex is valid
-        if (newPlayerCharIndex > 11) { return; }
-    
-        //update the new charindex networkVariable
-        charIndex.Value = newPlayerCharIndex;
+        pScore.Value = value;
+    }
+    // public void OnPlayerColorChanged(Color previous, Color current) {
+    //     ApplyPlayerColor();
+    // }
+
+    // public void ApplyPlayerColor() {
+    //     GetComponent<MeshRenderer>().material.color = PlayerColor.Value;
+    //     //transform.Find("LArm").GetComponent<MeshRenderer>().material.color = PlayerColor.Value;
+    //     transform.Find("RArm").GetComponent<MeshRenderer>().material.color = PlayerColor.Value;
+    // }
+
+
+    // horiz changes y rotation or x movement if shift down, vertical moves forward and back.
+    private Vector3[] CalcMovement() {
+        bool isShiftKeyDown = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        float x_move = 0.0f;
+        float z_move = Input.GetAxis("Vertical");
+        float y_rot = 0.0f;
+
+        if (isShiftKeyDown) {
+            x_move = Input.GetAxis("Horizontal");
+        } else {
+            y_rot = Input.GetAxis("Horizontal");
+        }
+
+        Vector3 moveVect = new Vector3(x_move, 0, z_move);
+        moveVect *= movementSpeed;
+
+        Vector3 rotVect = new Vector3(0, y_rot, 0);
+        rotVect *= rotationSpeed;
+
+        return new[] { moveVect, rotVect };
     }
     
+
+    // public void DisplayScore()
+    // {
+    //     txtScoreDisplay.text = pScore.Value.ToString();
+    // }
 }

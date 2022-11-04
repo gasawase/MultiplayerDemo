@@ -12,12 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Lobby.unity
     guid: bd6f780bd397934499f54ebd2d7faed3
   - enabled: 1
-    path: Assets/Scenes/MainLevel.unity
-    guid: 01f2710282abde0478bab4300d58d182
-  - enabled: 1
-    path: Assets/Troubleshooting/TestScene2.unity
-    guid: c481a57bdf69e174aa2303b741e9b353
-  - enabled: 1
-    path: Assets/Troubleshooting/TestSceneStart.unity
-    guid: 433faad9740a5674c9a4154dbbc6b1a9
+    path: Assets/Scenes/Arena1.unity
+    guid: 86eedf9aaf857f8409dcb6f6ae5b7da5
   m_configObjects: {}
