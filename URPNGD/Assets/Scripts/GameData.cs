@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TMPro;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -22,6 +23,9 @@ public class GameData : NetworkBehaviour {
     };
 
     public NetworkList<PlayerInfo> allPlayers;
+    [SerializeField] public TMP_InputField playerInputField;
+    public string playerName;
+    public NetworkVariable<FixedPlayerName> test;
 
     // --------------------------
     // Initialization
@@ -50,6 +54,7 @@ public class GameData : NetworkBehaviour {
             NetworkManager.Singleton.OnClientDisconnectCallback += HostOnClientDisconnected;
             AddPlayerToList(NetworkManager.LocalClientId);
         }
+        
     }
 
 
@@ -80,12 +85,16 @@ public class GameData : NetworkBehaviour {
         }
     }
 
+    public void onValueChangedName()
+    {
+        playerName = playerInputField.text;
+    }
 
     // --------------------------
     // Public
     // --------------------------
     public void AddPlayerToList(ulong clientId) {
-        allPlayers.Add(new PlayerInfo(clientId, NextColor(), false));
+        allPlayers.Add(new PlayerInfo(clientId, playerName, NextColor(), false));
     }
 
 

@@ -41,20 +41,22 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Troubleshooting\Scripts\TroubleshootLobby.cs" />
-     <Compile Include="Assets\Troubleshooting\Scripts\TroubleshootingMainMenu.cs" />
-     <Compile Include="Assets\ParrelSync\Examples\CustomArgumentExample.cs" />
-     <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\NetworkNameState.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
+     <Compile Include="Assets\Scripts\Main.cs" />
      <Compile Include="Assets\Scripts\PlayerInfo.cs" />
-     <Compile Include="Assets\Scripts\LobbyManager.cs" />
+     <Compile Include="Assets\Scripts\ServerCamera.cs" />
      <Compile Include="Assets\Scripts\GameData.cs" />
+     <Compile Include="Assets\Scripts\PlayerPanelDisplay.cs" />
      <Compile Include="Assets\Scripts\LobbyPlayerPanel.cs" />
+     <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Troubleshooting\Scripts\TroubleshootLobby.cs" />
+     <Compile Include="Assets\Scripts\ChatUI.cs" />
+     <Compile Include="Assets\Scripts\LobbyManager.cs" />
      <Compile Include="Assets\Scripts\Bullet.cs" />
      <Compile Include="Assets\Scripts\BulletSpawner.cs" />
-     <Compile Include="Assets\Scripts\ChatUI.cs" />
-     <Compile Include="Assets\Scripts\Main.cs" />
-     <Compile Include="Assets\Scripts\ServerCamera.cs" />
+     <Compile Include="Assets\Troubleshooting\Scripts\TroubleshootingMainMenu.cs" />
+     <Compile Include="Assets\ParrelSync\Examples\CustomArgumentExample.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

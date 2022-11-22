@@ -65,7 +65,7 @@ public class LobbyManager : NetworkBehaviour
     private void AddPlayerPanel(PlayerInfo info) {
         LobbyPlayerPanel newPanel = Instantiate(playerPanelPrefab);
         newPanel.transform.SetParent(playerScrollContent.transform, false);
-        newPanel.SetName($"Player {info.clientId.ToString()}");
+        newPanel.SetName(info.m_PlayerName);
         newPanel.SetColor(info.color);
         newPanel.SetReady(info.isReady);
         playerPanels.Add(newPanel);
