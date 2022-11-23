@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using TMPro;
 using Unity.Netcode;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameData : NetworkBehaviour {
     private static GameData _instance;
@@ -23,9 +22,11 @@ public class GameData : NetworkBehaviour {
     };
 
     public NetworkList<PlayerInfo> allPlayers;
-    [SerializeField] public TMP_InputField playerInputField;
-    public string playerName;
-    public NetworkVariable<FixedPlayerName> test;
+    public TMP_InputField playerInputField;
+    public string playerName = "";
+    public NetworkVariable<FixedPlayerName> fixedPlayerName;
+    public Dictionary<ulong, string> dictPNames = new Dictionary<ulong, string>();
+    public Button btnSubmitName = null;
 
     // --------------------------
     // Initialization
@@ -52,7 +53,7 @@ public class GameData : NetworkBehaviour {
         if (IsHost) {
             NetworkManager.Singleton.OnClientConnectedCallback += HostOnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback += HostOnClientDisconnected;
-            AddPlayerToList(NetworkManager.LocalClientId);
+            //AddPlayerToList(NetworkManager.LocalClientId);
         }
         
     }
@@ -75,26 +76,51 @@ public class GameData : NetworkBehaviour {
     // Events
     // --------------------------
     private void HostOnClientConnected(ulong clientId) {
-        AddPlayerToList(clientId);
+        //SendPNameServerRpc(playerName); for when input is/was on login screen
+        //AddPlayerToList(clientId);
     }
 
     private void HostOnClientDisconnected(ulong clientId) {
         int index = FindPlayerIndex(clientId);
         if (index != -1) {
             allPlayers.RemoveAt(index);
+            dictPNames.Remove(clientId);
         }
     }
 
-    public void onValueChangedName()
+    public void SubmitButtonClicked()
     {
+        playerInputField = GameObject.FindGameObjectWithTag("InputField").GetComponent<TMP_InputField>();
+        string inpString = GameObject.FindGameObjectWithTag("InputField").name;
         playerName = playerInputField.text;
+        SendPNameServerRpc(playerName);
+        Debug.Log($"{playerName} is the name from the inpString below");
+        Debug.Log($"{inpString} is the name of the input field");
     }
 
     // --------------------------
     // Public
     // --------------------------
-    public void AddPlayerToList(ulong clientId) {
-        allPlayers.Add(new PlayerInfo(clientId, playerName, NextColor(), false));
+    public void AddPlayerToList(ulong clientId, string pName) {
+        
+        allPlayers.Add(new PlayerInfo(clientId, pName, NextColor(), false));
+    }
+
+    public void AddPlayerNameToDictionary(ulong clientId, string pName)
+    {
+        if (dictPNames.ContainsKey(clientId))
+        {
+            if (dictPNames[clientId] != null)
+            {
+                dictPNames[clientId] = pName;
+            }
+            else
+            {
+                dictPNames.Add(clientId, pName);
+            }
+        }
+        Debug.Log($"{clientId} has name {pName}");
+
     }
 
 
@@ -109,11 +135,25 @@ public class GameData : NetworkBehaviour {
                 idx += 1;
             }
         }
-
         if (!found) {
             idx = -1;
         }
-
         return idx;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SendPNameServerRpc(string pName, ServerRpcParams serverRpcParams = default)
+    {
+        Debug.Log($"Host got name:  {pName}");
+
+        SendPNameClientRpc(pName, serverRpcParams.Receive.SenderClientId);
+    }
+
+    [ClientRpc]
+    public void SendPNameClientRpc(string pName, ulong clientId, ClientRpcParams clientRpcParams = default)
+    {
+        Debug.Log("sendPNameClientRpc ran");
+        AddPlayerNameToDictionary(clientId, pName);
+        AddPlayerToList(clientId, pName);
     }
 }

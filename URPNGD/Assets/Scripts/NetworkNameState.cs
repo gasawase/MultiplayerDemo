@@ -21,7 +21,7 @@ public struct FixedPlayerName : INetworkSerializable
 
     public override string ToString()
     {
-        return m_Name.Value.ToString();
+        return m_Name.ToString();
     }
 
     public static implicit operator string(FixedPlayerName s) => s.ToString();

@@ -16,10 +16,17 @@ public class LobbyManager : NetworkBehaviour
     public Button btnStart;
     public Button btnReady;
     public LobbyPlayerPanel playerPanelPrefab;
+    public Button btnSubmitName = null;
 
     
     public void Awake() {
         playerPanels = new List<LobbyPlayerPanel>();
+        btnSubmitName = GameObject.FindGameObjectWithTag("SubmitButton").GetComponent<Button>();
+
+        if (btnSubmitName != null)
+        {
+            btnSubmitName.onClick.AddListener(GameData.Instance.SubmitButtonClicked);
+        }
     }
 
     public void Start() {
