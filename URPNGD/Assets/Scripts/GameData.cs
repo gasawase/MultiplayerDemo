@@ -27,6 +27,7 @@ public class GameData : NetworkBehaviour {
     public NetworkVariable<FixedPlayerName> fixedPlayerName;
     public Dictionary<ulong, string> dictPNames = new Dictionary<ulong, string>();
     public Button btnSubmitName = null;
+    [SerializeField]public GameObject playerPrefab;
 
     // --------------------------
     // Initialization
@@ -96,6 +97,7 @@ public class GameData : NetworkBehaviour {
         SendPNameServerRpc(playerName);
         Debug.Log($"{playerName} is the name from the inpString below");
         Debug.Log($"{inpString} is the name of the input field");
+        SpawnPlayerSelector();
     }
 
     // --------------------------
@@ -139,6 +141,17 @@ public class GameData : NetworkBehaviour {
             idx = -1;
         }
         return idx;
+    }
+
+    public void SpawnPlayerSelector()
+    {
+        //spawn player prefab with the specific locations
+        //enable UI for selecting the player mesh
+        //add listeners and controls for selecting player mesh and for sending the data to player info
+        Vector3 scaleChange = new Vector3(9.5f, 9.5f, 9.5f);
+        Vector3 spawnPos = new Vector3(-2.98f, -10.55f, 21.03f);
+        GameObject spawnedPlayer = Instantiate(playerPrefab, spawnPos, Quaternion.Euler(0, 180, 0));
+        spawnedPlayer.transform.localScale = scaleChange;
     }
 
     [ServerRpc(RequireOwnership = false)]

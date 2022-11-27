@@ -1078,6 +1078,8 @@ MonoBehaviour:
   playerInputField: {fileID: 0}
   playerName: 
   btnSubmitName: {fileID: 0}
+  playerPrefab: {fileID: 4786539203683795154, guid: c5132cdfb960c1f4cb0c4878791d3a2d,
+    type: 3}
 --- !u!1 &999953407
 GameObject:
   m_ObjectHideFlags: 0

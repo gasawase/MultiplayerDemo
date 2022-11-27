@@ -12,7 +12,7 @@ public class LobbyManager : NetworkBehaviour
     private List<LobbyPlayerPanel> playerPanels;
 
     public GameObject playerScrollContent;
-    public TMPro.TMP_Text txtPlayerNumber;
+    public TMP_Text txtPlayerNumber;
     public Button btnStart;
     public Button btnReady;
     public LobbyPlayerPanel playerPanelPrefab;
