@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
@@ -28,6 +30,8 @@ public class GameData : NetworkBehaviour {
     public Dictionary<ulong, string> dictPNames = new Dictionary<ulong, string>();
     public Button btnSubmitName = null;
     [SerializeField]public GameObject playerPrefab;
+    public GameObject spawnedPlayer = null;
+    public int intOfCurrentMesh = 0;
 
     // --------------------------
     // Initialization
@@ -98,6 +102,13 @@ public class GameData : NetworkBehaviour {
         Debug.Log($"{playerName} is the name from the inpString below");
         Debug.Log($"{inpString} is the name of the input field");
         SpawnPlayerSelector();
+
+        Button rightSelectorBut = GameObject.Find("RightArrow").GetComponent<Button>();
+        rightSelectorBut.onClick.AddListener(IncreasePlayerMeshNum);
+        Button leftSelectorBut = GameObject.Find("LeftArrow").GetComponent<Button>();
+        leftSelectorBut.onClick.AddListener(DecreasePlayerMeshNum);
+        Button selectPlayMeshBut = GameObject.Find("SubmitMesh").GetComponent<Button>();
+        selectPlayMeshBut.onClick.AddListener(PlayerMeshSelected);
     }
 
     // --------------------------
@@ -145,13 +156,53 @@ public class GameData : NetworkBehaviour {
 
     public void SpawnPlayerSelector()
     {
-        //spawn player prefab with the specific locations
-        //enable UI for selecting the player mesh
+        //spawn player prefab with the specific locations DONE
+        //enable UI for selecting the player mesh DONE
         //add listeners and controls for selecting player mesh and for sending the data to player info
         Vector3 scaleChange = new Vector3(9.5f, 9.5f, 9.5f);
         Vector3 spawnPos = new Vector3(-2.98f, -10.55f, 21.03f);
-        GameObject spawnedPlayer = Instantiate(playerPrefab, spawnPos, Quaternion.Euler(0, 180, 0));
+        spawnedPlayer = Instantiate(playerPrefab, spawnPos, Quaternion.Euler(0, 180, 0));
         spawnedPlayer.transform.localScale = scaleChange;
+    }
+
+    public void IncreasePlayerMeshNum()
+    {
+        //change meshes instead of enabling/disabling objects
+        Mesh[] listOfMeshes = spawnedPlayer.GetComponent<Player>().listOfMeshes;
+        SkinnedMeshRenderer skinnedMeshRenderer =
+            GameObject.Find("MainPlayerObject").GetComponent<SkinnedMeshRenderer>();
+        int lengthOfArray = listOfMeshes.Length; //number of objects in the array
+
+        skinnedMeshRenderer.sharedMesh = listOfMeshes[intOfCurrentMesh];
+        intOfCurrentMesh++;
+        if (intOfCurrentMesh == lengthOfArray)
+        {
+            intOfCurrentMesh = 0;
+        }
+        Debug.Log(intOfCurrentMesh);
+    }
+    public void DecreasePlayerMeshNum()
+    {
+        Mesh[] listOfMeshes = spawnedPlayer.GetComponent<Player>().listOfMeshes;
+        SkinnedMeshRenderer skinnedMeshRenderer =
+            GameObject.Find("MainPlayerObject").GetComponent<SkinnedMeshRenderer>();
+        int lengthOfArray = listOfMeshes.Length; //number of objects in the array
+        Debug.Log(lengthOfArray);
+
+        skinnedMeshRenderer.sharedMesh = listOfMeshes[intOfCurrentMesh];
+        intOfCurrentMesh--;
+        Debug.Log(intOfCurrentMesh);
+        if (intOfCurrentMesh < 0)
+        {
+            intOfCurrentMesh = lengthOfArray-1;
+            Debug.Log(intOfCurrentMesh);
+        }
+
+    }
+
+    public void PlayerMeshSelected()
+    {
+        
     }
 
     [ServerRpc(RequireOwnership = false)]

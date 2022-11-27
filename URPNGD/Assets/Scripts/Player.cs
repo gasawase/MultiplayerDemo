@@ -12,7 +12,7 @@ public class Player : NetworkBehaviour {
     //public NetworkVariable<Color> PlayerColor = new NetworkVariable<Color>(Color.red);
     public NetworkVariable<int> pScore = new NetworkVariable<int>(50);
     public TMP_Text txtScoreDisplay;
-    [SerializeField] public GameObject[] listOfMeshes;
+    [SerializeField] public Mesh[] listOfMeshes;
     
     private GameManager _gameMgr;
     private Camera _camera;
