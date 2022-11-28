@@ -17,8 +17,11 @@ public class LobbyManager : NetworkBehaviour
     public Button btnReady;
     public LobbyPlayerPanel playerPanelPrefab;
     public Button btnSubmitName = null;
+    [SerializeField] public GameObject areYouSurePanel;
+    [SerializeField] public GameObject characterSelected;
+    [SerializeField] public TMP_Text playerNameText;
 
-    
+
     public void Awake() {
         playerPanels = new List<LobbyPlayerPanel>();
         btnSubmitName = GameObject.FindGameObjectWithTag("SubmitButton").GetComponent<Button>();
@@ -44,15 +47,6 @@ public class LobbyManager : NetworkBehaviour
         if (IsHost) {
             NetworkManager.Singleton.OnClientConnectedCallback += HostOnClientConnected;
             btnReady.gameObject.SetActive(false);
-
-            int myIndex = GameData.Instance.FindPlayerIndex(NetworkManager.LocalClientId);
-            Debug.Log(myIndex);
-            if(myIndex != -1) 
-            {
-                PlayerInfo info = GameData.Instance.allPlayers[myIndex];
-                info.isReady = true;
-                GameData.Instance.allPlayers[myIndex] = info;
-            }
         }
 
         if (IsClient && !IsHost) {
@@ -104,12 +98,12 @@ public class LobbyManager : NetworkBehaviour
             }
         }
 
-        btnStart.enabled = readyCount == GameData.Instance.allPlayers.Count;
-        if (btnStart.enabled) {
-            btnStart.GetComponentInChildren<TextMeshProUGUI>().text = "Start";
-        } else {
-            btnStart.GetComponentInChildren<TextMeshProUGUI>().text = "Waiting for Ready";
-        }
+        // btnStart.enabled = readyCount == GameData.Instance.allPlayers.Count;
+        // if (btnStart.enabled) {
+        //     btnStart.GetComponentInChildren<TextMeshProUGUI>().text = "Start";
+        // } else {
+        //     btnStart.GetComponentInChildren<TextMeshProUGUI>().text = "Waiting for Ready";
+        // }
     }
     
     private void ClientOnAllPlayersChanged(NetworkListEvent<PlayerInfo> changeEvent) {
@@ -127,6 +121,41 @@ public class LobbyManager : NetworkBehaviour
 
     private void ClientOnReadyClicked() {
         ToggleReadyServerRpc();
+    }
+    
+    /// <summary>
+    /// POPUP
+    /// </summary>
+    /// <param name="pName"></param>
+    /// <param name="currMesh"></param>
+    public void ActivateAreYouSurePopUp(string pName, int currMesh)
+    {
+        string playerName = pName;
+        areYouSurePanel.SetActive(true);
+        Sprite[] listOfImages = GameData.Instance.spawnedPlayer.GetComponent<Player>().listOfSprites;
+        playerNameText.text = playerName;
+        Sprite selectedChar = listOfImages[currMesh - 1];
+        characterSelected.GetComponent<Image>().sprite = selectedChar;
+        Debug.Log($"{pName} has mesh {currMesh}");
+    }
+
+    public void BackPopUp()
+    {
+        areYouSurePanel.SetActive(false);
+        GameData.Instance.leftSelectorBut.gameObject.SetActive(true);
+        GameData.Instance.rightSelectorBut.gameObject.SetActive(true);
+        GameData.Instance.selectPlayMeshBut.gameObject.SetActive(true);
+    }
+
+    public void ContinueButton()
+    {
+        ContinueButtonValues(GameData.Instance.playerName, GameData.Instance.intOfCurrentMesh);
+    }
+    public void ContinueButtonValues(string pName, int currMesh)
+    {
+        GameObject.Find("AreYouSurePanel").SetActive(false);
+        GameData.Instance.SendPNameServerRpc(pName, currMesh);
+        Debug.Log($"{pName} has mesh {currMesh}");
     }
 
     

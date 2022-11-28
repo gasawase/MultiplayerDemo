@@ -23,15 +23,29 @@ public class PlayerPanelDisplay : NetworkBehaviour
         {
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
-            RefreshPlayerPanels();
         }
     }
+    
 
     private void Awake()
     {
         playerPanels = new List<LobbyPlayerPanel>();
     }
-    
+
+    public override void OnNetworkSpawn()
+    {
+        if (IsHost)
+        {
+            RefreshPlayerPanels();
+            int myIndex = GameData.Instance.FindPlayerIndex(NetworkManager.LocalClientId);
+            if (myIndex != -1)
+            {
+                PlayerInfo info = GameData.Instance.allPlayers[myIndex];
+                displayNameText.text = info.m_PlayerName;
+            }
+        }
+    }
+
     private void AddPlayerPanel(PlayerInfo info) {
         LobbyPlayerPanel newPanel = Instantiate(playerPanelPrefab);
         newPanel.transform.SetParent(playerScrollContent.transform, false);

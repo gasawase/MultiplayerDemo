@@ -13,6 +13,7 @@ public class Player : NetworkBehaviour {
     public NetworkVariable<int> pScore = new NetworkVariable<int>(50);
     public TMP_Text txtScoreDisplay;
     [SerializeField] public Mesh[] listOfMeshes;
+    [SerializeField] public Sprite[] listOfSprites;
     
     private GameManager _gameMgr;
     private Camera _camera;
@@ -21,13 +22,9 @@ public class Player : NetworkBehaviour {
     //private BulletSpawner _bulletSpawner;
     
 
-    private void Start() {
+    private void Awake() {
         //ApplyPlayerColor();
         //PlayerColor.OnValueChanged += OnPlayerColorChanged;
-        SkinnedMeshRenderer skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
-        int myIndex = GameData.Instance.FindPlayerIndex(NetworkManager.LocalClientId);
-        PlayerInfo info = GameData.Instance.allPlayers[myIndex];
-        skinnedMeshRenderer.sharedMesh = listOfMeshes[info.playMeshSelect];
     }
     
     void Update() {

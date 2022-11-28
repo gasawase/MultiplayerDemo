@@ -640,7 +640,7 @@ GameObject:
   - component: {fileID: 4784054746419437310}
   - component: {fileID: 1983207754}
   - component: {fileID: 2141338365032284674}
-  - component: {fileID: 3668177471249933736}
+  - component: {fileID: 3323157037903870574}
   m_Layer: 0
   m_Name: PlayerLobbyScene
   m_TagString: Untagged
@@ -707,7 +707,7 @@ MonoBehaviour:
   ScaleThreshold: 0.01
   InLocalSpace: 0
   Interpolate: 0
---- !u!114 &3668177471249933736
+--- !u!114 &3323157037903870574
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -716,7 +716,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4786539203683795154}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 833f2a13f0224d30a522ecb848c001f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 10b61b656ebe69d4eb701f5ef39cef1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   PositionChange:
@@ -739,6 +739,19 @@ MonoBehaviour:
   - {fileID: 4300044, guid: c9a34c70f1c0d00409f41fcfbb2a6871, type: 3}
   - {fileID: 4300038, guid: c9a34c70f1c0d00409f41fcfbb2a6871, type: 3}
   - {fileID: 4300046, guid: c9a34c70f1c0d00409f41fcfbb2a6871, type: 3}
+  listOfSprites:
+  - {fileID: 21300000, guid: 9d233054a89be3e41a1ef4afb7b27968, type: 3}
+  - {fileID: 21300000, guid: 7b95406e65c33014b95ca9eb932879d7, type: 3}
+  - {fileID: 21300000, guid: 36a226ffb77ac404398710691a840acd, type: 3}
+  - {fileID: 21300000, guid: 01c3093c149e20c4083b71ed41ec97db, type: 3}
+  - {fileID: 21300000, guid: 0b073f229357d644d9901853359925e2, type: 3}
+  - {fileID: 21300000, guid: 677028a924a6aab488ca8317d8cd106c, type: 3}
+  - {fileID: 21300000, guid: 07b97e88f2f3b374fb4eb8c9e3c3f35f, type: 3}
+  - {fileID: 21300000, guid: f26035ee689044d4f81a6c57e0780f8e, type: 3}
+  - {fileID: 21300000, guid: 5362d8a8b12e9ae45946cd2fe1c16045, type: 3}
+  - {fileID: 21300000, guid: 357d373af39fc9f4e8e6757e3fe1ce1d, type: 3}
+  - {fileID: 21300000, guid: a8e74ff3cc2a9ad4c9e9aa0cbb75dfbe, type: 3}
+  - {fileID: 21300000, guid: 6a3a7a8f24be85e4395d643ae0dc9eef, type: 3}
   movementSpeed: 0.5
 --- !u!1 &4786548006347387904
 GameObject:

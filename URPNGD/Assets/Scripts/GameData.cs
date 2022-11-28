@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Mono.CSharp;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
@@ -31,12 +32,16 @@ public class GameData : NetworkBehaviour {
     public Button btnSubmitName = null;
     [SerializeField]public GameObject playerPrefab;
     public GameObject spawnedPlayer = null;
-    private Button rightSelectorBut = null;
-    private Button leftSelectorBut = null;
-    private Button selectPlayMeshBut = null;
+    public Button rightSelectorBut = null;
+    public Button leftSelectorBut = null;
+    public Button selectPlayMeshBut = null;
     private Mesh[] listOfMeshes = null;
+    public Sprite[] listOfImages = null;
     private bool isClicked = true;
-    public int intOfCurrentMesh = 0;
+    public int intOfCurrentMesh = 1;
+    
+    public int idx = 0;
+    public bool found = false;
 
     // --------------------------
     // Initialization
@@ -63,15 +68,10 @@ public class GameData : NetworkBehaviour {
         if (IsHost) {
             NetworkManager.Singleton.OnClientConnectedCallback += HostOnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback += HostOnClientDisconnected;
+            ulong clientId = NetworkManager.LocalClientId;
+            Debug.Log(clientId);
             //AddPlayerToList(NetworkManager.LocalClientId);
-                    SpawnPlayerSelector();
 
-        // rightSelectorBut = GameObject.Find("RightArrow").GetComponent<Button>();
-        // rightSelectorBut.onClick.AddListener(IncreasePlayerMeshNum);
-        // leftSelectorBut = GameObject.Find("LeftArrow").GetComponent<Button>();
-        // leftSelectorBut.onClick.AddListener(DecreasePlayerMeshNum);
-        // selectPlayMeshBut = GameObject.Find("SubmitMesh").GetComponent<Button>();
-        // selectPlayMeshBut.onClick.AddListener(PlayerMeshSelected);
         }
         
     }
@@ -89,20 +89,12 @@ public class GameData : NetworkBehaviour {
         return newColor;
     }
 
-    private int WaitForSelect()
-    {
-        //can this loop while waiting for the player to select something?
-        //or do we just have some variable that's constantly waiting for the player to pick a name and submit a character?
-        return 
-    }
-
 
     // --------------------------
     // Events
     // --------------------------
     private void HostOnClientConnected(ulong clientId) {
         //SendPNameServerRpc(playerName); for when input is/was on login screen
-        //AddPlayerToList(clientId);
     }
 
     private void HostOnClientDisconnected(ulong clientId) {
@@ -118,25 +110,28 @@ public class GameData : NetworkBehaviour {
         playerInputField = GameObject.FindGameObjectWithTag("InputField").GetComponent<TMP_InputField>();
         string inpString = GameObject.FindGameObjectWithTag("InputField").name;
         playerName = playerInputField.text;
-        SendPNameServerRpc(playerName);
+        // SendPNameServerRpc(playerName);
         Debug.Log($"{playerName} is the name from the inpString below");
         Debug.Log($"{inpString} is the name of the input field");
-        // SpawnPlayerSelector();
-        //
-        // rightSelectorBut = GameObject.Find("RightArrow").GetComponent<Button>();
-        // rightSelectorBut.onClick.AddListener(IncreasePlayerMeshNum);
-        // leftSelectorBut = GameObject.Find("LeftArrow").GetComponent<Button>();
-        // leftSelectorBut.onClick.AddListener(DecreasePlayerMeshNum);
-        // selectPlayMeshBut = GameObject.Find("SubmitMesh").GetComponent<Button>();
-        // selectPlayMeshBut.onClick.AddListener(PlayerMeshSelected);
+        
+        //spawns player and activates the spawned player UI
+        SpawnPlayerSelector();
+        
+        rightSelectorBut = GameObject.Find("RightArrow").GetComponent<Button>();
+        rightSelectorBut.onClick.AddListener(IncreasePlayerMeshNum);
+        leftSelectorBut = GameObject.Find("LeftArrow").GetComponent<Button>();
+        leftSelectorBut.onClick.AddListener(DecreasePlayerMeshNum);
+        selectPlayMeshBut = GameObject.Find("SubmitMesh").GetComponent<Button>();
+        selectPlayMeshBut.onClick.AddListener(PlayerMeshSelected);
     }
 
     // --------------------------
     // Public
     // --------------------------
-    public void AddPlayerToList(ulong clientId, string pName) {
+    public void AddPlayerToList(ulong clientId, int currMesh, string pName) {
         
-        allPlayers.Add(new PlayerInfo(clientId, pName,0, NextColor(), false));
+        allPlayers.Add(new PlayerInfo(clientId, pName, (currMesh - 1), NextColor(), false));
+        Debug.Log(allPlayers[0].clientId);
     }
 
     public void AddPlayerNameToDictionary(ulong clientId, string pName)
@@ -158,8 +153,8 @@ public class GameData : NetworkBehaviour {
 
 
     public int FindPlayerIndex(ulong clientId) {
-        var idx = 0;
-        var found = false;
+        // var idx = 0;
+        // var found = false;
 
         while (idx < allPlayers.Count && !found) {
             if (allPlayers[idx].clientId == clientId) {
@@ -226,7 +221,7 @@ public class GameData : NetworkBehaviour {
         {
             leftSelectorBut.gameObject.SetActive(false);
             rightSelectorBut.gameObject.SetActive(false);
-            selectPlayMeshBut.GetComponentInChildren<TMP_Text>().text = "Back";
+            selectPlayMeshBut.gameObject.SetActive(false);
             SkinnedMeshRenderer skinnedMeshRenderer =
                 GameObject.Find("MainPlayerObject").GetComponent<SkinnedMeshRenderer>();
             string currentMeshSelected = skinnedMeshRenderer.sharedMesh.name;
@@ -234,47 +229,54 @@ public class GameData : NetworkBehaviour {
             Debug.Log(intOfCurrentMesh);
             isClicked = false;
         }
-        else
-        {
-            leftSelectorBut.gameObject.SetActive(true);
-            rightSelectorBut.gameObject.SetActive(true);
-            selectPlayMeshBut.GetComponentInChildren<TMP_Text>().text = "Submit";
-            isClicked = true;
-        }
-        // if (isClicked)
-        // {
-        //     leftSelectorBut.gameObject.SetActive(false);
-        //     rightSelectorBut.gameObject.SetActive(false);
-        //     selectPlayMeshBut.GetComponentInChildren<TMP_Text>().text = "Back";
-        //     SkinnedMeshRenderer skinnedMeshRenderer =
-        //         GameObject.Find("MainPlayerObject").GetComponent<SkinnedMeshRenderer>();
-        //     string currentMeshSelected = skinnedMeshRenderer.sharedMesh.name;
-        //     Debug.Log(currentMeshSelected);
-        //     Debug.Log(intOfCurrentMesh);
-        //     isClicked = false;
-        // }
-        // else
-        // {
-        //     leftSelectorBut.gameObject.SetActive(true);
-        //     rightSelectorBut.gameObject.SetActive(true);
-        //     selectPlayMeshBut.GetComponentInChildren<TMP_Text>().text = "Submit";
-        //     isClicked = true;
-        // }
+
+        LobbyManager lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+        lobbyManager.ActivateAreYouSurePopUp(playerName, intOfCurrentMesh);
     }
 
+    // public void ActivateAreYouSurePopUp(string pName, int currMesh)
+    // {
+    //     GameObject areYouSurePanel = GameObject.Find("AreYouSurePanel");
+    //     areYouSurePanel.SetActive(true);
+    //     Sprite[] listOfImages = spawnedPlayer.GetComponent<Player>().listOfSprites;
+    //     GameObject characterSelected = GameObject.Find("CharacterSelected");
+    //     pName = GameObject.Find("PlayerNameText").GetComponent<TMP_Text>().text;
+    //     Sprite selectedChar = listOfImages[currMesh];
+    //     characterSelected.GetComponent<Image>().sprite = selectedChar;
+    //
+    //     Button backButton = GameObject.Find("BackButton").GetComponent<Button>();
+    //     backButton.onClick.AddListener(BackPopUp);
+    //     Button continueButton = GameObject.Find("BackButton").GetComponent<Button>();
+    //     continueButton.onClick.AddListener(ContinueButton);
+    // }
+    //
+    // public void BackPopUp()
+    // {
+    //     GameObject.Find("AreYouSurePanel").SetActive(false);
+    //     leftSelectorBut.gameObject.SetActive(true);
+    //     rightSelectorBut.gameObject.SetActive(true);
+    //     selectPlayMeshBut.gameObject.SetActive(true);
+    // }
+    //
+    // public void ContinueButton()
+    // {
+    //     GameObject.Find("AreYouSurePanel").SetActive(false);
+    //     SendPNameServerRpc(playerName, intOfCurrentMesh);
+    // }
+
     [ServerRpc(RequireOwnership = false)]
-    public void SendPNameServerRpc(string pName, ServerRpcParams serverRpcParams = default)
+    public void SendPNameServerRpc(string pName, int currMesh, ServerRpcParams serverRpcParams = default)
     {
         Debug.Log($"Host got name:  {pName}");
 
-        SendPNameClientRpc(pName, serverRpcParams.Receive.SenderClientId);
+        SendPNameClientRpc(pName, currMesh, serverRpcParams.Receive.SenderClientId);
     }
 
     [ClientRpc]
-    public void SendPNameClientRpc(string pName, ulong clientId, ClientRpcParams clientRpcParams = default)
+    public void SendPNameClientRpc(string pName, int currMesh, ulong clientId, ClientRpcParams clientRpcParams = default)
     {
         Debug.Log("sendPNameClientRpc ran");
         AddPlayerNameToDictionary(clientId, pName);
-        AddPlayerToList(clientId, pName);
+        AddPlayerToList(clientId, currMesh, pName);
     }
 }
