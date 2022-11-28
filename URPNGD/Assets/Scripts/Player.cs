@@ -24,6 +24,10 @@ public class Player : NetworkBehaviour {
     private void Start() {
         //ApplyPlayerColor();
         //PlayerColor.OnValueChanged += OnPlayerColorChanged;
+        SkinnedMeshRenderer skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        int myIndex = GameData.Instance.FindPlayerIndex(NetworkManager.LocalClientId);
+        PlayerInfo info = GameData.Instance.allPlayers[myIndex];
+        skinnedMeshRenderer.sharedMesh = listOfMeshes[info.playMeshSelect];
     }
     
     void Update() {

@@ -5,13 +5,15 @@ using Unity.Collections;
 
 public struct PlayerInfo : INetworkSerializable, System.IEquatable<PlayerInfo> {
     public ulong clientId;
+    public int playMeshSelect;
     public Color color;
     public bool isReady;
     public FixedPlayerName m_PlayerName;
 
-    public PlayerInfo(ulong id, string name, Color c, bool ready=false) {
+    public PlayerInfo(ulong id, string name, int playMesh, Color c, bool ready=false) {
         clientId = id;
         m_PlayerName = new FixedPlayerName();
+        playMeshSelect = playMesh;
         color = c;
         isReady = ready;
 
@@ -27,6 +29,7 @@ public struct PlayerInfo : INetworkSerializable, System.IEquatable<PlayerInfo> {
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter {
         serializer.SerializeValue(ref clientId);
         serializer.SerializeValue(ref m_PlayerName);
+        serializer.SerializeValue(ref playMeshSelect);
         serializer.SerializeValue(ref color);
         serializer.SerializeValue(ref isReady);
     }

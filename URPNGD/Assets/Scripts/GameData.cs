@@ -31,6 +31,11 @@ public class GameData : NetworkBehaviour {
     public Button btnSubmitName = null;
     [SerializeField]public GameObject playerPrefab;
     public GameObject spawnedPlayer = null;
+    private Button rightSelectorBut = null;
+    private Button leftSelectorBut = null;
+    private Button selectPlayMeshBut = null;
+    private Mesh[] listOfMeshes = null;
+    private bool isClicked = true;
     public int intOfCurrentMesh = 0;
 
     // --------------------------
@@ -59,6 +64,14 @@ public class GameData : NetworkBehaviour {
             NetworkManager.Singleton.OnClientConnectedCallback += HostOnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback += HostOnClientDisconnected;
             //AddPlayerToList(NetworkManager.LocalClientId);
+                    SpawnPlayerSelector();
+
+        // rightSelectorBut = GameObject.Find("RightArrow").GetComponent<Button>();
+        // rightSelectorBut.onClick.AddListener(IncreasePlayerMeshNum);
+        // leftSelectorBut = GameObject.Find("LeftArrow").GetComponent<Button>();
+        // leftSelectorBut.onClick.AddListener(DecreasePlayerMeshNum);
+        // selectPlayMeshBut = GameObject.Find("SubmitMesh").GetComponent<Button>();
+        // selectPlayMeshBut.onClick.AddListener(PlayerMeshSelected);
         }
         
     }
@@ -74,6 +87,13 @@ public class GameData : NetworkBehaviour {
             colorIndex = 0;
         }
         return newColor;
+    }
+
+    private int WaitForSelect()
+    {
+        //can this loop while waiting for the player to select something?
+        //or do we just have some variable that's constantly waiting for the player to pick a name and submit a character?
+        return 
     }
 
 
@@ -101,14 +121,14 @@ public class GameData : NetworkBehaviour {
         SendPNameServerRpc(playerName);
         Debug.Log($"{playerName} is the name from the inpString below");
         Debug.Log($"{inpString} is the name of the input field");
-        SpawnPlayerSelector();
-
-        Button rightSelectorBut = GameObject.Find("RightArrow").GetComponent<Button>();
-        rightSelectorBut.onClick.AddListener(IncreasePlayerMeshNum);
-        Button leftSelectorBut = GameObject.Find("LeftArrow").GetComponent<Button>();
-        leftSelectorBut.onClick.AddListener(DecreasePlayerMeshNum);
-        Button selectPlayMeshBut = GameObject.Find("SubmitMesh").GetComponent<Button>();
-        selectPlayMeshBut.onClick.AddListener(PlayerMeshSelected);
+        // SpawnPlayerSelector();
+        //
+        // rightSelectorBut = GameObject.Find("RightArrow").GetComponent<Button>();
+        // rightSelectorBut.onClick.AddListener(IncreasePlayerMeshNum);
+        // leftSelectorBut = GameObject.Find("LeftArrow").GetComponent<Button>();
+        // leftSelectorBut.onClick.AddListener(DecreasePlayerMeshNum);
+        // selectPlayMeshBut = GameObject.Find("SubmitMesh").GetComponent<Button>();
+        // selectPlayMeshBut.onClick.AddListener(PlayerMeshSelected);
     }
 
     // --------------------------
@@ -116,7 +136,7 @@ public class GameData : NetworkBehaviour {
     // --------------------------
     public void AddPlayerToList(ulong clientId, string pName) {
         
-        allPlayers.Add(new PlayerInfo(clientId, pName, NextColor(), false));
+        allPlayers.Add(new PlayerInfo(clientId, pName,0, NextColor(), false));
     }
 
     public void AddPlayerNameToDictionary(ulong clientId, string pName)
@@ -183,7 +203,7 @@ public class GameData : NetworkBehaviour {
     }
     public void DecreasePlayerMeshNum()
     {
-        Mesh[] listOfMeshes = spawnedPlayer.GetComponent<Player>().listOfMeshes;
+        listOfMeshes = spawnedPlayer.GetComponent<Player>().listOfMeshes;
         SkinnedMeshRenderer skinnedMeshRenderer =
             GameObject.Find("MainPlayerObject").GetComponent<SkinnedMeshRenderer>();
         int lengthOfArray = listOfMeshes.Length; //number of objects in the array
@@ -201,8 +221,45 @@ public class GameData : NetworkBehaviour {
     }
 
     public void PlayerMeshSelected()
-    {
-        
+    {       
+        if (isClicked)
+        {
+            leftSelectorBut.gameObject.SetActive(false);
+            rightSelectorBut.gameObject.SetActive(false);
+            selectPlayMeshBut.GetComponentInChildren<TMP_Text>().text = "Back";
+            SkinnedMeshRenderer skinnedMeshRenderer =
+                GameObject.Find("MainPlayerObject").GetComponent<SkinnedMeshRenderer>();
+            string currentMeshSelected = skinnedMeshRenderer.sharedMesh.name;
+            Debug.Log(currentMeshSelected);
+            Debug.Log(intOfCurrentMesh);
+            isClicked = false;
+        }
+        else
+        {
+            leftSelectorBut.gameObject.SetActive(true);
+            rightSelectorBut.gameObject.SetActive(true);
+            selectPlayMeshBut.GetComponentInChildren<TMP_Text>().text = "Submit";
+            isClicked = true;
+        }
+        // if (isClicked)
+        // {
+        //     leftSelectorBut.gameObject.SetActive(false);
+        //     rightSelectorBut.gameObject.SetActive(false);
+        //     selectPlayMeshBut.GetComponentInChildren<TMP_Text>().text = "Back";
+        //     SkinnedMeshRenderer skinnedMeshRenderer =
+        //         GameObject.Find("MainPlayerObject").GetComponent<SkinnedMeshRenderer>();
+        //     string currentMeshSelected = skinnedMeshRenderer.sharedMesh.name;
+        //     Debug.Log(currentMeshSelected);
+        //     Debug.Log(intOfCurrentMesh);
+        //     isClicked = false;
+        // }
+        // else
+        // {
+        //     leftSelectorBut.gameObject.SetActive(true);
+        //     rightSelectorBut.gameObject.SetActive(true);
+        //     selectPlayMeshBut.GetComponentInChildren<TMP_Text>().text = "Submit";
+        //     isClicked = true;
+        // }
     }
 
     [ServerRpc(RequireOwnership = false)]
