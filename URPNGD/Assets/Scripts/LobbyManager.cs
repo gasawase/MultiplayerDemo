@@ -154,7 +154,7 @@ public class LobbyManager : NetworkBehaviour
     public void ContinueButtonValues(string pName, int currMesh)
     {
         GameObject.Find("AreYouSurePanel").SetActive(false);
-        GameData.Instance.SendPNameServerRpc(pName, currMesh);
+        //GameData.Instance.SendPNameServerRpc(pName, currMesh);
         Debug.Log($"{pName} has mesh {currMesh}");
     }
 

@@ -69,7 +69,13 @@ public class PlayerPanelDisplay : NetworkBehaviour
     ////////HANDLES/////////
     private void OnClientConnected(ulong clientId)
     {
-        
+        RefreshPlayerPanels();
+        int myIndex = GameData.Instance.FindPlayerIndex(NetworkManager.LocalClientId);
+        if (myIndex != -1)
+        {
+            PlayerInfo info = GameData.Instance.allPlayers[myIndex];
+            displayNameText.text = info.m_PlayerName;
+        }
     }
 
     private void OnClientDisconnected(ulong clientId)

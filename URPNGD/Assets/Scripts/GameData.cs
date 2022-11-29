@@ -112,7 +112,7 @@ public class GameData : NetworkBehaviour {
         playerName = playerInputField.text;
         // SendPNameServerRpc(playerName);
         Debug.Log($"{playerName} is the name from the inpString below");
-        Debug.Log($"{inpString} is the name of the input field");
+
         
         //spawns player and activates the spawned player UI
         SpawnPlayerSelector();
@@ -128,13 +128,13 @@ public class GameData : NetworkBehaviour {
     // --------------------------
     // Public
     // --------------------------
-    public void AddPlayerToList(ulong clientId, int currMesh, string pName) {
-        
+    public void AddPlayerToList(ulong clientId, int currMesh, string pName)
+    {
+        Debug.Log($"From AddPlayerToList{clientId} <- client id {pName} <- name");
         allPlayers.Add(new PlayerInfo(clientId, pName, (currMesh - 1), NextColor(), false));
-        Debug.Log(allPlayers[0].clientId);
     }
 
-    public void AddPlayerNameToDictionary(ulong clientId, string pName)
+    public void AddPlayerNameToDictionary(ulong clientId, string pName, int currMesh)
     {
         if (dictPNames.ContainsKey(clientId))
         {
@@ -148,6 +148,11 @@ public class GameData : NetworkBehaviour {
             }
         }
         Debug.Log($"{clientId} has name {pName}");
+        if (IsHost)
+        {
+            AddPlayerToList(clientId, currMesh, pName);
+        }
+        
 
     }
 
@@ -229,9 +234,11 @@ public class GameData : NetworkBehaviour {
             Debug.Log(intOfCurrentMesh);
             isClicked = false;
         }
+        
+        SendPNameServerRpc(playerName, intOfCurrentMesh);
 
-        LobbyManager lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
-        lobbyManager.ActivateAreYouSurePopUp(playerName, intOfCurrentMesh);
+        //LobbyManager lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+        //lobbyManager.ActivateAreYouSurePopUp(playerName, intOfCurrentMesh);
     }
 
     // public void ActivateAreYouSurePopUp(string pName, int currMesh)
@@ -276,7 +283,7 @@ public class GameData : NetworkBehaviour {
     public void SendPNameClientRpc(string pName, int currMesh, ulong clientId, ClientRpcParams clientRpcParams = default)
     {
         Debug.Log("sendPNameClientRpc ran");
-        AddPlayerNameToDictionary(clientId, pName);
-        AddPlayerToList(clientId, currMesh, pName);
+        AddPlayerNameToDictionary(clientId, pName, currMesh);
+        //AddPlayerToList(clientId, currMesh, pName);
     }
 }
