@@ -4315,6 +4315,11 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 2183481089
       objectReference: {fileID: 0}
+    - target: {fileID: 2012477535803910226, guid: 5115b3eecf2a94e4aa73cf41192ac727,
+        type: 3}
+      propertyPath: DontDestroyWithOwner
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2012477535803910228, guid: 5115b3eecf2a94e4aa73cf41192ac727,
         type: 3}
       propertyPath: m_Name

@@ -10,10 +10,12 @@ public class Player : NetworkBehaviour {
     public NetworkVariable<Vector3> PositionChange = new NetworkVariable<Vector3>();
     public NetworkVariable<Vector3> RotationChange = new NetworkVariable<Vector3>();
     //public NetworkVariable<Color> PlayerColor = new NetworkVariable<Color>(Color.red);
+    public NetworkVariable<int> PlayerMeshInt = new NetworkVariable<int>();
     public NetworkVariable<int> pScore = new NetworkVariable<int>(50);
     public TMP_Text txtScoreDisplay;
     [SerializeField] public Mesh[] listOfMeshes;
     [SerializeField] public Sprite[] listOfSprites;
+    [SerializeField] public GameObject meshHolder;
     
     private GameManager _gameMgr;
     private Camera _camera;
@@ -21,11 +23,6 @@ public class Player : NetworkBehaviour {
     private float rotationSpeed = 1f;
     //private BulletSpawner _bulletSpawner;
     
-
-    private void Awake() {
-        //ApplyPlayerColor();
-        //PlayerColor.OnValueChanged += OnPlayerColorChanged;
-    }
     
     void Update() {
         if (IsOwner) {
@@ -45,12 +42,6 @@ public class Player : NetworkBehaviour {
     public override void OnNetworkSpawn() {
         _camera = transform.Find("Camera").GetComponent<Camera>();
         _camera.enabled = IsOwner;
-        SkinnedMeshRenderer skinnedMeshRenderer =
-            GameObject.Find("MainPlayerObject").GetComponent<SkinnedMeshRenderer>();
-        skinnedMeshRenderer.sharedMesh =
-            listOfMeshes[GameData.Instance.allPlayers[GameData.Instance.FindPlayerIndex(NetworkManager.LocalClientId)].playMeshSelect];
-
-
         //pScore.OnValueChanged += ClientOnScoreChanged;
         //Make a more effecient way to find the spawner. Player>PlayerMeshes>Root>Hips>Spine_01>Spine_02>Spine_03>Clavicle_R>Shoulder_R>Elbow_R>Hand_R>ItemSpawningLocation
         //_bulletSpawner = transform.Find("RArm").transform.Find("BulletSpawner").GetComponent<BulletSpawner>();
@@ -134,7 +125,6 @@ public class Player : NetworkBehaviour {
     //     //transform.Find("LArm").GetComponent<MeshRenderer>().material.color = PlayerColor.Value;
     //     transform.Find("RArm").GetComponent<MeshRenderer>().material.color = PlayerColor.Value;
     // }
-
 
     // horiz changes y rotation or x movement if shift down, vertical moves forward and back.
     private Vector3[] CalcMovement() {

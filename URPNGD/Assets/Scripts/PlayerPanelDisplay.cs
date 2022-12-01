@@ -37,7 +37,8 @@ public class PlayerPanelDisplay : NetworkBehaviour
         if (IsHost)
         {
             RefreshPlayerPanels();
-            int myIndex = GameData.Instance.FindPlayerIndex(NetworkManager.LocalClientId);
+            int myIndex = Convert.ToInt32(NetworkManager.LocalClientId);
+            //int myIndex = GameData.Instance.FindPlayerIndex(NetworkManager.LocalClientId);
             if (myIndex != -1)
             {
                 PlayerInfo info = GameData.Instance.allPlayers[myIndex];
@@ -69,8 +70,9 @@ public class PlayerPanelDisplay : NetworkBehaviour
     ////////HANDLES/////////
     private void OnClientConnected(ulong clientId)
     {
+        Debug.Log($"Client Connected {clientId}");
         RefreshPlayerPanels();
-        int myIndex = GameData.Instance.FindPlayerIndex(NetworkManager.LocalClientId);
+        int myIndex = Convert.ToInt32(NetworkManager.LocalClientId);
         if (myIndex != -1)
         {
             PlayerInfo info = GameData.Instance.allPlayers[myIndex];

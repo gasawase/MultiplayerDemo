@@ -87,7 +87,7 @@ public class LobbyManager : NetworkBehaviour
     {
         var scene = NetworkManager.SceneManager.LoadScene("Arena1", LoadSceneMode.Single);
         btnStart.enabled = false;
-        
+
     }
 
     private void EnableStartIfAllReady() {

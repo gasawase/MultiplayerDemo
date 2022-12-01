@@ -18,9 +18,9 @@ public class GameManager : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if (IsHost)
+        if (IsOwner)
         {
-            SpawnPlayers();
+            SpawnPlayerServerRpc();
         }
     }
     
@@ -56,8 +56,22 @@ public class GameManager : NetworkBehaviour
         {
             Player playerSpawn = Instantiate(playerPrefab, GetNextSpawnLocation(), Quaternion.identity);
             playerSpawn.GetComponent<NetworkObject>().SpawnAsPlayerObject(pi.clientId);
+            Debug.Log($"PLAYER INFO || clientId = {pi.clientId} ; PlayerName = {pi.PlayerName} ; CurrentMesh = {pi.playMeshSelect}");
+            playerSpawn.PlayerMeshInt.Value = pi.playMeshSelect;
             //playerSpawn.PlayerColor.Value = pi.color;
-            Debug.Log(pi.clientId);
         }
     }
+    
+    
+    [ServerRpc(RequireOwnership = false)]
+    public void SpawnPlayerServerRpc(ServerRpcParams serverRpcParams = default) //ask server to send info from this script to the client?
+    {
+        SpawnPlayers();
+    }
+
+    // [ClientRpc]
+    // public void SpawnPlayersClientRpc(ClientRpcParams clientRpcParams = default)
+    // {
+    //     SpawnPlayers();
+    // }
 }

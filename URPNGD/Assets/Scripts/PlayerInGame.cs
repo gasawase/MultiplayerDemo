@@ -1,21 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class PlayerInGame : Player
 {
-    // Start is called before the first frame update
-    void Awake()
+    private void Start() {
+        ApplyPlayerMesh();
+        PlayerMeshInt.OnValueChanged += OnPlayerMeshChanged;
+    }
+    
+    public void ApplyPlayerMesh()
     {
-        SkinnedMeshRenderer skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
-        int myIndex = GameData.Instance.FindPlayerIndex(NetworkManager.LocalClientId);
-        PlayerInfo info = GameData.Instance.allPlayers[myIndex];
-        skinnedMeshRenderer.sharedMesh = listOfMeshes[info.playMeshSelect];
+        meshHolder.GetComponent<SkinnedMeshRenderer>().sharedMesh = listOfMeshes[PlayerMeshInt.Value];
+    }
+    
+    public void OnPlayerMeshChanged(int previous, int current)
+    {
+        ApplyPlayerMesh();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

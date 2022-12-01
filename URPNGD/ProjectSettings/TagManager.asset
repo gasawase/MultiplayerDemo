@@ -6,6 +6,7 @@ TagManager:
   tags:
   - InputField
   - SubmitButton
+  - PlayerPanel
   layers:
   - Default
   - TransparentFX
