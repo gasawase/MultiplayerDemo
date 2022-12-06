@@ -221,3 +221,37 @@ AssetImportParameters requested are different than current active one (requested
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 1861.694520 seconds.
+  path: Assets/Animations/BigRig/Mutant Dying.fbx
+  artifactKey: Guid(096b5436abed41245b965bb35f3d3d93) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BigRig/Mutant Dying.fbx using Guid(096b5436abed41245b965bb35f3d3d93) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '11bdf7f02c728ca31947d819b546a0d6') in 0.094483 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000033 seconds.
+  path: Assets/Animations/BigRig/Mutant Run.fbx
+  artifactKey: Guid(07df2e2a0e30f9048ad7447df61d3e6f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BigRig/Mutant Run.fbx using Guid(07df2e2a0e30f9048ad7447df61d3e6f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '72695e7d1016e7a189fd2dbd5f0b4b59') in 0.005732 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000028 seconds.
+  path: Assets/Animations/BigRig/Mutant Jump Attack.fbx
+  artifactKey: Guid(1d46e3d9ae83d7c40b052dee663ef421) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BigRig/Mutant Jump Attack.fbx using Guid(1d46e3d9ae83d7c40b052dee663ef421) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cf0a43eda1ed8594af734894dccc827e') in 0.008182 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 17.982668 seconds.
+  path: Assets/Animations/NakedRig/Standing Idle.fbx
+  artifactKey: Guid(62a33a42ecc2b224abe325750ec03698) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/NakedRig/Standing Idle.fbx using Guid(62a33a42ecc2b224abe325750ec03698) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '475b3c395b59775340235988650fb780') in 0.005858 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 11.062030 seconds.
+  path: Assets/Animations/NakedRig/Sword And Shield Idle.fbx
+  artifactKey: Guid(96672cd34c1e5c14c8f0f065dabbc5bb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/NakedRig/Sword And Shield Idle.fbx using Guid(96672cd34c1e5c14c8f0f065dabbc5bb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7b521e8e3047a8bc3a983c7d7269959d') in 0.005716 seconds 
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0
