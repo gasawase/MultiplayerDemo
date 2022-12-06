@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\NetworkNameState.cs" />
+     <Compile Include="Assets\Scripts\PlayerInGame.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\Main.cs" />
      <Compile Include="Assets\Scripts\PlayerInfo.cs" />
@@ -58,7 +59,6 @@
      <Compile Include="Assets\Troubleshooting\Scripts\TroubleshootingMainMenu.cs" />
      <Compile Include="Assets\ParrelSync\Examples\CustomArgumentExample.cs" />
      <Compile Include="Assets\Scripts\PlayerLobby.cs" />
-     <Compile Include="Assets\Scripts\PlayerInGame.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
