@@ -16,9 +16,10 @@ public class Player : NetworkBehaviour {
     [SerializeField] public Mesh[] listOfMeshes;
     [SerializeField] public Sprite[] listOfSprites;
     [SerializeField] public GameObject meshHolder;
+    [SerializeField] public GameObject _camera;
     
     private GameManager _gameMgr;
-    private Camera _camera;
+    //private Camera _camera;
     public float movementSpeed = .5f;
     private float rotationSpeed = 1f;
     //private BulletSpawner _bulletSpawner;
@@ -40,8 +41,22 @@ public class Player : NetworkBehaviour {
     }
 
     public override void OnNetworkSpawn() {
-        _camera = transform.Find("Camera").GetComponent<Camera>();
-        _camera.enabled = IsOwner;
+        // if (!IsOwner)
+        // {
+        //     _camera.GetComponent<Camera>().enabled = true;
+        //     Debug.Log("Inside if");
+        //     
+        // }
+        // Debug.Log("outside if");
+        _camera.GetComponent<Camera>().enabled = IsOwner;
+
+
+        // _camera = transform.Find("Camera").GetComponent<Camera>();
+        // _camera.enabled = IsOwner;
+        // if (IsOwner)
+        // {
+        //     _camera.enabled = true;
+        // }
         //pScore.OnValueChanged += ClientOnScoreChanged;
         //Make a more effecient way to find the spawner. Player>PlayerMeshes>Root>Hips>Spine_01>Spine_02>Spine_03>Clavicle_R>Shoulder_R>Elbow_R>Hand_R>ItemSpawningLocation
         //_bulletSpawner = transform.Find("RArm").transform.Find("BulletSpawner").GetComponent<BulletSpawner>();

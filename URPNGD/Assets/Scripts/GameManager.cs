@@ -9,6 +9,7 @@ public class GameManager : NetworkBehaviour
     [SerializeField] public GameObject spawnPoints;
 
     private int spawnIndex = 0;
+    private Camera _camera;
     private List<Vector3> availSpawnPos = new List<Vector3>();
 
     private void Awake()
@@ -20,7 +21,8 @@ public class GameManager : NetworkBehaviour
     {
         if (IsOwner)
         {
-            SpawnPlayerServerRpc();
+            //SpawnPlayerServerRpc();
+            SpawnPlayers();
         }
     }
     
@@ -56,6 +58,7 @@ public class GameManager : NetworkBehaviour
         {
             Player playerSpawn = Instantiate(playerPrefab, GetNextSpawnLocation(), Quaternion.identity);
             playerSpawn.GetComponent<NetworkObject>().SpawnAsPlayerObject(pi.clientId);
+            //playerSpawn.GetComponent<NetworkObject>().SpawnWithOwnership(pi.clientId);
             Debug.Log($"PLAYER INFO || clientId = {pi.clientId} ; PlayerName = {pi.PlayerName} ; CurrentMesh = {pi.playMeshSelect}");
             playerSpawn.PlayerMeshInt.Value = pi.playMeshSelect;
             //playerSpawn.PlayerColor.Value = pi.color;
