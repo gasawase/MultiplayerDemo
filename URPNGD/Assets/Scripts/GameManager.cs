@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -61,6 +62,12 @@ public class GameManager : NetworkBehaviour
             //playerSpawn.GetComponent<NetworkObject>().SpawnWithOwnership(pi.clientId);
             Debug.Log($"PLAYER INFO || clientId = {pi.clientId} ; PlayerName = {pi.PlayerName} ; CurrentMesh = {pi.playMeshSelect}");
             playerSpawn.PlayerMeshInt.Value = pi.playMeshSelect;
+           
+            ulong[] singleTarget = new ulong[1];
+            singleTarget[0] = pi.clientId;
+            ClientRpcParams rpcParams = default;
+            rpcParams.Send.TargetClientIds = singleTarget;
+            RecievePlayerNameClientRpc(pi.m_PlayerName, rpcParams);
             //playerSpawn.PlayerColor.Value = pi.color;
         }
     }
@@ -72,9 +79,9 @@ public class GameManager : NetworkBehaviour
         SpawnPlayers();
     }
 
-    // [ClientRpc]
-    // public void SpawnPlayersClientRpc(ClientRpcParams clientRpcParams = default)
-    // {
-    //     SpawnPlayers();
-    // }
+    [ClientRpc]
+    public void RecievePlayerNameClientRpc(string pName, ClientRpcParams clientRpcParams = default)
+    {
+        GameObject.Find("PlayerName").GetComponent<TMP_Text>().text = pName;
+    }
 }

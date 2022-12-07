@@ -17,46 +17,54 @@ public class Player : NetworkBehaviour {
     [SerializeField] public Sprite[] listOfSprites;
     [SerializeField] public GameObject meshHolder;
     [SerializeField] public GameObject _camera;
+    [SerializeField] public TMP_Text playerNameTxt;
+    [SerializeField] public CharacterController mpCharController;
     
     private GameManager _gameMgr;
     //private Camera _camera;
-    public float movementSpeed = .5f;
-    private float rotationSpeed = 1f;
+    public float movementSpeed = 5f;
+    private float rotationSpeed = 5f;
+    //private CharacterController mpCharController;
     //private BulletSpawner _bulletSpawner;
-    
-    
-    void Update() {
-        if (IsOwner) {
-            Vector3[] results = CalcMovement();
-            RequestPositionForMovementServerRpc(results[0], results[1]);
-            // if (Input.GetButtonDown("Fire1")) {
-            //     _bulletSpawner.FireServerRpc();
-            // }
-        }
 
-        if(!IsOwner || IsHost){
-            transform.Translate(PositionChange.Value);
-            transform.Rotate(RotationChange.Value);
+    private void Start()
+    {
+        //mpCharController = GetComponent<CharacterController>();
+    }
+
+    void Update() {
+        // if (IsOwner) {
+        //     Vector3[] results = CalcMovement();
+        //     RequestPositionForMovementServerRpc(results[0], results[1]);
+        //     // if (Input.GetButtonDown("Fire1")) {
+        //     //     _bulletSpawner.FireServerRpc();
+        //     // }
+        // }
+        //
+        // if(!IsOwner || IsHost){
+        //     transform.Translate(PositionChange.Value);
+        //     transform.Rotate(RotationChange.Value);
+        // }
+        if (IsOwner)
+        {
+            MovePlayer();
+            //mpCharController.SimpleMove(moveVect * movementSpeed); // get data here from rpc?
         }
     }
 
+    void MovePlayer()
+    {
+        transform.Rotate(0, Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime, 0);
+        Vector3 moveVect = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        mpCharController.SimpleMove(moveVect * movementSpeed);
+        Debug.Log(moveVect);
+        Debug.Log(mpCharController.SimpleMove(moveVect * movementSpeed));
+        
+    }
+
     public override void OnNetworkSpawn() {
-        // if (!IsOwner)
-        // {
-        //     _camera.GetComponent<Camera>().enabled = true;
-        //     Debug.Log("Inside if");
-        //     
-        // }
-        // Debug.Log("outside if");
         _camera.GetComponent<Camera>().enabled = IsOwner;
-
-
-        // _camera = transform.Find("Camera").GetComponent<Camera>();
-        // _camera.enabled = IsOwner;
-        // if (IsOwner)
-        // {
-        //     _camera.enabled = true;
-        // }
+        mpCharController.enabled = IsOwner;
         //pScore.OnValueChanged += ClientOnScoreChanged;
         //Make a more effecient way to find the spawner. Player>PlayerMeshes>Root>Hips>Spine_01>Spine_02>Spine_03>Clavicle_R>Shoulder_R>Elbow_R>Hand_R>ItemSpawningLocation
         //_bulletSpawner = transform.Find("RArm").transform.Find("BulletSpawner").GetComponent<BulletSpawner>();

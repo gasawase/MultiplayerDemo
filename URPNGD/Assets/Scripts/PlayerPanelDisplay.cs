@@ -19,32 +19,32 @@ public class PlayerPanelDisplay : NetworkBehaviour
     private void Start()
     {
         //spawn playerHud
-        if (IsHost)
-        {
-            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-            NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
-        }
+        // if (IsHost)
+        // {
+        //     NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+        //     NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+        // }
     }
     
 
     private void Awake()
     {
-        playerPanels = new List<LobbyPlayerPanel>();
+        //playerPanels = new List<LobbyPlayerPanel>();
     }
 
     public override void OnNetworkSpawn()
     {
-        if (IsHost)
-        {
-            RefreshPlayerPanels();
-            int myIndex = Convert.ToInt32(NetworkManager.LocalClientId);
-            //int myIndex = GameData.Instance.FindPlayerIndex(NetworkManager.LocalClientId);
-            if (myIndex != -1)
-            {
-                PlayerInfo info = GameData.Instance.allPlayers[myIndex];
-                displayNameText.text = info.m_PlayerName;
-            }
-        }
+        // if (IsHost)
+        // {
+        //     RefreshPlayerPanels();
+        //     int myIndex = Convert.ToInt32(NetworkManager.LocalClientId);
+        //     //int myIndex = GameData.Instance.FindPlayerIndex(NetworkManager.LocalClientId);
+        //     if (myIndex != -1)
+        //     {
+        //         PlayerInfo info = GameData.Instance.allPlayers[myIndex];
+        //         displayNameText.text = info.m_PlayerName;
+        //     }
+        // }
     }
 
     private void AddPlayerPanel(PlayerInfo info) {
