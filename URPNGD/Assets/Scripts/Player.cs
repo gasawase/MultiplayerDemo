@@ -105,6 +105,7 @@ public class Player : NetworkBehaviour {
         WeaponManager weaponScript = collision.gameObject.GetComponent<WeaponManager>();
         // get the current weapon that is active
         Debug.Log(weaponScript.weaponName);
+        collision.GetComponent<NetworkObject>().Despawn();
     }
     
     // private void ClientOnScoreChanged(int previous, int current)
