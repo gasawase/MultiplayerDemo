@@ -1,4 +1,5 @@
 ﻿using System;
+using Cinemachine;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
@@ -16,9 +17,10 @@ public class Player : NetworkBehaviour {
     [SerializeField] public Mesh[] listOfMeshes;
     [SerializeField] public Sprite[] listOfSprites;
     [SerializeField] public GameObject meshHolder;
-    [SerializeField] public GameObject _camera;
+    [SerializeField] public GameObject cameraGameObject;
+    [SerializeField] public CinemachineVirtualCamera cinemachineVirtualCamera;
     [SerializeField] public TMP_Text playerNameTxt;
-    [SerializeField] public CharacterController mpCharController;
+    //[SerializeField] public CharacterController mpCharController;
     
     private GameManager _gameMgr;
     //private Camera _camera;
@@ -47,7 +49,7 @@ public class Player : NetworkBehaviour {
         // }
         if (IsOwner)
         {
-            MovePlayer();
+            //MovePlayer();
             //mpCharController.SimpleMove(moveVect * movementSpeed); // get data here from rpc?
         }
     }
@@ -56,15 +58,15 @@ public class Player : NetworkBehaviour {
     {
         transform.Rotate(0, Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime, 0);
         Vector3 moveVect = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        mpCharController.SimpleMove(moveVect * movementSpeed);
+       //mpCharController.SimpleMove(moveVect * movementSpeed);
         Debug.Log(moveVect);
-        Debug.Log(mpCharController.SimpleMove(moveVect * movementSpeed));
+        //Debug.Log(mpCharController.SimpleMove(moveVect * movementSpeed));
         
     }
 
     public override void OnNetworkSpawn() {
-        _camera.GetComponent<Camera>().enabled = IsOwner;
-        mpCharController.enabled = IsOwner;
+        cameraGameObject.GetComponent<Camera>().enabled = IsOwner;
+        cinemachineVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = IsOwner;
         //pScore.OnValueChanged += ClientOnScoreChanged;
         //Make a more effecient way to find the spawner. Player>PlayerMeshes>Root>Hips>Spine_01>Spine_02>Spine_03>Clavicle_R>Shoulder_R>Elbow_R>Hand_R>ItemSpawningLocation
         //_bulletSpawner = transform.Find("RArm").transform.Find("BulletSpawner").GetComponent<BulletSpawner>();
@@ -97,6 +99,13 @@ public class Player : NetworkBehaviour {
         // }
 
     }
+
+    private void HostHandleWeaponPickup(Collider collision)
+    {
+        WeaponManager weaponScript = collision.gameObject.GetComponent<WeaponManager>();
+        // get the current weapon that is active
+        Debug.Log(weaponScript.weaponName);
+    }
     
     // private void ClientOnScoreChanged(int previous, int current)
     // {
@@ -123,6 +132,12 @@ public class Player : NetworkBehaviour {
             {
                 HostHandleDamageBoostPickup(collision);
             }
+
+            if (collision.gameObject.CompareTag("Weapon"))
+            {
+                //TODO in the code it will run a switch case or something to handle to weapon and which is enabled
+                HostHandleWeaponPickup(collision);
+            }
         }
     }
 
@@ -139,15 +154,6 @@ public class Player : NetworkBehaviour {
     {
         pScore.Value = value;
     }
-    // public void OnPlayerColorChanged(Color previous, Color current) {
-    //     ApplyPlayerColor();
-    // }
-
-    // public void ApplyPlayerColor() {
-    //     GetComponent<MeshRenderer>().material.color = PlayerColor.Value;
-    //     //transform.Find("LArm").GetComponent<MeshRenderer>().material.color = PlayerColor.Value;
-    //     transform.Find("RArm").GetComponent<MeshRenderer>().material.color = PlayerColor.Value;
-    // }
 
     // horiz changes y rotation or x movement if shift down, vertical moves forward and back.
     private Vector3[] CalcMovement() {

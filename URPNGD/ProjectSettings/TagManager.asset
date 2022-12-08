@@ -8,6 +8,8 @@ TagManager:
   - SubmitButton
   - PlayerPanel
   - PlayerName
+  - CinemachineTarget
+  - Weapon
   layers:
   - Default
   - TransparentFX

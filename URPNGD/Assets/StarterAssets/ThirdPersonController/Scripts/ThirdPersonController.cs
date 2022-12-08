@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using Cinemachine;
+using Mono.CSharp;
+using Unity.Netcode;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -12,7 +15,7 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
     [RequireComponent(typeof(PlayerInput))]
 #endif
-    public class ThirdPersonController : MonoBehaviour
+    public class ThirdPersonController : NetworkBehaviour
     {
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
@@ -105,6 +108,7 @@ namespace StarterAssets
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
+        private CinemachineVirtualCamera _cinemachineVirtualCamera;
 
         private const float _threshold = 0.01f;
 
@@ -125,10 +129,18 @@ namespace StarterAssets
 
         private void Awake()
         {
+            Player playerScript = GetComponent<Player>();
             // get a reference to our main camera
             if (_mainCamera == null)
             {
-                _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+                //_mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+                _mainCamera = playerScript.cameraGameObject;
+
+            }
+
+            if (_cinemachineVirtualCamera == null)
+            {
+                _cinemachineVirtualCamera = playerScript.cinemachineVirtualCamera;
             }
         }
 
@@ -139,11 +151,6 @@ namespace StarterAssets
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
-            _playerInput = GetComponent<PlayerInput>();
-#else
-			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
-#endif
 
             AssignAnimationIDs();
 
@@ -152,13 +159,28 @@ namespace StarterAssets
             _fallTimeoutDelta = FallTimeout;
         }
 
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+            if (IsClient && IsOwner)
+            {
+                _playerInput = GetComponent<PlayerInput>();
+                _playerInput.enabled = true;
+                _cinemachineVirtualCamera.Follow = transform;
+            }
+        }
+
         private void Update()
         {
-            _hasAnimator = TryGetComponent(out _animator);
+            if (IsOwner)
+            {
+                _hasAnimator = TryGetComponent(out _animator);
+    
+                JumpAndGravity();
+                GroundedCheck();
+                Move();
+            }
 
-            JumpAndGravity();
-            GroundedCheck();
-            Move();
         }
 
         private void LateUpdate()
