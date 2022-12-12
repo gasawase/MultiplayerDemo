@@ -4,7 +4,7 @@ using Unity.Netcode;
 using UnityEngine.Serialization;
 using Unity.Collections;
 
-public class WeaponInfo
+public class WeaponInfo : MonoBehaviour
 {
     [SerializeField] private int damageNum;
     [SerializeField] private GameObject weaponModel;

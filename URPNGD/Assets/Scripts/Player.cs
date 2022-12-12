@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Cinemachine;
 using TMPro;
 using Unity.Netcode;
@@ -6,16 +7,19 @@ using UnityEngine;
 
 
 public class Player : NetworkBehaviour {
-
-
     public NetworkVariable<Vector3> PositionChange = new NetworkVariable<Vector3>();
     public NetworkVariable<Vector3> RotationChange = new NetworkVariable<Vector3>();
     //public NetworkVariable<Color> PlayerColor = new NetworkVariable<Color>(Color.red);
     public NetworkVariable<int> PlayerMeshInt = new NetworkVariable<int>();
     public NetworkVariable<int> pScore = new NetworkVariable<int>(50);
+    public NetworkVariable<int> weaponArrLoc = new NetworkVariable<int>();
+
+    //public NetworkVariable<int> weaponObjArray = new NetworkVariable<int>();
+
     public TMP_Text txtScoreDisplay;
     [SerializeField] public Mesh[] listOfMeshes;
     [SerializeField] public Sprite[] listOfSprites;
+    [SerializeField] public GameObject[] listOfWeapons;
     [SerializeField] public GameObject meshHolder;
     [SerializeField] public GameObject cameraGameObject;
     [SerializeField] public CinemachineVirtualCamera cinemachineVirtualCamera;
@@ -23,46 +27,8 @@ public class Player : NetworkBehaviour {
     //[SerializeField] public CharacterController mpCharController;
     
     private GameManager _gameMgr;
-    //private Camera _camera;
-    public float movementSpeed = 5f;
-    private float rotationSpeed = 5f;
     //private CharacterController mpCharController;
     //private BulletSpawner _bulletSpawner;
-
-    private void Start()
-    {
-        //mpCharController = GetComponent<CharacterController>();
-    }
-
-    void Update() {
-        // if (IsOwner) {
-        //     Vector3[] results = CalcMovement();
-        //     RequestPositionForMovementServerRpc(results[0], results[1]);
-        //     // if (Input.GetButtonDown("Fire1")) {
-        //     //     _bulletSpawner.FireServerRpc();
-        //     // }
-        // }
-        //
-        // if(!IsOwner || IsHost){
-        //     transform.Translate(PositionChange.Value);
-        //     transform.Rotate(RotationChange.Value);
-        // }
-        if (IsOwner)
-        {
-            //MovePlayer();
-            //mpCharController.SimpleMove(moveVect * movementSpeed); // get data here from rpc?
-        }
-    }
-
-    void MovePlayer()
-    {
-        transform.Rotate(0, Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime, 0);
-        Vector3 moveVect = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-       //mpCharController.SimpleMove(moveVect * movementSpeed);
-        Debug.Log(moveVect);
-        //Debug.Log(mpCharController.SimpleMove(moveVect * movementSpeed));
-        
-    }
 
     public override void OnNetworkSpawn() {
         cameraGameObject.GetComponent<Camera>().enabled = IsOwner;
@@ -100,14 +66,6 @@ public class Player : NetworkBehaviour {
 
     }
 
-    private void HostHandleWeaponPickup(Collider collision)
-    {
-        WeaponManager weaponScript = collision.gameObject.GetComponent<WeaponManager>();
-        // get the current weapon that is active
-        Debug.Log(weaponScript.weaponName);
-        collision.GetComponent<NetworkObject>().Despawn();
-    }
-    
     // private void ClientOnScoreChanged(int previous, int current)
     // {
     //     DisplayScore();
@@ -136,10 +94,17 @@ public class Player : NetworkBehaviour {
 
             if (collision.gameObject.CompareTag("Weapon"))
             {
-                //TODO in the code it will run a switch case or something to handle to weapon and which is enabled
-                HostHandleWeaponPickup(collision);
+                //TODO in the code it will run a switch case or checking and getting the weapon class info or something to handle to weapon and which is enabled
+                //ActivateWeaponOnPlayerClientRpc(collision);
             }
         }
+    }
+    
+    private void HostHandleWeaponPickup(Collider collision)
+    {
+        WeaponManager weaponScript = collision.GetComponent<WeaponManager>();
+        weaponArrLoc.Value = weaponScript.activeLoc;
+        listOfWeapons[weaponArrLoc.Value].SetActive(true);
     }
 
     [ServerRpc]
@@ -157,27 +122,7 @@ public class Player : NetworkBehaviour {
     }
 
     // horiz changes y rotation or x movement if shift down, vertical moves forward and back.
-    private Vector3[] CalcMovement() {
-        bool isShiftKeyDown = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-        float x_move = 0.0f;
-        float z_move = Input.GetAxis("Vertical");
-        float y_rot = 0.0f;
 
-        if (isShiftKeyDown) {
-            x_move = Input.GetAxis("Horizontal");
-        } else {
-            y_rot = Input.GetAxis("Horizontal");
-        }
-
-        Vector3 moveVect = new Vector3(x_move, 0, z_move);
-        moveVect *= movementSpeed;
-
-        Vector3 rotVect = new Vector3(0, y_rot, 0);
-        rotVect *= rotationSpeed;
-
-        return new[] { moveVect, rotVect };
-    }
-    
 
     // public void DisplayScore()
     // {
