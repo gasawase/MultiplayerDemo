@@ -42,6 +42,8 @@ public class GameData : NetworkBehaviour {
     
     public int idx = 0;
     public bool found = false;
+    
+    public Dictionary<ulong, GameObject> allPlayersSpawned = new Dictionary<ulong, GameObject>();
 
     // --------------------------
     // Initialization

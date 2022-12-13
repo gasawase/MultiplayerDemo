@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.QGUI", "QFSW.QC.QGU
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.Editor", "QFSW.QC.Editor.csproj", "{3f2a591b-4d83-773b-ac04-09fd430fa1cc}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{085fb207-1c95-b6eb-f561-777b9e9c5d70}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.Editor.Tools", "QFSW.QC.Editor.Tools.csproj", "{72362a1a-862d-e56f-d646-c63ab0db16fb}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{0543572d-7205-0d48-5bbf-0e1d7b09b9b2}"
@@ -62,6 +64,8 @@ Global
 		{83471245-d5b4-f7c2-c4d0-635b39008f45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3f2a591b-4d83-773b-ac04-09fd430fa1cc}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3f2a591b-4d83-773b-ac04-09fd430fa1cc}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{085fb207-1c95-b6eb-f561-777b9e9c5d70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{085fb207-1c95-b6eb-f561-777b9e9c5d70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72362a1a-862d-e56f-d646-c63ab0db16fb}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{72362a1a-862d-e56f-d646-c63ab0db16fb}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0543572d-7205-0d48-5bbf-0e1d7b09b9b2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

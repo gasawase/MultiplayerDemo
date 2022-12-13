@@ -9,6 +9,8 @@ public class GameManager : NetworkBehaviour
     [SerializeField] public Player playerPrefab;
     [SerializeField] public GameObject spawnPoints;
 
+    //public Dictionary<ulong, GameObject> allPlayersSpawned = new Dictionary<ulong, GameObject>();
+
     private int spawnIndex = 0;
     private Camera _camera;
     private List<Vector3> availSpawnPos = new List<Vector3>();
@@ -68,6 +70,7 @@ public class GameManager : NetworkBehaviour
             ClientRpcParams rpcParams = default;
             rpcParams.Send.TargetClientIds = singleTarget;
             RecievePlayerNameClientRpc(pi.m_PlayerName, rpcParams);
+            GameData.Instance.allPlayersSpawned.Add(pi.clientId, playerSpawn.gameObject); //TODO need to handle client disconnecting
             //playerSpawn.PlayerColor.Value = pi.color;
         }
     }
