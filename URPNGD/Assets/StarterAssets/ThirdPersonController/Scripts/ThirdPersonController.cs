@@ -179,6 +179,7 @@ namespace StarterAssets
                 JumpAndGravity();
                 GroundedCheck();
                 Move();
+                Fire();
             }
 
         }
@@ -368,6 +369,16 @@ namespace StarterAssets
             {
                 _verticalVelocity += Gravity * Time.deltaTime;
             }
+        }
+
+        private void Fire()
+        {
+            if (_input.fire)
+            {
+                GetComponent<Player>()._projectileSpawner.MagicProjectileServerRpc();
+                _input.fire = false;
+            }
+            
         }
 
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)

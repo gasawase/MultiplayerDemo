@@ -38,7 +38,9 @@ public class GameData : NetworkBehaviour {
     private Mesh[] listOfMeshes = null;
     public Sprite[] listOfImages = null;
     private bool isClicked = true;
-    public int intOfCurrentMesh = 1;
+    private SkinnedMeshRenderer skinnedMeshRenderer;
+    private int lengthOfArray;
+    public int intOfCurrentMesh = 0;
     
     public int idx = 0;
     public bool found = false;
@@ -185,40 +187,53 @@ public class GameData : NetworkBehaviour {
         Vector3 spawnPos = new Vector3(-2.98f, -10.55f, 21.03f);
         spawnedPlayer = Instantiate(playerPrefab, spawnPos, Quaternion.Euler(0, 180, 0));
         spawnedPlayer.transform.localScale = scaleChange;
+        Mesh[] listOfMeshes = spawnedPlayer.GetComponent<Player>().listOfMeshes;
+        skinnedMeshRenderer = spawnedPlayer.GetComponentInChildren<SkinnedMeshRenderer>();
+
+        skinnedMeshRenderer.sharedMesh = listOfMeshes[0];
+        lengthOfArray = listOfMeshes.Length; //number of objects in the array
+        Debug.Log(lengthOfArray);
     }
 
     public void IncreasePlayerMeshNum()
     {
-        //change meshes instead of enabling/disabling objects
-        Mesh[] listOfMeshes = spawnedPlayer.GetComponent<Player>().listOfMeshes;
-        SkinnedMeshRenderer skinnedMeshRenderer =
-            GameObject.Find("MainPlayerObject").GetComponent<SkinnedMeshRenderer>();
-        int lengthOfArray = listOfMeshes.Length; //number of objects in the array
-
-        skinnedMeshRenderer.sharedMesh = listOfMeshes[intOfCurrentMesh];
+        if (listOfMeshes == null)
+        {
+            listOfMeshes = spawnedPlayer.GetComponent<Player>().listOfMeshes;
+        }
+        if (skinnedMeshRenderer == null)
+        {
+            skinnedMeshRenderer = spawnedPlayer.GetComponentInChildren<SkinnedMeshRenderer>();
+        }
         intOfCurrentMesh++;
         if (intOfCurrentMesh == lengthOfArray)
         {
             intOfCurrentMesh = 0;
+            skinnedMeshRenderer.sharedMesh = listOfMeshes[intOfCurrentMesh];
         }
+        skinnedMeshRenderer.sharedMesh = listOfMeshes[intOfCurrentMesh];
         Debug.Log(intOfCurrentMesh);
     }
     public void DecreasePlayerMeshNum()
     {
-        listOfMeshes = spawnedPlayer.GetComponent<Player>().listOfMeshes;
-        SkinnedMeshRenderer skinnedMeshRenderer =
-            GameObject.Find("MainPlayerObject").GetComponent<SkinnedMeshRenderer>();
-        int lengthOfArray = listOfMeshes.Length; //number of objects in the array
-        Debug.Log(lengthOfArray);
-
-        skinnedMeshRenderer.sharedMesh = listOfMeshes[intOfCurrentMesh];
-        intOfCurrentMesh--;
-        Debug.Log(intOfCurrentMesh);
-        if (intOfCurrentMesh < 0)
+        if (listOfMeshes == null)
         {
-            intOfCurrentMesh = lengthOfArray-1;
+            listOfMeshes = spawnedPlayer.GetComponent<Player>().listOfMeshes;
+        }
+        if (skinnedMeshRenderer == null)
+        {
+            skinnedMeshRenderer = spawnedPlayer.GetComponentInChildren<SkinnedMeshRenderer>();
+        }
+        
+        intOfCurrentMesh -= 1;
+        Debug.Log(intOfCurrentMesh);
+        if (intOfCurrentMesh <= -1)
+        {
+            intOfCurrentMesh = lengthOfArray;
+            skinnedMeshRenderer.sharedMesh = listOfMeshes[intOfCurrentMesh-1];
             Debug.Log(intOfCurrentMesh);
         }
+        skinnedMeshRenderer.sharedMesh = listOfMeshes[intOfCurrentMesh];
 
     }
 

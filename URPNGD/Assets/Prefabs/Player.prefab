@@ -462,6 +462,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2306394322176923063}
   - component: {fileID: 5323300973538428816}
+  - component: {fileID: 6275433982303615338}
   m_Layer: 0
   m_Name: ThrowableWeapons
   m_TagString: Untagged
@@ -501,6 +502,22 @@ MonoBehaviour:
   listOfWeapons:
   - {fileID: 2306444509284301795}
   activeLoc: 0
+--- !u!54 &6275433982303615338
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2306394322176923062}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &3775114139741372914
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,7 +629,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2228558497843921846}
-  - component: {fileID: 2286301253207923726}
+  - component: {fileID: 7087546686924496324}
   m_Layer: 0
   m_Name: ItemSpawningLocation
   m_TagString: Untagged
@@ -627,15 +644,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4716658985843432338}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.097, y: 0.048, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4790188052664172100}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2286301253207923726
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &7087546686924496324
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -644,12 +661,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4716658985843432338}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4d9fdc9860848a2a4da712d284904e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 14728627f444f0d46a6f23f5dde37cfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletDamage:
+  networkedDamage:
     m_InternalValue: 5
-  bullet: {fileID: 0}
+  projectileRB: {fileID: 3239761751496237758, guid: 49149b9e57eb67f4bbddba492d0acfbe,
+    type: 3}
 --- !u!1 &4785087539951822322
 GameObject:
   m_ObjectHideFlags: 0
@@ -1010,7 +1028,7 @@ GameObject:
   - component: {fileID: 5999829972805483635}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1068,11 +1086,11 @@ MonoBehaviour:
     m_InternalValue: {x: 0, y: 0, z: 0}
   PlayerMeshInt:
     m_InternalValue: 0
-  pScore:
-    m_InternalValue: 50
+  playerHealth:
+    m_InternalValue: 100
   weaponArrLoc:
     m_InternalValue: 0
-  txtScoreDisplay: {fileID: 0}
+  healthSlider: {fileID: 201004128079581462}
   listOfMeshes:
   - {fileID: 4300028, guid: c9a34c70f1c0d00409f41fcfbb2a6871, type: 3}
   - {fileID: 4300030, guid: c9a34c70f1c0d00409f41fcfbb2a6871, type: 3}
@@ -1127,6 +1145,7 @@ MonoBehaviour:
   cameraGameObject: {fileID: 8120908573674633803}
   cinemachineVirtualCamera: {fileID: 792098750147909019}
   playerNameTxt: {fileID: 4774356523277463794}
+  _projectileSpawner: {fileID: 7087546686924496324}
 --- !u!143 &4142810230950373359
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1240,6 +1259,7 @@ MonoBehaviour:
   look: {x: 0, y: 0}
   jump: 0
   sprint: 0
+  fire: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
@@ -3578,8 +3598,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 114.43, y: 0}
-  m_SizeDelta: {x: 228.85, y: 0}
+  m_AnchoredPosition: {x: 0.0025100708, y: 0}
+  m_SizeDelta: {x: -0.0050049, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3829754489160225497
 CanvasRenderer:
@@ -3691,7 +3711,7 @@ GameObject:
   - component: {fileID: 810304450548429271}
   - component: {fileID: 201004128079581462}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3765,9 +3785,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1455394201594667578}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 100
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4519,6 +4539,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2306394322480681085}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7440641311411645151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2306444509284301795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d4fc1eac05b4d4cbe48719c53d79c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageNum: 10
+  weaponModel: {fileID: 0}
+  damageNWVar:
+    m_InternalValue: 10
 --- !u!4 &2310499672635819255 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4924022943716490, guid: 65f514a6efccbc0489fd5896f6da61f5,
@@ -4612,6 +4648,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageNum: 0
   weaponModel: {fileID: 0}
+  damageNWVar:
+    m_InternalValue: 10
 --- !u!1001 &4962333142722783427
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4693,6 +4731,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageNum: 0
   weaponModel: {fileID: 0}
+  damageNWVar:
+    m_InternalValue: 10
 --- !u!4 &4962333142722904449 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 403778, guid: a72fcdd51f52f5146b54b8faccf63756,
@@ -4786,6 +4826,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageNum: 0
   weaponModel: {fileID: 0}
+  damageNWVar:
+    m_InternalValue: 10
 --- !u!1001 &4962333143315547607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4873,6 +4915,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageNum: 0
   weaponModel: {fileID: 0}
+  damageNWVar:
+    m_InternalValue: 10
 --- !u!1001 &4962333143676350932
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4954,6 +4998,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageNum: 0
   weaponModel: {fileID: 0}
+  damageNWVar:
+    m_InternalValue: 10
 --- !u!4 &4962333143676663774 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 476682, guid: 24438bb8ac649ea46b56ab6b0404db1a,
@@ -5041,6 +5087,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageNum: 0
   weaponModel: {fileID: 0}
+  damageNWVar:
+    m_InternalValue: 10
 --- !u!4 &4962333143756883164 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 440554, guid: 9e311f4d0c272f44ea83aed3c3b15c40,
@@ -5134,6 +5182,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageNum: 0
   weaponModel: {fileID: 0}
+  damageNWVar:
+    m_InternalValue: 10
 --- !u!1001 &8113569764517984571
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5215,6 +5265,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageNum: 0
   weaponModel: {fileID: 0}
+  damageNWVar:
+    m_InternalValue: 10
 --- !u!4 &8113569764518335177 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 437234, guid: 74472bc2f47a23b41aa71c9d0d2c408f,
@@ -5308,6 +5360,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageNum: 0
   weaponModel: {fileID: 0}
+  damageNWVar:
+    m_InternalValue: 10
 --- !u!1001 &8113569764815252759
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5395,6 +5449,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageNum: 0
   weaponModel: {fileID: 0}
+  damageNWVar:
+    m_InternalValue: 10
 --- !u!1001 &8113569765092470733
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5482,6 +5538,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageNum: 0
   weaponModel: {fileID: 0}
+  damageNWVar:
+    m_InternalValue: 10
 --- !u!1001 &8113569765187061608
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5563,6 +5621,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageNum: 0
   weaponModel: {fileID: 0}
+  damageNWVar:
+    m_InternalValue: 10
 --- !u!4 &8113569765187159324 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 492148, guid: 4045dbaae77b39241bd7c0edbd188a33,
@@ -5656,6 +5716,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageNum: 0
   weaponModel: {fileID: 0}
+  damageNWVar:
+    m_InternalValue: 10
 --- !u!1001 &8113569765361130850
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5743,6 +5805,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageNum: 0
   weaponModel: {fileID: 0}
+  damageNWVar:
+    m_InternalValue: 10
 --- !u!1001 &8113569765485316152
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5824,6 +5888,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageNum: 0
   weaponModel: {fileID: 0}
+  damageNWVar:
+    m_InternalValue: 10
 --- !u!4 &8113569765485471614 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 421702, guid: 12caa982699ea3b41a15a260d90f16a0,
@@ -5917,6 +5983,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageNum: 0
   weaponModel: {fileID: 0}
+  damageNWVar:
+    m_InternalValue: 10
 --- !u!1001 &8113569765658258175
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6004,6 +6072,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageNum: 0
   weaponModel: {fileID: 0}
+  damageNWVar:
+    m_InternalValue: 10
 --- !u!1001 &8113569765750829293
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6091,6 +6161,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageNum: 0
   weaponModel: {fileID: 0}
+  damageNWVar:
+    m_InternalValue: 10
 --- !u!1001 &8113569765780953214
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6172,6 +6244,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageNum: 0
   weaponModel: {fileID: 0}
+  damageNWVar:
+    m_InternalValue: 10
 --- !u!4 &8113569765781369792 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 420798, guid: 1006941873f215d46b09517732f49978,
@@ -6265,3 +6339,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageNum: 0
   weaponModel: {fileID: 0}
+  damageNWVar:
+    m_InternalValue: 10

@@ -10,6 +10,7 @@ TagManager:
   - PlayerName
   - CinemachineTarget
   - Weapon
+  - Projectile
   layers:
   - Default
   - TransparentFX
