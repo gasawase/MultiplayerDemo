@@ -10,6 +10,7 @@ public class PickupManager : NetworkBehaviour
 {
     private GameManager _gameManager;
     private GameData _gameData;
+    private int typeOfWManagerInt;
     private void OnTriggerEnter(Collider collision)
     {
         ulong colliderClientId = collision.gameObject.GetComponent<Player>().OwnerClientId;
@@ -19,25 +20,50 @@ public class PickupManager : NetworkBehaviour
         //collidedGameObject.GetComponent<Player>().weaponArrLoc.Value = this.GetComponent<WeaponManager>().activeLoc; 
         //find this client id in the playerinfo
         PlayerInfo playerinfo = GameData.Instance.allPlayers[Convert.ToInt32(colliderClientId)];
-        Debug.Log(playerinfo.m_PlayerName);
-
-        WhenPlayerPickupClientRpc(colliderClientId);
+        //get the type of weapon manager
+        //switch case as to assigning the int for the thingy
+        switch (this.name)
+        {
+            case "TwoHandedWeapons":
+                typeOfWManagerInt = 0;
+                break;
+            case "SingleHandedWeapons":
+                typeOfWManagerInt = 1;
+                break;
+            case "ThrowableWeapons":
+                typeOfWManagerInt = 2;
+                break;
+        }
+        Debug.Log($"{this.name} has num {typeOfWManagerInt}");
+        WhenPlayerPickupClientRpc(colliderClientId, typeOfWManagerInt);
         GetComponent<NetworkObject>().Despawn();
     }
 
     [ClientRpc]
-    public void WhenPlayerPickupClientRpc(ulong clientId, ClientRpcParams clientRpcParams = default)
+    public void WhenPlayerPickupClientRpc(ulong clientId, int typeOfWManager, ClientRpcParams clientRpcParams = default)
     {
+        //string[] typeOfWeaponManager = {"TwoHandedWeapons", "SingleHandedWeapons", "ThrowableWeapons"};
         Player[] playerObj = FindObjectsOfType<Player>();
         foreach (Player playerGO in playerObj)
         {
             if (playerGO.OwnerClientId == clientId)
             {
-                playerGO.listOfWeapons[GetComponent<WeaponManager>().activeLoc].SetActive(true);
+                switch (typeOfWManager)
+                {
+                    case 0:
+                        playerGO.listOfDoubHandWeapons[GetComponent<WeaponManager>().activeLoc].SetActive(true);
+                        break;
+                    case 1:
+                        playerGO.listOfSingHandWeapons[GetComponent<WeaponManager>().activeLoc].SetActive(true);
+                        break;
+                    case 2:
+                        playerGO.listOfThrownWeapons[GetComponent<WeaponManager>().activeLoc].SetActive(true);
+                        break;
+                }
+                //playerGO.listOfWeapons[GetComponent<WeaponManager>().activeLoc].SetActive(true);
             }
         }
         
         Debug.Log(GameData.Instance.allPlayersSpawned.Count);
-        //collidedGameObject.GetComponent<Player>().listOfWeapons[GetComponent<WeaponManager>().activeLoc].SetActive(true);
     }
 }
