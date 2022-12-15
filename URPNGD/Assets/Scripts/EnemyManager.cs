@@ -8,8 +8,8 @@ using UnityEngine.UI;
 public class EnemyManager : NetworkBehaviour
 {
     [SerializeField] private Slider refToEnHealthBar;
-    public NetworkVariable<int> enHealth = new NetworkVariable<int>(100);
-    // Start is called before the first frame update
+    public NetworkVariable<int> enHealth;
+    public NetworkVariable<int> regularHitDamage = new NetworkVariable<int>();
     void Start()
     {
         refToEnHealthBar.value = enHealth.Value;

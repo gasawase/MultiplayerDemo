@@ -376,7 +376,10 @@ namespace StarterAssets
             if (_input.fire)
             {
                 GetComponent<Player>()._projectileSpawner.MagicProjectileServerRpc();
+                GetComponent<Player>()._animator.SetInteger(GetComponent<Player>()._attackNum, 1);
                 _input.fire = false;
+                GetComponent<Player>()._animator.
+                GetComponent<Player>()._animator.SetInteger(GetComponent<Player>()._attackNum, 0);
             }
             
         }

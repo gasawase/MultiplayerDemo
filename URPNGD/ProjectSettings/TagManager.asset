@@ -11,6 +11,7 @@ TagManager:
   - CinemachineTarget
   - Weapon
   - Projectile
+  - Damager
   layers:
   - Default
   - TransparentFX

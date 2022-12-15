@@ -135,7 +135,7 @@ public class GameData : NetworkBehaviour {
     public void AddPlayerToList(ulong clientId, int currMesh, string pName)
     {
         Debug.Log($"From AddPlayerToList{clientId} <- client id {pName} <- name");
-        allPlayers.Add(new PlayerInfo(clientId, pName, (currMesh - 1), NextColor(), false));
+        allPlayers.Add(new PlayerInfo(clientId, pName, (currMesh), NextColor(), false));
     }
 
     public void AddPlayerNameToDictionary(ulong clientId, string pName, int currMesh)
@@ -209,7 +209,6 @@ public class GameData : NetworkBehaviour {
         if (intOfCurrentMesh == lengthOfArray)
         {
             intOfCurrentMesh = 0;
-            skinnedMeshRenderer.sharedMesh = listOfMeshes[intOfCurrentMesh];
         }
         skinnedMeshRenderer.sharedMesh = listOfMeshes[intOfCurrentMesh];
         Debug.Log(intOfCurrentMesh);
@@ -226,14 +225,12 @@ public class GameData : NetworkBehaviour {
         }
         
         intOfCurrentMesh -= 1;
-        Debug.Log(intOfCurrentMesh);
         if (intOfCurrentMesh <= -1)
         {
-            intOfCurrentMesh = lengthOfArray;
-            skinnedMeshRenderer.sharedMesh = listOfMeshes[intOfCurrentMesh-1];
-            Debug.Log(intOfCurrentMesh);
+            intOfCurrentMesh = lengthOfArray - 1;
         }
         skinnedMeshRenderer.sharedMesh = listOfMeshes[intOfCurrentMesh];
+        Debug.Log(intOfCurrentMesh);
 
     }
 
@@ -244,49 +241,24 @@ public class GameData : NetworkBehaviour {
             leftSelectorBut.gameObject.SetActive(false);
             rightSelectorBut.gameObject.SetActive(false);
             selectPlayMeshBut.gameObject.SetActive(false);
-            SkinnedMeshRenderer skinnedMeshRenderer =
-                GameObject.Find("MainPlayerObject").GetComponent<SkinnedMeshRenderer>();
+            if (listOfMeshes == null)
+            {
+                listOfMeshes = spawnedPlayer.GetComponent<Player>().listOfMeshes;
+            }
+            if (skinnedMeshRenderer == null)
+            {
+                skinnedMeshRenderer = spawnedPlayer.GetComponentInChildren<SkinnedMeshRenderer>();
+            }
             string currentMeshSelected = skinnedMeshRenderer.sharedMesh.name;
             Debug.Log(currentMeshSelected);
             Debug.Log(intOfCurrentMesh);
             isClicked = false;
+            SendPNameServerRpc(playerName, intOfCurrentMesh);
         }
         
-        SendPNameServerRpc(playerName, intOfCurrentMesh);
-
-        //LobbyManager lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
-        //lobbyManager.ActivateAreYouSurePopUp(playerName, intOfCurrentMesh);
+        //SendPNameServerRpc(playerName, intOfCurrentMesh);
+        
     }
-
-    // public void ActivateAreYouSurePopUp(string pName, int currMesh)
-    // {
-    //     GameObject areYouSurePanel = GameObject.Find("AreYouSurePanel");
-    //     areYouSurePanel.SetActive(true);
-    //     Sprite[] listOfImages = spawnedPlayer.GetComponent<Player>().listOfSprites;
-    //     GameObject characterSelected = GameObject.Find("CharacterSelected");
-    //     pName = GameObject.Find("PlayerNameText").GetComponent<TMP_Text>().text;
-    //     Sprite selectedChar = listOfImages[currMesh];
-    //     characterSelected.GetComponent<Image>().sprite = selectedChar;
-    //
-    //     Button backButton = GameObject.Find("BackButton").GetComponent<Button>();
-    //     backButton.onClick.AddListener(BackPopUp);
-    //     Button continueButton = GameObject.Find("BackButton").GetComponent<Button>();
-    //     continueButton.onClick.AddListener(ContinueButton);
-    // }
-    //
-    // public void BackPopUp()
-    // {
-    //     GameObject.Find("AreYouSurePanel").SetActive(false);
-    //     leftSelectorBut.gameObject.SetActive(true);
-    //     rightSelectorBut.gameObject.SetActive(true);
-    //     selectPlayMeshBut.gameObject.SetActive(true);
-    // }
-    //
-    // public void ContinueButton()
-    // {
-    //     GameObject.Find("AreYouSurePanel").SetActive(false);
-    //     SendPNameServerRpc(playerName, intOfCurrentMesh);
-    // }
 
     [ServerRpc(RequireOwnership = false)]
     public void SendPNameServerRpc(string pName, int currMesh, ServerRpcParams serverRpcParams = default)

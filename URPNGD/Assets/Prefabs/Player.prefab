@@ -1117,6 +1117,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 357d373af39fc9f4e8e6757e3fe1ce1d, type: 3}
   - {fileID: 21300000, guid: a8e74ff3cc2a9ad4c9e9aa0cbb75dfbe, type: 3}
   - {fileID: 21300000, guid: 6a3a7a8f24be85e4395d643ae0dc9eef, type: 3}
+  playerNameTxt: {fileID: 4774356523277463794}
   listOfDoubHandWeapons:
   - {fileID: 8114534623825962619}
   - {fileID: 8114752825584752443}
@@ -1144,8 +1145,9 @@ MonoBehaviour:
   meshHolder: {fileID: 7974755918522440772}
   cameraGameObject: {fileID: 8120908573674633803}
   cinemachineVirtualCamera: {fileID: 792098750147909019}
-  playerNameTxt: {fileID: 4774356523277463794}
   _projectileSpawner: {fileID: 7087546686924496324}
+  _attackNum: 0
+  _animator: {fileID: 0}
 --- !u!143 &4142810230950373359
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1173,7 +1175,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 4786539203683795154}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.5
   m_Height: 1.5977335
   m_Direction: 1

@@ -41,14 +41,15 @@ public class Player : NetworkBehaviour {
     private int _animIDMotionSpeed;
     private int _animWeaponType;
     private int _animIsMagic;
+    public int _attackNum;
 
-    private Animator _animator;
+    public Animator _animator;
     private bool _hasAnimator;
     private GameManager _gameMgr;
     //private CharacterController mpCharController;
     //private BulletSpawner _bulletSpawner;
 
-    private void Start()
+    private void Awake()
     {
         _hasAnimator = TryGetComponent(out _animator);
         AssignAnimationIDs();
@@ -61,20 +62,17 @@ public class Player : NetworkBehaviour {
         playerHealth.OnValueChanged += ClientOnScoreChanged;
         foreach (PlayerInfo player in GameData.Instance.allPlayers)
         {
-            if (player.playMeshSelect == 5 || player.playMeshSelect == 10 || player.playMeshSelect == 11)
+            if (player.playMeshSelect is 5 or 10 or 11)
             {
                 _animator.SetBool(_animIsMagic, true);
             }
-            _animator.SetBool(_animIsMagic, false);
+            else
+            {
+                _animator.SetBool(_animIsMagic, false);
+            }
         }
-        //Make a more effecient way to find the spawner. Player>PlayerMeshes>Root>Hips>Spine_01>Spine_02>Spine_03>Clavicle_R>Shoulder_R>Elbow_R>Hand_R>ItemSpawningLocation
-        //_bulletSpawner = transform.Find("RArm").transform.Find("BulletSpawner").GetComponent<BulletSpawner>();
-        // if (IsHost)
-        // {
-        //     _bulletSpawner.bulletDamage.Value = 1;
-        // }
 
-        DisplayScore();
+        DisplayHealth();
     }
 
     private void HostHandleBulletCollision(GameObject bullet)
@@ -101,21 +99,14 @@ public class Player : NetworkBehaviour {
 
     private void ClientOnScoreChanged(int previous, int current)
     {
-        DisplayScore();
+        DisplayHealth();
     }
 
     public void OnCollisionEnter(Collision collision)
     {
-        if (IsHost)
+        if (collision.gameObject.CompareTag("Damager")) // "Damager" should be attached to anything that can damage the player
         {
-            // if (collision.gameObject.CompareTag("Bullet"))
-            // {
-            //     HostHandleBulletCollision(collision.gameObject);
-            // }
-            if (collision.gameObject.CompareTag("Projectile"))
-            {
-                //this currently won't work for thrown objects because it will conflict and send the wrong message if the player runs over the object
-            }
+            ServerDamageHandlerForPlayers(collision.gameObject);
         }
     }
 
@@ -130,7 +121,16 @@ public class Player : NetworkBehaviour {
             }
         }
     }
-    
+
+    public void ServerDamageHandlerForPlayers(GameObject damagerObject)
+    {
+        // check if this is an Enemy
+        if (damagerObject.GetComponent<EnemyManager>())
+        {
+            EnemyManager enemyManager = GetComponent<EnemyManager>();
+            playerHealth.Value -= enemyManager.regularHitDamage.Value;
+        }
+    }
 
     [ServerRpc]
     void RequestPositionForMovementServerRpc(Vector3 posChange, Vector3 rotChange) {
@@ -139,17 +139,12 @@ public class Player : NetworkBehaviour {
         PositionChange.Value = posChange;
         RotationChange.Value = rotChange;
     }
-
-    [ServerRpc(RequireOwnership = false)]
-    public void RequestSetScoreServerRpc(int value)
-    {
-        playerHealth.Value = value;
-    }
+    
 
     // horiz changes y rotation or x movement if shift down, vertical moves forward and back.
 
 
-    public void DisplayScore()
+    public void DisplayHealth()
     {
         healthSlider.value = playerHealth.Value;
     }
@@ -161,6 +156,7 @@ public class Player : NetworkBehaviour {
         _animIDSpeed = Animator.StringToHash("Speed");
         _animWeaponType = Animator.StringToHash("weaponType");
         _animIsMagic = Animator.StringToHash("isMagic");
+        _attackNum = Animator.StringToHash("attackNum");
         //_animIDGrounded = Animator.StringToHash("Grounded");
         //_animIDJump = Animator.StringToHash("Jump");
         //_animIDFreeFall = Animator.StringToHash("FreeFall");

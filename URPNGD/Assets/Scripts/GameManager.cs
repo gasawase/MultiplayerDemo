@@ -74,8 +74,7 @@ public class GameManager : NetworkBehaviour
             //playerSpawn.PlayerColor.Value = pi.color;
         }
     }
-    
-    
+
     [ServerRpc(RequireOwnership = false)]
     public void SpawnPlayerServerRpc(ServerRpcParams serverRpcParams = default) //ask server to send info from this script to the client?
     {
