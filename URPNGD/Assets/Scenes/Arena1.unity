@@ -711,6 +711,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5291280974704568252, guid: 04aa273a00c40984d855ae1ec86e0cf7,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7112015264758090088, guid: 04aa273a00c40984d855ae1ec86e0cf7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 04aa273a00c40984d855ae1ec86e0cf7, type: 3}
@@ -3843,6 +3848,8 @@ MonoBehaviour:
   refToEnHealthBar: {fileID: 943046136}
   enHealth:
     m_InternalValue: 50
+  regularHitDamage:
+    m_InternalValue: 0
 --- !u!137 &137089911038378800
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
