@@ -9,7 +9,7 @@ public class EnemyManager : NetworkBehaviour
 {
     [SerializeField] private Slider refToEnHealthBar;
     public NetworkVariable<int> enHealth;
-    public NetworkVariable<int> regularHitDamage = new NetworkVariable<int>();
+    public NetworkVariable<int> regularHitDamage;
     void Start()
     {
         refToEnHealthBar.value = enHealth.Value;

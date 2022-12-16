@@ -127,8 +127,9 @@ public class Player : NetworkBehaviour {
         // check if this is an Enemy
         if (damagerObject.GetComponent<EnemyManager>())
         {
-            EnemyManager enemyManager = GetComponent<EnemyManager>();
+            EnemyManager enemyManager = damagerObject.GetComponent<EnemyManager>();
             playerHealth.Value -= enemyManager.regularHitDamage.Value;
+            //trigger animation hit
         }
     }
 
