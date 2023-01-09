@@ -13,6 +13,7 @@ public class EnemyManager : NetworkBehaviour
     void Start()
     {
         refToEnHealthBar.value = enHealth.Value;
+        regularHitDamage.Value = 10;
     }
 
     public override void OnNetworkSpawn()

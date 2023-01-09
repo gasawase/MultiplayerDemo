@@ -12,6 +12,7 @@ TagManager:
   - Weapon
   - Projectile
   - Damager
+  - SpawnLocation
   layers:
   - Default
   - TransparentFX

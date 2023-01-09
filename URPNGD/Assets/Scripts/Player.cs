@@ -15,8 +15,10 @@ public class Player : NetworkBehaviour {
     public NetworkVariable<Vector3> RotationChange = new NetworkVariable<Vector3>();
     //public NetworkVariable<Color> PlayerColor = new NetworkVariable<Color>(Color.red);
     public NetworkVariable<int> PlayerMeshInt = new NetworkVariable<int>();
-    public NetworkVariable<int> playerHealth = new NetworkVariable<int>(100);
+    public NetworkVariable<int> playerHealth = new NetworkVariable<int>();
     public NetworkVariable<int> weaponArrLoc = new NetworkVariable<int>();
+
+    public int maxPlayerHealth = 100;
     
 
     //UI
@@ -53,6 +55,8 @@ public class Player : NetworkBehaviour {
     {
         _hasAnimator = TryGetComponent(out _animator);
         AssignAnimationIDs();
+        playerHealth.Value = maxPlayerHealth;
+        _gameMgr = GetComponent<GameManager>();
     }
     
     public override void OnNetworkSpawn() {
@@ -106,6 +110,7 @@ public class Player : NetworkBehaviour {
     {
         if (collision.gameObject.CompareTag("Damager")) // "Damager" should be attached to anything that can damage the player
         {
+            Debug.Log($"player hit by {collision.gameObject}");
             ServerDamageHandlerForPlayers(collision.gameObject);
         }
     }
@@ -127,11 +132,22 @@ public class Player : NetworkBehaviour {
         // check if this is an Enemy
         if (damagerObject.GetComponent<EnemyManager>())
         {
+            Debug.Log($"this is an enemy hit");
             EnemyManager enemyManager = damagerObject.GetComponent<EnemyManager>();
             playerHealth.Value -= enemyManager.regularHitDamage.Value;
+            Debug.Log($"{playerHealth.Value}");
+            DisplayHealth();
+            if (playerHealth.Value <= 0)
+            {
+                //play death animation
+                //black screen fade in
+                RespawnPlayerServerRpc();
+                ResetPlayerLocationClientRpc();
+            }
             //trigger animation hit
         }
     }
+    
 
     [ServerRpc]
     void RequestPositionForMovementServerRpc(Vector3 posChange, Vector3 rotChange) {
@@ -140,10 +156,25 @@ public class Player : NetworkBehaviour {
         PositionChange.Value = posChange;
         RotationChange.Value = rotChange;
     }
-    
 
-    // horiz changes y rotation or x movement if shift down, vertical moves forward and back.
+    [ServerRpc]
+    void RespawnPlayerServerRpc()
+    {
+        // set health to 100%
+        playerHealth.Value = maxPlayerHealth;
+    }
 
+    [ClientRpc]
+    void ResetPlayerLocationClientRpc()
+    {
+        //reset player position to spawn point
+        GetComponent<CharacterController>().enabled = false;
+        GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("SpawnLocation");
+        UnityEngine.Random.InitState((int)System.DateTime.Now.Ticks);
+        int index = UnityEngine.Random.Range(0, spawnPoints.Length);
+        transform.position = spawnPoints[index].transform.position;
+        GetComponent<CharacterController>().enabled = true;
+    }
 
     public void DisplayHealth()
     {
