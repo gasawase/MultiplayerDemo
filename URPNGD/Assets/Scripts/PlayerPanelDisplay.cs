@@ -12,9 +12,9 @@ public class PlayerPanelDisplay : NetworkBehaviour
 {
     [SerializeField] public TMPro.TMP_Text displayNameText;
     public GameObject playerScrollContent;
-    public LobbyPlayerPanel playerPanelPrefab;
+    public PlayerPanelInGame playerPanelPrefab;
     
-    private List<LobbyPlayerPanel> playerPanels;
+    private List<PlayerPanelInGame> playerPanels;
 
     private void Start()
     {
@@ -34,6 +34,7 @@ public class PlayerPanelDisplay : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        ////// this works; now i have to integrate the new player panels and health
         // if (IsHost)
         // {
         //     RefreshPlayerPanels();
@@ -48,7 +49,7 @@ public class PlayerPanelDisplay : NetworkBehaviour
     }
 
     private void AddPlayerPanel(PlayerInfo info) {
-        LobbyPlayerPanel newPanel = Instantiate(playerPanelPrefab);
+        PlayerPanelInGame newPanel = Instantiate(playerPanelPrefab);
         newPanel.transform.SetParent(playerScrollContent.transform, false);
         newPanel.SetName(info.m_PlayerName);
         newPanel.SetColor(info.color);
@@ -57,7 +58,7 @@ public class PlayerPanelDisplay : NetworkBehaviour
     }
     
     private void RefreshPlayerPanels() {
-        foreach (LobbyPlayerPanel panel in playerPanels) {
+        foreach (PlayerPanelInGame panel in playerPanels) {
             Destroy(panel.gameObject);
         }
         playerPanels.Clear();

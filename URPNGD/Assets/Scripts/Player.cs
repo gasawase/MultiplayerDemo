@@ -162,4 +162,16 @@ public class Player : NetworkBehaviour {
         //_animIDFreeFall = Animator.StringToHash("FreeFall");
         //_animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
     }
+    
+    //////// ATTACK MANAGER //////////
+
+    public void AttackUIManager()
+    {
+        // spawns all the attacks this player does
+    }
+    public void SlashAttack()
+    {
+        // controls the animation and attack and stuff 
+    }
+
 }
