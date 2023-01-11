@@ -4,84 +4,30 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// controls player HUD and everything displayed
 /// </summary>
-public class PlayerPanelDisplay : NetworkBehaviour
+public class PlayerPanelDisplay : MonoBehaviour
 {
-    [SerializeField] public TMPro.TMP_Text displayNameText;
-    public GameObject playerScrollContent;
-    public LobbyPlayerPanel playerPanelPrefab;
-    
-    private List<LobbyPlayerPanel> playerPanels;
+    [SerializeField] public TMPro.TMP_Text txtName;
+    [SerializeField] public Sprite[] listOfSprites;
+    [SerializeField] public GameObject spriteImageGO;
+    [SerializeField] public Slider playerHealth;
 
-    private void Start()
+    public void SetName(string newName)
     {
-        //spawn playerHud
-        // if (IsHost)
-        // {
-        //     NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-        //     NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
-        // }
+        txtName.text = newName;
     }
-    
 
-    private void Awake()
+    public void SetSpriteLoc(int i)
     {
-        //playerPanels = new List<LobbyPlayerPanel>();
+        spriteImageGO.GetComponent<Image>().sprite = listOfSprites[i];
     }
 
-    public override void OnNetworkSpawn()
+    public void RefreshHealth(int playHealth)
     {
-        // if (IsHost)
-        // {
-        //     RefreshPlayerPanels();
-        //     int myIndex = Convert.ToInt32(NetworkManager.LocalClientId);
-        //     //int myIndex = GameData.Instance.FindPlayerIndex(NetworkManager.LocalClientId);
-        //     if (myIndex != -1)
-        //     {
-        //         PlayerInfo info = GameData.Instance.allPlayers[myIndex];
-        //         displayNameText.text = info.m_PlayerName;
-        //     }
-        // }
-    }
-
-    private void AddPlayerPanel(PlayerInfo info) {
-        LobbyPlayerPanel newPanel = Instantiate(playerPanelPrefab);
-        newPanel.transform.SetParent(playerScrollContent.transform, false);
-        newPanel.SetName(info.m_PlayerName);
-        newPanel.SetColor(info.color);
-        newPanel.SetReady(info.isReady);
-        playerPanels.Add(newPanel);
-    }
-    
-    private void RefreshPlayerPanels() {
-        foreach (LobbyPlayerPanel panel in playerPanels) {
-            Destroy(panel.gameObject);
-        }
-        playerPanels.Clear();
-
-        foreach (PlayerInfo pi in GameData.Instance.allPlayers) {
-            AddPlayerPanel(pi);
-        }
-    }
-    
-    ////////HANDLES/////////
-    private void OnClientConnected(ulong clientId)
-    {
-        Debug.Log($"Client Connected {clientId}");
-        RefreshPlayerPanels();
-        int myIndex = Convert.ToInt32(NetworkManager.LocalClientId);
-        if (myIndex != -1)
-        {
-            PlayerInfo info = GameData.Instance.allPlayers[myIndex];
-            displayNameText.text = info.m_PlayerName;
-        }
-    }
-
-    private void OnClientDisconnected(ulong clientId)
-    {
-        
+        playerHealth.value = playHealth;
     }
 }

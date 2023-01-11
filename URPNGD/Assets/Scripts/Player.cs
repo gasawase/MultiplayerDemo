@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Cinemachine;
 using StarterAssets;
 using TMPro;
@@ -22,13 +23,14 @@ public class Player : NetworkBehaviour {
 
     public int maxPlayerHealth = 100;
     public Slider _healthSlider;
-    public GameObject _playerPanel;
+    public GameObject _playerDisplay;
 
     //UI
     [SerializeField] public Mesh[] listOfMeshes;
     [SerializeField] public Sprite[] listOfSprites;
     [SerializeField] public TMP_Text playerNameTxt;
-    
+    [SerializeField] public PlayerPanelDisplay playerPanelPrefab;
+    public GameObject playersContent;
     [SerializeField] public GameObject[] listOfDoubHandWeapons;
     [SerializeField] public GameObject[] listOfSingHandWeapons;
     [SerializeField] public GameObject[] listOfThrownWeapons;
@@ -37,6 +39,8 @@ public class Player : NetworkBehaviour {
     //[SerializeField] public GameObject _healthSliderGO;
     [SerializeField] public CinemachineVirtualCamera cinemachineVirtualCamera;
     [SerializeField] public ProjectileSpawner _projectileSpawner;
+
+    private List<PlayerPanelDisplay> _playerPanelDisplays;
     
     // animation IDs
     private int _animIDSpeed;
@@ -60,6 +64,9 @@ public class Player : NetworkBehaviour {
         AssignAnimationIDs();
         playerHealth.Value = maxPlayerHealth;
         _gameMgr = GetComponent<GameManager>();
+        _playerPanelDisplays = new List<PlayerPanelDisplay>();
+        RefreshPlayerPanels();
+        
     }
     
     public override void OnNetworkSpawn() {
@@ -67,7 +74,7 @@ public class Player : NetworkBehaviour {
 
         _hasAnimator = TryGetComponent(out _animator);
         cameraGameObject.GetComponent<Camera>().enabled = IsOwner;
-        _playerPanel.SetActive(IsOwner);
+        _playerDisplay.SetActive(IsOwner);
         cinemachineVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = IsOwner;
         playerHealth.OnValueChanged += ClientOnScoreChanged;
         
@@ -82,8 +89,37 @@ public class Player : NetworkBehaviour {
                 _animator.SetBool(_animIsMagic, false);
             }
         }
-
+        GameData.Instance.allPlayers.OnListChanged += ClientOnAllPlayersChanged;
         DisplayHealth();
+    }
+
+    private void RefreshPlayerPanels()
+    {
+        foreach (PlayerPanelDisplay panel in _playerPanelDisplays)
+        {
+            Destroy(panel.gameObject);
+        }
+        _playerPanelDisplays.Clear();
+
+        foreach (PlayerInfo pi in GameData.Instance.allPlayers)
+        {
+            AddPlayerPanel(pi);
+        }
+    }
+
+    private void AddPlayerPanel(PlayerInfo info)
+    {
+        PlayerPanelDisplay newPanel = Instantiate(playerPanelPrefab);
+        newPanel.transform.SetParent(playersContent.transform, false);
+        newPanel.SetName(info.m_PlayerName);
+        //newPanel.SetSpriteLoc(info.);
+        newPanel.RefreshHealth(100);
+        _playerPanelDisplays.Add(newPanel);
+    }
+
+    private void ClientOnAllPlayersChanged(NetworkListEvent<PlayerInfo> changeEvent)
+    {
+        RefreshPlayerPanels();
     }
 
     private void HostHandleBulletCollision(GameObject bullet)
@@ -111,6 +147,8 @@ public class Player : NetworkBehaviour {
     private void ClientOnScoreChanged(int previous, int current)
     {
         //DisplayHealth();
+        //function for refreshing player panels? something that sends the server something that tells it this value changed?
+        //find the panel on the list and change the health?
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -170,6 +208,7 @@ public class Player : NetworkBehaviour {
     {
         // set health to 100%
         playerHealth.Value = maxPlayerHealth;
+        _healthSlider.value = maxPlayerHealth;
     }
 
     [ClientRpc]
@@ -190,12 +229,13 @@ public class Player : NetworkBehaviour {
 
     }
 
-    [ServerRpc]
+    [ServerRpc] //shares player health with server
     public void DisplayHealthServerRpc()
     {
         _healthSlider.value = playerHealth.Value; 
 
     }
+    
     
     //////// ANIMATION CONTROLLERS ////////
     
