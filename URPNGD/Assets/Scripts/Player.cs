@@ -3,8 +3,10 @@ using Cinemachine;
 using StarterAssets;
 using TMPro;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -19,10 +21,10 @@ public class Player : NetworkBehaviour {
     public NetworkVariable<int> weaponArrLoc = new NetworkVariable<int>();
 
     public int maxPlayerHealth = 100;
-    
+    public Slider _healthSlider;
+    public GameObject _playerPanel;
 
     //UI
-    public Slider healthSlider;
     [SerializeField] public Mesh[] listOfMeshes;
     [SerializeField] public Sprite[] listOfSprites;
     [SerializeField] public TMP_Text playerNameTxt;
@@ -32,6 +34,7 @@ public class Player : NetworkBehaviour {
     [SerializeField] public GameObject[] listOfThrownWeapons;
     [SerializeField] public GameObject meshHolder;
     [SerializeField] public GameObject cameraGameObject;
+    //[SerializeField] public GameObject _healthSliderGO;
     [SerializeField] public CinemachineVirtualCamera cinemachineVirtualCamera;
     [SerializeField] public ProjectileSpawner _projectileSpawner;
     
@@ -60,10 +63,14 @@ public class Player : NetworkBehaviour {
     }
     
     public override void OnNetworkSpawn() {
+        //assign the health thing here and if it's not null, destroy it i think
+
         _hasAnimator = TryGetComponent(out _animator);
         cameraGameObject.GetComponent<Camera>().enabled = IsOwner;
+        _playerPanel.SetActive(IsOwner);
         cinemachineVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = IsOwner;
         playerHealth.OnValueChanged += ClientOnScoreChanged;
+        
         foreach (PlayerInfo player in GameData.Instance.allPlayers)
         {
             if (player.playMeshSelect is 5 or 10 or 11)
@@ -103,7 +110,7 @@ public class Player : NetworkBehaviour {
 
     private void ClientOnScoreChanged(int previous, int current)
     {
-        DisplayHealth();
+        //DisplayHealth();
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -136,7 +143,8 @@ public class Player : NetworkBehaviour {
             EnemyManager enemyManager = damagerObject.GetComponent<EnemyManager>();
             playerHealth.Value -= enemyManager.regularHitDamage.Value;
             Debug.Log($"{playerHealth.Value}");
-            DisplayHealth();
+            //DisplayHealth();
+            DisplayHealthServerRpc();
             if (playerHealth.Value <= 0)
             {
                 //play death animation
@@ -178,7 +186,15 @@ public class Player : NetworkBehaviour {
 
     public void DisplayHealth()
     {
-        healthSlider.value = playerHealth.Value;
+        _healthSlider.value = playerHealth.Value; 
+
+    }
+
+    [ServerRpc]
+    public void DisplayHealthServerRpc()
+    {
+        _healthSlider.value = playerHealth.Value; 
+
     }
     
     //////// ANIMATION CONTROLLERS ////////

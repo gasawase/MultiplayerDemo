@@ -1090,7 +1090,9 @@ MonoBehaviour:
     m_InternalValue: 100
   weaponArrLoc:
     m_InternalValue: 0
-  healthSlider: {fileID: 201004128079581462}
+  maxPlayerHealth: 100
+  _healthSlider: {fileID: 201004128079581462}
+  _playerPanel: {fileID: 2129615427946494646}
   listOfMeshes:
   - {fileID: 4300028, guid: c9a34c70f1c0d00409f41fcfbb2a6871, type: 3}
   - {fileID: 4300030, guid: c9a34c70f1c0d00409f41fcfbb2a6871, type: 3}
@@ -3600,7 +3602,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.0025100708, y: 0}
+  m_AnchoredPosition: {x: 0.0025024414, y: 0}
   m_SizeDelta: {x: -0.0050049, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3829754489160225497
@@ -3714,7 +3716,7 @@ GameObject:
   - component: {fileID: 201004128079581462}
   m_Layer: 5
   m_Name: Health
-  m_TagString: Untagged
+  m_TagString: HealthSlider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

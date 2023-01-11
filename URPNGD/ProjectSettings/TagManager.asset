@@ -13,6 +13,7 @@ TagManager:
   - Projectile
   - Damager
   - SpawnLocation
+  - HealthSlider
   layers:
   - Default
   - TransparentFX

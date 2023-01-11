@@ -65,11 +65,13 @@ public class GameManager : NetworkBehaviour
             Debug.Log($"PLAYER INFO || clientId = {pi.clientId} ; PlayerName = {pi.PlayerName} ; CurrentMesh = {pi.playMeshSelect}");
             playerSpawn.PlayerMeshInt.Value = pi.playMeshSelect;
            
+            // sends this to only one target
             ulong[] singleTarget = new ulong[1];
             singleTarget[0] = pi.clientId;
             ClientRpcParams rpcParams = default;
             rpcParams.Send.TargetClientIds = singleTarget;
             RecievePlayerNameClientRpc(pi.m_PlayerName, rpcParams);
+            
             GameData.Instance.allPlayersSpawned.Add(pi.clientId, playerSpawn.gameObject); //TODO need to handle client disconnecting
             //playerSpawn.PlayerColor.Value = pi.color;
         }
@@ -81,6 +83,7 @@ public class GameManager : NetworkBehaviour
         SpawnPlayers();
     }
 
+    // sends message to all clients what their name should be
     [ClientRpc]
     public void RecievePlayerNameClientRpc(string pName, ClientRpcParams clientRpcParams = default)
     {

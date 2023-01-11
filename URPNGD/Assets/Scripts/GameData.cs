@@ -138,6 +138,7 @@ public class GameData : NetworkBehaviour {
         allPlayers.Add(new PlayerInfo(clientId, pName, (currMesh), NextColor(), false));
     }
 
+    // adds player name, current mesh, and client id to a separate dictionary to associate the client id with the player and their mesh
     public void AddPlayerNameToDictionary(ulong clientId, string pName, int currMesh)
     {
         if (dictPNames.ContainsKey(clientId))
