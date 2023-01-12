@@ -18,11 +18,11 @@ public class Player : NetworkBehaviour {
     public NetworkVariable<Vector3> RotationChange = new NetworkVariable<Vector3>();
     //public NetworkVariable<Color> PlayerColor = new NetworkVariable<Color>(Color.red);
     public NetworkVariable<int> PlayerMeshInt = new NetworkVariable<int>();
-    public NetworkVariable<int> playerHealth = new NetworkVariable<int>();
+    //public NetworkVariable<int> playerHealth;
     public NetworkVariable<int> weaponArrLoc = new NetworkVariable<int>();
 
-    public int maxPlayerHealth = 100;
-    public Slider _healthSlider;
+    //public int maxPlayerHealth = 100;
+    //public Slider _healthSlider;
     public GameObject _playerDisplay;
 
     //UI
@@ -62,7 +62,7 @@ public class Player : NetworkBehaviour {
     {
         _hasAnimator = TryGetComponent(out _animator);
         AssignAnimationIDs();
-        playerHealth.Value = maxPlayerHealth;
+        //playerHealth.Value = maxPlayerHealth;
         _gameMgr = GetComponent<GameManager>();
         _playerPanelDisplays = new List<PlayerPanelDisplay>();
         RefreshPlayerPanels();
@@ -76,7 +76,7 @@ public class Player : NetworkBehaviour {
         cameraGameObject.GetComponent<Camera>().enabled = IsOwner;
         _playerDisplay.SetActive(IsOwner);
         cinemachineVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = IsOwner;
-        playerHealth.OnValueChanged += ClientOnScoreChanged;
+        //playerHealth.OnValueChanged += ClientOnScoreChanged;
         
         foreach (PlayerInfo player in GameData.Instance.allPlayers)
         {
@@ -90,7 +90,7 @@ public class Player : NetworkBehaviour {
             }
         }
         GameData.Instance.allPlayers.OnListChanged += ClientOnAllPlayersChanged;
-        DisplayHealth();
+        //DisplayHealth();
     }
 
     private void RefreshPlayerPanels()
@@ -125,11 +125,11 @@ public class Player : NetworkBehaviour {
     private void HostHandleBulletCollision(GameObject bullet)
     {
         Bullet bulletScript = bullet.GetComponent<Bullet>();
-        playerHealth.Value -= bulletScript.damage.Value;
+        //playerHealth.Value -= bulletScript.damage.Value;
 
         ulong ownerClientId = bullet.GetComponent<NetworkObject>().OwnerClientId;
         Player otherPlayer = NetworkManager.Singleton.ConnectedClients[ownerClientId].PlayerObject.GetComponent<Player>();
-        otherPlayer.playerHealth.Value += 1;
+        //otherPlayer.playerHealth.Value += 1;
         
         Destroy(bullet);          
     }
@@ -151,14 +151,14 @@ public class Player : NetworkBehaviour {
         //find the panel on the list and change the health?
     }
 
-    public void OnCollisionEnter(Collision collision)
+    /*public void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Damager")) // "Damager" should be attached to anything that can damage the player
         {
             Debug.Log($"player hit by {collision.gameObject}");
             ServerDamageHandlerForPlayers(collision.gameObject);
         }
-    }
+    }*/
 
     public void OnTriggerEnter(Collider collision)
     {
@@ -172,7 +172,7 @@ public class Player : NetworkBehaviour {
         }
     }
 
-    public void ServerDamageHandlerForPlayers(GameObject damagerObject)
+    /*public void ServerDamageHandlerForPlayers(GameObject damagerObject)
     {
         // check if this is an Enemy
         if (damagerObject.GetComponent<EnemyManager>())
@@ -192,7 +192,7 @@ public class Player : NetworkBehaviour {
             }
             //trigger animation hit
         }
-    }
+    }*/
     
 
     [ServerRpc]
@@ -203,13 +203,13 @@ public class Player : NetworkBehaviour {
         RotationChange.Value = rotChange;
     }
 
-    [ServerRpc]
+    /*[ServerRpc]
     void RespawnPlayerServerRpc()
     {
         // set health to 100%
         playerHealth.Value = maxPlayerHealth;
         _healthSlider.value = maxPlayerHealth;
-    }
+    }*/
 
     [ClientRpc]
     void ResetPlayerLocationClientRpc()
@@ -223,7 +223,7 @@ public class Player : NetworkBehaviour {
         GetComponent<CharacterController>().enabled = true;
     }
 
-    public void DisplayHealth()
+    /*public void DisplayHealth()
     {
         _healthSlider.value = playerHealth.Value; 
 
@@ -234,7 +234,7 @@ public class Player : NetworkBehaviour {
     {
         _healthSlider.value = playerHealth.Value; 
 
-    }
+    }*/
     
     
     //////// ANIMATION CONTROLLERS ////////
