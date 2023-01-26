@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// controls player HUD and everything displayed
+/// manages the display itself of each player panel on the side of the player HUDs
 /// </summary>
 public class PlayerPanelDisplay : MonoBehaviour
 {

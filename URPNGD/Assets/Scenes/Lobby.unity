@@ -853,7 +853,7 @@ MonoBehaviour:
   btnReady: {fileID: 1517301030}
   playerPanelPrefab: {fileID: 8234815413222516709, guid: 7c6676aa5477c864dbd021e540db70db,
     type: 3}
-  btnSubmitName: {fileID: 0}
+  btnSubmitName: {fileID: 594061652}
   areYouSurePanel: {fileID: 756518771}
   characterSelected: {fileID: 1343287149}
   playerNameText: {fileID: 21198130}

@@ -88,6 +88,6 @@ public class GameManager : NetworkBehaviour
     [ClientRpc]
     public void RecievePlayerNameClientRpc(string pName, ClientRpcParams clientRpcParams = default)
     {
-        GameObject.Find("PlayerName").GetComponent<TMP_Text>().text = pName;
+        //GameObject.Find("PlayerName").GetComponent<TMP_Text>().text = pName;
     }
 }

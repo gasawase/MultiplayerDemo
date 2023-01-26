@@ -23,14 +23,10 @@ public class Player : NetworkBehaviour {
 
     //public int maxPlayerHealth = 100;
     //public Slider _healthSlider;
-    public GameObject _playerDisplay;
+    
 
     //UI
     [SerializeField] public Mesh[] listOfMeshes;
-    [SerializeField] public Sprite[] listOfSprites;
-    [SerializeField] public TMP_Text playerNameTxt;
-    [SerializeField] public PlayerPanelDisplay playerPanelPrefab;
-    public GameObject playersContent;
     [SerializeField] public GameObject[] listOfDoubHandWeapons;
     [SerializeField] public GameObject[] listOfSingHandWeapons;
     [SerializeField] public GameObject[] listOfThrownWeapons;
@@ -65,7 +61,7 @@ public class Player : NetworkBehaviour {
         //playerHealth.Value = maxPlayerHealth;
         _gameMgr = GetComponent<GameManager>();
         _playerPanelDisplays = new List<PlayerPanelDisplay>();
-        RefreshPlayerPanels();
+        //RefreshPlayerPanels();
         
     }
     
@@ -74,7 +70,6 @@ public class Player : NetworkBehaviour {
 
         _hasAnimator = TryGetComponent(out _animator);
         cameraGameObject.GetComponent<Camera>().enabled = IsOwner;
-        _playerDisplay.SetActive(IsOwner);
         cinemachineVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = IsOwner;
         //playerHealth.OnValueChanged += ClientOnScoreChanged;
         
@@ -89,39 +84,8 @@ public class Player : NetworkBehaviour {
                 _animator.SetBool(_animIsMagic, false);
             }
         }
-        GameData.Instance.allPlayers.OnListChanged += ClientOnAllPlayersChanged;
         //DisplayHealth();
     }
-
-    private void RefreshPlayerPanels()
-    {
-        foreach (PlayerPanelDisplay panel in _playerPanelDisplays)
-        {
-            Destroy(panel.gameObject);
-        }
-        _playerPanelDisplays.Clear();
-
-        foreach (PlayerInfo pi in GameData.Instance.allPlayers)
-        {
-            AddPlayerPanel(pi);
-        }
-    }
-
-    private void AddPlayerPanel(PlayerInfo info)
-    {
-        PlayerPanelDisplay newPanel = Instantiate(playerPanelPrefab);
-        newPanel.transform.SetParent(playersContent.transform, false);
-        newPanel.SetName(info.m_PlayerName);
-        //newPanel.SetSpriteLoc(info.);
-        newPanel.RefreshHealth(100);
-        _playerPanelDisplays.Add(newPanel);
-    }
-
-    private void ClientOnAllPlayersChanged(NetworkListEvent<PlayerInfo> changeEvent)
-    {
-        RefreshPlayerPanels();
-    }
-
     private void HostHandleBulletCollision(GameObject bullet)
     {
         Bullet bulletScript = bullet.GetComponent<Bullet>();
@@ -172,28 +136,6 @@ public class Player : NetworkBehaviour {
         }
     }
 
-    /*public void ServerDamageHandlerForPlayers(GameObject damagerObject)
-    {
-        // check if this is an Enemy
-        if (damagerObject.GetComponent<EnemyManager>())
-        {
-            Debug.Log($"this is an enemy hit");
-            EnemyManager enemyManager = damagerObject.GetComponent<EnemyManager>();
-            playerHealth.Value -= enemyManager.regularHitDamage.Value;
-            Debug.Log($"{playerHealth.Value}");
-            //DisplayHealth();
-            DisplayHealthServerRpc();
-            if (playerHealth.Value <= 0)
-            {
-                //play death animation
-                //black screen fade in
-                RespawnPlayerServerRpc();
-                ResetPlayerLocationClientRpc();
-            }
-            //trigger animation hit
-        }
-    }*/
-    
 
     [ServerRpc]
     void RequestPositionForMovementServerRpc(Vector3 posChange, Vector3 rotChange) {
@@ -202,41 +144,21 @@ public class Player : NetworkBehaviour {
         PositionChange.Value = posChange;
         RotationChange.Value = rotChange;
     }
-
-    /*[ServerRpc]
-    void RespawnPlayerServerRpc()
-    {
-        // set health to 100%
-        playerHealth.Value = maxPlayerHealth;
-        _healthSlider.value = maxPlayerHealth;
-    }*/
-
-    [ClientRpc]
-    void ResetPlayerLocationClientRpc()
-    {
-        //reset player position to spawn point
-        GetComponent<CharacterController>().enabled = false;
-        GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("SpawnLocation");
-        UnityEngine.Random.InitState((int)System.DateTime.Now.Ticks);
-        int index = UnityEngine.Random.Range(0, spawnPoints.Length);
-        transform.position = spawnPoints[index].transform.position;
-        GetComponent<CharacterController>().enabled = true;
-    }
-
-    /*public void DisplayHealth()
-    {
-        _healthSlider.value = playerHealth.Value; 
-
-    }
-
-    [ServerRpc] //shares player health with server
-    public void DisplayHealthServerRpc()
-    {
-        _healthSlider.value = playerHealth.Value; 
-
-    }*/
     
-    
+
+    // [ClientRpc]
+    // void ResetPlayerLocationClientRpc()
+    // {
+    //     //reset player position to spawn point
+    //     GetComponent<CharacterController>().enabled = false;
+    //     GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("SpawnLocation");
+    //     UnityEngine.Random.InitState((int)System.DateTime.Now.Ticks);
+    //     int index = UnityEngine.Random.Range(0, spawnPoints.Length);
+    //     transform.position = spawnPoints[index].transform.position;
+    //     GetComponent<CharacterController>().enabled = true;
+    // }
+
+
     //////// ANIMATION CONTROLLERS ////////
     
     private void AssignAnimationIDs()

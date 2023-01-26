@@ -132,7 +132,7 @@ public class LobbyManager : NetworkBehaviour
     {
         string playerName = pName;
         areYouSurePanel.SetActive(true);
-        Sprite[] listOfImages = GameData.Instance.spawnedPlayer.GetComponent<Player>().listOfSprites;
+        Sprite[] listOfImages = GameData.Instance.spawnedPlayer.GetComponent<PlayerHUDManager>().listOfSprites;
         playerNameText.text = playerName;
         Sprite selectedChar = listOfImages[currMesh - 1];
         characterSelected.GetComponent<Image>().sprite = selectedChar;

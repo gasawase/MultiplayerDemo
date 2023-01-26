@@ -5,6 +5,11 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// manages the health and damage of the players
+/// the health is over a network variable so when it's changed,
+/// everyone on the network knows
+/// </summary>
 public class PlayerAttributes : NetworkBehaviour
 {
     public Slider hpBar;
@@ -56,6 +61,7 @@ public class PlayerAttributes : NetworkBehaviour
         }
     }
 
+    // tell the server that you've taken damage
     [ServerRpc]
     private void TakeDamageServerRpc(int damage)
     {
@@ -63,6 +69,7 @@ public class PlayerAttributes : NetworkBehaviour
     }
     
     
+    // tell the server that your health is reset
     [ServerRpc]
     void RespawnPlayerServerRpc()
     {
@@ -71,6 +78,7 @@ public class PlayerAttributes : NetworkBehaviour
         //hpBar.value = maxHP; //should be covered by ClientOnValueChanged
     }
     
+    // tell all the clients that a specific player has a new location
     [ClientRpc]
     void ResetPlayerLocationClientRpc()
     {

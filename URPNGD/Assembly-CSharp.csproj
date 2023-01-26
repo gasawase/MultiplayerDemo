@@ -78,6 +78,7 @@
      <Compile Include="Assets\StarterAssets\TutorialInfo\Scripts\Readme.cs" />
      <Compile Include="Assets\Scripts\PlayerLobby.cs" />
      <Compile Include="Assets\Scripts\ProjectileSpawner.cs" />
+     <Compile Include="Assets\Scripts\PlayerHUDManager.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
