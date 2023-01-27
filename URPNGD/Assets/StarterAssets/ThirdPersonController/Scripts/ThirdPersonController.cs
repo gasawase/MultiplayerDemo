@@ -162,7 +162,7 @@ namespace StarterAssets
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
-            if (IsClient && IsOwner)
+            if (IsClient && IsLocalPlayer)
             {
                 _playerInput = GetComponent<PlayerInput>();
                 _playerInput.enabled = true;
@@ -172,7 +172,7 @@ namespace StarterAssets
 
         private void Update()
         {
-            if (IsOwner)
+            if (IsLocalPlayer)
             {
                 _hasAnimator = TryGetComponent(out _animator);
     

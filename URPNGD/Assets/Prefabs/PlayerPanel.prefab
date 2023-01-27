@@ -566,6 +566,7 @@ MonoBehaviour:
   listOfSprites: []
   spriteImageGO: {fileID: 2140135664893374339}
   playerHealth: {fileID: 8463825982004559443}
+  personalClientId: 0
 --- !u!114 &4368346939638777411
 MonoBehaviour:
   m_ObjectHideFlags: 0

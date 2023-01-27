@@ -12,9 +12,10 @@ using UnityEngine.UI;
 /// </summary>
 public class PlayerAttributes : NetworkBehaviour
 {
+    [SerializeField] public PlayerHUDManager playerHudManager;
     public Slider hpBar;
-
     private int maxHP = 100;
+    public int visibleHealth;
 
     private NetworkVariable<int> currentHp = new NetworkVariable<int>();
 
@@ -27,6 +28,7 @@ public class PlayerAttributes : NetworkBehaviour
     private void ClientOnValueChanged(int previousvalue, int newvalue)
     {
         hpBar.value = currentHp.Value;
+        visibleHealth = currentHp.Value;
     }
     
     public void OnCollisionEnter(Collision collision)
@@ -34,11 +36,11 @@ public class PlayerAttributes : NetworkBehaviour
         if (collision.gameObject.CompareTag("Damager")) // "Damager" should be attached to anything that can damage the player
         {
             Debug.Log($"player hit by {collision.gameObject}");
-            ServerDamageHandlerForPlayers(collision.gameObject);
+            DamageHandlerForPlayers(collision.gameObject);
         }
     }
     
-    public void ServerDamageHandlerForPlayers(GameObject damagerObject)
+    public void DamageHandlerForPlayers(GameObject damagerObject)
     {
         // check if this is an Enemy
         if (damagerObject.GetComponent<EnemyManager>())
@@ -61,11 +63,28 @@ public class PlayerAttributes : NetworkBehaviour
         }
     }
 
-    // tell the server that you've taken damage
-    [ServerRpc]
-    private void TakeDamageServerRpc(int damage)
+    //DOES run
+    public void UpdatePlayersHealth(int health, ulong playerClientId)
     {
+        string idString = playerClientId.ToString();
+        int playerIDInt = Int32.Parse(idString);
+        
+    }
+
+    // tell the server that you've taken damage
+    [ServerRpc(RequireOwnership = false)]
+    private void TakeDamageServerRpc(int damage, ServerRpcParams serverRpcParams = default)
+    {
+        // changing health on this player end
         currentHp.Value -= damage;
+        // change health on all clients' end
+        if (serverRpcParams.Receive.SenderClientId != NetworkManager.LocalClientId)
+        {
+            ReceivePlayerHealthChangeClientRpc(currentHp.Value, serverRpcParams.Receive.SenderClientId);
+            Debug.Log("TakeDamageServerRPC ran");
+        }
+        
+        
     }
     
     
@@ -76,6 +95,25 @@ public class PlayerAttributes : NetworkBehaviour
         // set health to 100%
         currentHp.Value = maxHP;
         //hpBar.value = maxHP; //should be covered by ClientOnValueChanged
+    }
+
+    //tells each client to run this script on each client
+    [ClientRpc]
+    public void ReceivePlayerHealthChangeClientRpc(int health, ulong playerWhoTookDamageId)
+    {
+        GameObject[] currentPlayers = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject playerObj in currentPlayers)
+        {
+            foreach (PlayerInfo playerInfo in GameData.Instance.allPlayers)
+            {
+                if (playerObj.GetComponent<NetworkBehaviour>().OwnerClientId == playerInfo.clientId)
+                {
+                    GetComponent<PlayerHUDManager>().UpdatePlayersHealthUI(health, playerWhoTookDamageId);
+
+                }
+            }
+        }
+        Debug.Log("ReceivePlayerHealthChangeClientRPC ran");
     }
     
     // tell all the clients that a specific player has a new location

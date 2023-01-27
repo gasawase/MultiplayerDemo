@@ -16,6 +16,8 @@ public class PlayerPanelDisplay : MonoBehaviour
     [SerializeField] public GameObject spriteImageGO;
     [SerializeField] public Slider playerHealth;
 
+    public ulong personalClientId;
+
     public void SetName(string newName)
     {
         txtName.text = newName;
@@ -29,5 +31,10 @@ public class PlayerPanelDisplay : MonoBehaviour
     public void RefreshHealth(int playHealth)
     {
         playerHealth.value = playHealth;
+    }
+
+    public void SetClientId(ulong clientId)
+    {
+        personalClientId = clientId;
     }
 }

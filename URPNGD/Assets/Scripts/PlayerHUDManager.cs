@@ -26,26 +26,33 @@ public class PlayerHUDManager : NetworkBehaviour
     public GameObject playersContent;
     
     private GameManager _gameMgr;
-    private List<PlayerPanelDisplay> _playerPanelDisplays;
+    public List<PlayerPanelDisplay> _playerPanelDisplays;
+    public Dictionary<ulong, float> listOfPlayerHealthIds;
 
     private void Awake()
     {
         _gameMgr = GetComponent<GameManager>();
         _playerPanelDisplays = new List<PlayerPanelDisplay>();
+        listOfPlayerHealthIds = new Dictionary<ulong, float>();
+        
         playerClientId.text = NetworkManager.LocalClientId.ToString();
         RefreshPlayerPanels();
-        foreach (PlayerInfo pi in GameData.Instance.allPlayers)
-        {
-            if (pi.clientId == NetworkManager.LocalClientId)
-            {
-                playerNameTxt.text = pi.m_PlayerName;
-            }
-        }
+    }
+
+    private void SetUpPlayerHUD()
+    {
+        AssignCorrectName();
+        
     }
 
     public override void OnNetworkSpawn()
     {
+        SetUpPlayerHUD();
         _playerHUD.SetActive(IsOwner);
+        if (_playerHUD.activeInHierarchy == false)
+        {
+            Destroy(_playerHUD);
+        }
         GameData.Instance.allPlayers.OnListChanged += ClientOnAllPlayersChanged;
     }
 
@@ -63,7 +70,6 @@ public class PlayerHUDManager : NetworkBehaviour
             {
                 AddPlayerPanel(pi);
             }
-            //AddPlayerPanel(pi);
         }
     }
     
@@ -72,14 +78,38 @@ public class PlayerHUDManager : NetworkBehaviour
         PlayerPanelDisplay newPanel = Instantiate(playerPanelPrefab);
         newPanel.transform.SetParent(playersContent.transform, false);
         newPanel.SetName(info.m_PlayerName);
+        newPanel.SetClientId(info.clientId);
+        Debug.Log($"newPanel client id: {newPanel.personalClientId}");
         //newPanel.SetSpriteLoc(info.);
         //newPanel.RefreshHealth(100); //is there a way to get the client health here? do i call a client rpc here?
         _playerPanelDisplays.Add(newPanel);
+        listOfPlayerHealthIds.Add(info.clientId, newPanel.playerHealth.value);
+        
+        // for each new panel, add an event listener that will track that players health
+        
+        //newPanel.playerHealth.onValueChanged.AddListener(delegate { OtherPlayerHealthManager();  });
+        Debug.Log($"listOfPlayerHealthAndPanels info.clientId: {info.clientId}");
     }
     
     private void ClientOnAllPlayersChanged(NetworkListEvent<PlayerInfo> changeEvent)
     {
         RefreshPlayerPanels();
+    }
+
+    private void AssignCorrectName()
+    {
+        foreach (PlayerInfo pi in GameData.Instance.allPlayers)
+        {
+            if (pi.clientId == NetworkManager.LocalClientId)
+            {
+                playerNameTxt.text = pi.m_PlayerName;
+            }
+        }
+    }
+
+    public void UpdatePlayersHealthUI(int health, ulong playerWhoTookDamageId)
+    {
+        Debug.Log($"Player {playerWhoTookDamageId} took {health} damage");
     }
 
 }

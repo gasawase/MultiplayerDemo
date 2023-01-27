@@ -68,9 +68,11 @@ public class Player : NetworkBehaviour {
     public override void OnNetworkSpawn() {
         //assign the health thing here and if it's not null, destroy it i think
 
+        //if you don't own this, destroy all of its children
+        
         _hasAnimator = TryGetComponent(out _animator);
-        cameraGameObject.GetComponent<Camera>().enabled = IsOwner;
-        cinemachineVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = IsOwner;
+        cameraGameObject.GetComponent<Camera>().enabled = IsLocalPlayer;
+        cinemachineVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = IsLocalPlayer;
         //playerHealth.OnValueChanged += ClientOnScoreChanged;
         
         foreach (PlayerInfo player in GameData.Instance.allPlayers)

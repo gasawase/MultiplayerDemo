@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 6872209773624307922}
   m_Layer: 5
   m_Name: Players
-  m_TagString: Untagged
+  m_TagString: ListOfPlayers
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1342,6 +1342,7 @@ MonoBehaviour:
     type: 3}
   playerClientId: {fileID: 1406634129666689587}
   playersContent: {fileID: 1498474351483249686}
+  _playerPanelDisplays: []
 --- !u!114 &6531199863567641395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1354,6 +1355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbaefb3e9a805e94d9e44b88d22b3b4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHudManager: {fileID: 1943512071975289763}
   hpBar: {fileID: 6277285458964443176}
 --- !u!114 &9179103832877124640
 MonoBehaviour:

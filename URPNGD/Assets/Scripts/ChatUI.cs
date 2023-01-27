@@ -56,7 +56,7 @@ public class ChatUI : NetworkBehaviour {
             singleClientId[0] = from;
             SendChatMessageClientRpc($"<whisper> {message}", from, rpcParams);
 
-            singleClientId[0] = to;
+            singleClientId[1] = to;
             SendChatMessageClientRpc($"<whisper> {message}", to, rpcParams);
         }
     }
