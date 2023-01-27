@@ -23,6 +23,11 @@ public class PlayerHUDManager : NetworkBehaviour
     [SerializeField] public TMP_Text playerNameTxt; //this is controlled in GameManager under RecievePlayerNameClientRpc
     [SerializeField] public PlayerPanelDisplay playerPanelPrefab;
     [SerializeField] public TMP_Text playerClientId;
+
+    [SerializeField] public GameObject testPanel;
+    [SerializeField] public TMP_Text playerNameHolder;
+    [SerializeField] public TMP_Text playerHealthHolder;
+    
     public GameObject playersContent;
     
     private GameManager _gameMgr;
@@ -53,8 +58,7 @@ public class PlayerHUDManager : NetworkBehaviour
         {
             Destroy(_playerHUD);
         }
-        GameData.Instance.allPlayers.OnListChanged += ClientOnAllPlayersChanged;
-    }
+        GameData.Instance.allPlayers.OnListChanged += ClientOnAllPlayersChanged; }
 
     private void RefreshPlayerPanels()
     {
@@ -109,6 +113,8 @@ public class PlayerHUDManager : NetworkBehaviour
 
     public void UpdatePlayersHealthUI(int health, ulong playerWhoTookDamageId)
     {
+        playerNameHolder.text = playerWhoTookDamageId.ToString();
+        playerHealthHolder.text = health.ToString();
         Debug.Log($"Player {playerWhoTookDamageId} took {health} damage");
     }
 

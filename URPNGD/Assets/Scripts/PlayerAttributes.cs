@@ -68,7 +68,7 @@ public class PlayerAttributes : NetworkBehaviour
     {
         string idString = playerClientId.ToString();
         int playerIDInt = Int32.Parse(idString);
-        
+        Debug.Log("updateplayershealth ran");
     }
 
     // tell the server that you've taken damage
@@ -80,6 +80,7 @@ public class PlayerAttributes : NetworkBehaviour
         // change health on all clients' end
         if (serverRpcParams.Receive.SenderClientId != NetworkManager.LocalClientId)
         {
+            UpdatePlayersHealth(damage, serverRpcParams.Receive.SenderClientId);
             ReceivePlayerHealthChangeClientRpc(currentHp.Value, serverRpcParams.Receive.SenderClientId);
             Debug.Log("TakeDamageServerRPC ran");
         }
@@ -102,6 +103,7 @@ public class PlayerAttributes : NetworkBehaviour
     public void ReceivePlayerHealthChangeClientRpc(int health, ulong playerWhoTookDamageId)
     {
         GameObject[] currentPlayers = GameObject.FindGameObjectsWithTag("Player");
+        GetComponent<PlayerHUDManager>().UpdatePlayersHealthUI(health, playerWhoTookDamageId);
         foreach (GameObject playerObj in currentPlayers)
         {
             foreach (PlayerInfo playerInfo in GameData.Instance.allPlayers)
@@ -109,11 +111,11 @@ public class PlayerAttributes : NetworkBehaviour
                 if (playerObj.GetComponent<NetworkBehaviour>().OwnerClientId == playerInfo.clientId)
                 {
                     GetComponent<PlayerHUDManager>().UpdatePlayersHealthUI(health, playerWhoTookDamageId);
-
+                    Debug.Log("ReceivePlayerHealthChangeClientRPC ran");
                 }
             }
         }
-        Debug.Log("ReceivePlayerHealthChangeClientRPC ran");
+        
     }
     
     // tell all the clients that a specific player has a new location
