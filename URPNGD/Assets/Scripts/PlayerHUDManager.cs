@@ -113,9 +113,30 @@ public class PlayerHUDManager : NetworkBehaviour
 
     public void UpdatePlayersHealthUI(int health, ulong playerWhoTookDamageId)
     {
+        // find/get the player panels
+        // change health here
+
+        GameObject[] listPlayerPanels = GetListOfPlayerPanels();
+
+        foreach (var panel in listPlayerPanels)
+        {
+            PlayerPanelDisplay ppdisplayScript = panel.GetComponent<PlayerPanelDisplay>();
+
+            if (ppdisplayScript.personalClientId == playerWhoTookDamageId)
+            {
+                ppdisplayScript.playerHealth.value = health;
+            }
+        }
+        
         playerNameHolder.text = playerWhoTookDamageId.ToString();
         playerHealthHolder.text = health.ToString();
         Debug.Log($"Player {playerWhoTookDamageId} took {health} damage");
+    }
+
+    private GameObject[] GetListOfPlayerPanels()
+    {
+        GameObject[] listPlayerPanels = GameObject.FindGameObjectsWithTag("PlayerPanel");
+        return listPlayerPanels;
     }
 
 }

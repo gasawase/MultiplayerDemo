@@ -28,6 +28,7 @@ public class PlayerAttributes : NetworkBehaviour
     private void ClientOnValueChanged(int previousvalue, int newvalue)
     {
         hpBar.value = currentHp.Value;
+        
         visibleHealth = currentHp.Value;
     }
     
@@ -78,12 +79,9 @@ public class PlayerAttributes : NetworkBehaviour
         // changing health on this player end
         currentHp.Value -= damage;
         // change health on all clients' end
-        if (serverRpcParams.Receive.SenderClientId != NetworkManager.LocalClientId)
-        {
-            UpdatePlayersHealth(damage, serverRpcParams.Receive.SenderClientId);
-            ReceivePlayerHealthChangeClientRpc(currentHp.Value, serverRpcParams.Receive.SenderClientId);
-            Debug.Log("TakeDamageServerRPC ran");
-        }
+        UpdatePlayersHealth(damage, serverRpcParams.Receive.SenderClientId);
+        ReceivePlayerHealthChangeClientRpc(currentHp.Value, serverRpcParams.Receive.SenderClientId);
+        Debug.Log("TakeDamageServerRPC ran");
         
         
     }
@@ -104,7 +102,7 @@ public class PlayerAttributes : NetworkBehaviour
     {
         GameObject[] currentPlayers = GameObject.FindGameObjectsWithTag("Player");
         GetComponent<PlayerHUDManager>().UpdatePlayersHealthUI(health, playerWhoTookDamageId);
-        foreach (GameObject playerObj in currentPlayers)
+        /*foreach (GameObject playerObj in currentPlayers)
         {
             foreach (PlayerInfo playerInfo in GameData.Instance.allPlayers)
             {
@@ -114,7 +112,7 @@ public class PlayerAttributes : NetworkBehaviour
                     Debug.Log("ReceivePlayerHealthChangeClientRPC ran");
                 }
             }
-        }
+        }*/
         
     }
     

@@ -15,6 +15,7 @@ TagManager:
   - SpawnLocation
   - HealthSlider
   - ListOfPlayers
+  - GameManager
   layers:
   - Default
   - TransparentFX
