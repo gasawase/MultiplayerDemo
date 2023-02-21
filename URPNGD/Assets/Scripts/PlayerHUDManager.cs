@@ -40,8 +40,9 @@ public class PlayerHUDManager : NetworkBehaviour
         _playerPanelDisplays = new List<PlayerPanelDisplay>();
         listOfPlayerHealthIds = new Dictionary<ulong, float>();
         
-        playerClientId.text = NetworkManager.LocalClientId.ToString();
-        RefreshPlayerPanels();
+        playerClientId.text = this.NetworkManager.LocalClientId.ToString();
+        
+        //RefreshPlayerPanels();
     }
 
     private void SetUpPlayerHUD()
@@ -58,18 +59,25 @@ public class PlayerHUDManager : NetworkBehaviour
         {
             Destroy(_playerHUD);
         }
-        GameData.Instance.allPlayers.OnListChanged += ClientOnAllPlayersChanged; }
+        GameData.Instance.allPlayers.OnListChanged += ClientOnAllPlayersChanged; 
+        RefreshPlayerPanels();
+    }
+    
 
     private void RefreshPlayerPanels()
     {
+        // for all players in the list of player panels that have been added, destroy them
         foreach (PlayerPanelDisplay panel in _playerPanelDisplays)
         {
             Destroy(panel.gameObject);
         }
         _playerPanelDisplays.Clear();
 
+        // for all players currently in the game data
         foreach (PlayerInfo pi in GameData.Instance.allPlayers)
         {
+            // if the player id does not match the local client id of this specific player
+            // then don't add the panel
             if (pi.clientId != NetworkManager.LocalClientId)
             {
                 AddPlayerPanel(pi);
@@ -100,11 +108,19 @@ public class PlayerHUDManager : NetworkBehaviour
         RefreshPlayerPanels();
     }
 
+    // for all players currently active, if the player in player
+    // info matches the owner client id, attach their name to the text panel
     private void AssignCorrectName()
     {
         foreach (PlayerInfo pi in GameData.Instance.allPlayers)
         {
-            if (pi.clientId == NetworkManager.LocalClientId)
+            // if (pi.clientId == NetworkManager.LocalClientId)
+            // {
+            //     playerNameTxt.text = pi.m_PlayerName;
+            // }
+            
+            // where the clientID matches the networkobject.ownerclientid, assign the name here
+            if (pi.clientId == NetworkObject.OwnerClientId)
             {
                 playerNameTxt.text = pi.m_PlayerName;
             }
