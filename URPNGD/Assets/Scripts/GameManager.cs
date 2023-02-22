@@ -4,6 +4,10 @@ using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
+/// <summary>
+/// Manages the first level of the game
+/// </summary>
+
 public class GameManager : NetworkBehaviour
 {
     [SerializeField] public Player playerPrefab;
@@ -55,6 +59,7 @@ public class GameManager : NetworkBehaviour
         return newPosition;
     }
     
+    // Spawns players for the scene 
     private void SpawnPlayers()
     {
         foreach (PlayerInfo pi in GameData.Instance.allPlayers)
@@ -66,28 +71,17 @@ public class GameManager : NetworkBehaviour
             playerSpawn.PlayerMeshInt.Value = pi.playMeshSelect;
            
             // sends this to only one target
+            // 2_22_23, I don't think this portion does anything
             ulong[] singleTarget = new ulong[1];
             singleTarget[0] = pi.clientId;
             ClientRpcParams rpcParams = default;
             rpcParams.Send.TargetClientIds = singleTarget;
-            RecievePlayerNameClientRpc(pi.m_PlayerName, rpcParams);
-            
+            //
+
             GameData.Instance.allPlayersSpawned.Add(pi.clientId, playerSpawn.gameObject); //TODO need to handle client disconnecting
-            //playerSpawn.PlayerColor.Value = pi.color;
         }
+        // create HUDs here 
+        // TODO: create a checking system to make sure that all players are actually in the scene
     }
     
-
-    [ServerRpc(RequireOwnership = false)]
-    public void SpawnPlayerServerRpc(ServerRpcParams serverRpcParams = default) //ask server to send info from this script to the client?
-    {
-        SpawnPlayers();
-    }
-
-    // sends message to all clients what their name should be
-    [ClientRpc]
-    public void RecievePlayerNameClientRpc(string pName, ClientRpcParams clientRpcParams = default)
-    {
-        //GameObject.Find("PlayerName").GetComponent<TMP_Text>().text = pName;
-    }
 }

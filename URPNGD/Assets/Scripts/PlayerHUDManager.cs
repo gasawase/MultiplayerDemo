@@ -39,28 +39,35 @@ public class PlayerHUDManager : NetworkBehaviour
         _gameMgr = GetComponent<GameManager>();
         _playerPanelDisplays = new List<PlayerPanelDisplay>();
         listOfPlayerHealthIds = new Dictionary<ulong, float>();
-        
-        playerClientId.text = this.NetworkManager.LocalClientId.ToString();
-        
-        //RefreshPlayerPanels();
     }
 
-    private void SetUpPlayerHUD()
+    public void SetUpPlayerHUD()
     {
         AssignCorrectName();
-        
-    }
-
-    public override void OnNetworkSpawn()
-    {
-        SetUpPlayerHUD();
+        // enable player panels and get the data for the player panels
         _playerHUD.SetActive(IsOwner);
+        
+        // if the hud that has been spawned is not of the owner then delete it 
         if (_playerHUD.activeInHierarchy == false)
         {
             Destroy(_playerHUD);
         }
-        GameData.Instance.allPlayers.OnListChanged += ClientOnAllPlayersChanged; 
         RefreshPlayerPanels();
+        playerClientId.text = this.NetworkManager.LocalClientId.ToString();
+        // get info for player name and such
+        // disable the black screen
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        // SetUpPlayerHUD();
+        // _playerHUD.SetActive(IsOwner);
+        // if (_playerHUD.activeInHierarchy == false)
+        // {
+        //     Destroy(_playerHUD);
+        // }
+        // GameData.Instance.allPlayers.OnListChanged += ClientOnAllPlayersChanged; 
+        // RefreshPlayerPanels();
     }
     
 
