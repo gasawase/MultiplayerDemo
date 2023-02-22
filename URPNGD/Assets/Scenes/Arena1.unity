@@ -548,6 +548,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 787875781350694953, guid: ad063ac1b9aa2a94aaacb35f62848379,
         type: 3}
+      propertyPath: hudPrefab
+      value: 
+      objectReference: {fileID: 870194213778219859, guid: 137416306e2570f4194a3a3e41e5c92f,
+        type: 3}
+    - target: {fileID: 787875781350694953, guid: ad063ac1b9aa2a94aaacb35f62848379,
+        type: 3}
       propertyPath: spawnPoints
       value: 
       objectReference: {fileID: 488339403}
@@ -570,7 +576,7 @@ PrefabInstance:
     - target: {fileID: 2787144283637373561, guid: ad063ac1b9aa2a94aaacb35f62848379,
         type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 861700875
+      value: 3716243934
       objectReference: {fileID: 0}
     - target: {fileID: 2787144283637373563, guid: ad063ac1b9aa2a94aaacb35f62848379,
         type: 3}

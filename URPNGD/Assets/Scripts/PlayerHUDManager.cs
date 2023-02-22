@@ -17,8 +17,6 @@ using UnityEngine.UI;
 
 public class PlayerHUDManager : NetworkBehaviour
 {
-    public GameObject _playerHUD;
-    
     [SerializeField] public Sprite[] listOfSprites;
     [SerializeField] public TMP_Text playerNameTxt; //this is controlled in GameManager under RecievePlayerNameClientRpc
     [SerializeField] public PlayerPanelDisplay playerPanelPrefab;
@@ -27,6 +25,8 @@ public class PlayerHUDManager : NetworkBehaviour
     [SerializeField] public GameObject testPanel;
     [SerializeField] public TMP_Text playerNameHolder;
     [SerializeField] public TMP_Text playerHealthHolder;
+
+    [SerializeField] public GameObject blackScreen;
     
     public GameObject playersContent;
     
@@ -44,14 +44,6 @@ public class PlayerHUDManager : NetworkBehaviour
     public void SetUpPlayerHUD()
     {
         AssignCorrectName();
-        // enable player panels and get the data for the player panels
-        _playerHUD.SetActive(IsOwner);
-        
-        // if the hud that has been spawned is not of the owner then delete it 
-        if (_playerHUD.activeInHierarchy == false)
-        {
-            Destroy(_playerHUD);
-        }
         RefreshPlayerPanels();
         playerClientId.text = this.NetworkManager.LocalClientId.ToString();
         // get info for player name and such

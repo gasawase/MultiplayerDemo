@@ -12,17 +12,16 @@ using Object = UnityEngine.Object;
 using UnityEngine.InputSystem;
 #endif
 
+/// <summary>
+/// Controls player movement, meshes, weapon pickup, states, etc.
+/// </summary>
+/// TODO: move input system here instead of third person 
 
 public class Player : NetworkBehaviour {
     public NetworkVariable<Vector3> PositionChange = new NetworkVariable<Vector3>();
     public NetworkVariable<Vector3> RotationChange = new NetworkVariable<Vector3>();
-    //public NetworkVariable<Color> PlayerColor = new NetworkVariable<Color>(Color.red);
     public NetworkVariable<int> PlayerMeshInt = new NetworkVariable<int>();
-    //public NetworkVariable<int> playerHealth;
     public NetworkVariable<int> weaponArrLoc = new NetworkVariable<int>();
-
-    //public int maxPlayerHealth = 100;
-    //public Slider _healthSlider;
     
 
     //UI
@@ -32,12 +31,9 @@ public class Player : NetworkBehaviour {
     [SerializeField] public GameObject[] listOfThrownWeapons;
     [SerializeField] public GameObject meshHolder;
     [SerializeField] public GameObject cameraGameObject;
-    //[SerializeField] public GameObject _healthSliderGO;
     [SerializeField] public CinemachineVirtualCamera cinemachineVirtualCamera;
     [SerializeField] public ProjectileSpawner _projectileSpawner;
 
-    private List<PlayerPanelDisplay> _playerPanelDisplays;
-    
     // animation IDs
     private int _animIDSpeed;
     private int _animIDGrounded;
@@ -58,23 +54,15 @@ public class Player : NetworkBehaviour {
     {
         _hasAnimator = TryGetComponent(out _animator);
         AssignAnimationIDs();
-        //playerHealth.Value = maxPlayerHealth;
         _gameMgr = GetComponent<GameManager>();
-        _playerPanelDisplays = new List<PlayerPanelDisplay>();
-        //RefreshPlayerPanels();
-        
     }
     
     public override void OnNetworkSpawn() {
-        //assign the health thing here and if it's not null, destroy it i think
 
-        //if you don't own this, destroy all of its children
-        
         _hasAnimator = TryGetComponent(out _animator);
         cameraGameObject.GetComponent<Camera>().enabled = IsLocalPlayer;
         cinemachineVirtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = IsLocalPlayer;
-        //playerHealth.OnValueChanged += ClientOnScoreChanged;
-        
+
         foreach (PlayerInfo player in GameData.Instance.allPlayers)
         {
             if (player.playMeshSelect is 5 or 10 or 11)
@@ -86,7 +74,6 @@ public class Player : NetworkBehaviour {
                 _animator.SetBool(_animIsMagic, false);
             }
         }
-        //DisplayHealth();
     }
     private void HostHandleBulletCollision(GameObject bullet)
     {
