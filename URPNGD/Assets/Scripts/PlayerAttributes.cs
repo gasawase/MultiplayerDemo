@@ -26,19 +26,30 @@ public class PlayerAttributes : NetworkBehaviour
     {
         currentHp.Value = maxHP;
         currentHp.OnValueChanged += ClientOnValueChanged;
-        thisClientId = NetworkManager.LocalClientId;
-        
+        //thisClientId = GetComponent<NetworkObject>().OwnerClientId;
+
     }
 
+    //TODO: find a more efficient way for checking for when the hud is awake
     private void Update()
     {
         if (isHudAwake)
         {
             playerHudManager = GameObject.FindGameObjectWithTag("HUD").GetComponent<PlayerHUDManager>();
+            
         }
     }
-    
 
+    public void SetHUDAwake(bool isAwake)
+    {
+        isHudAwake = isAwake;
+    }
+
+    public void SetOwnerClientId()
+    {
+        thisClientId = GetComponent<NetworkObject>().OwnerClientId;
+    }
+    
     private void ClientOnValueChanged(int previousvalue, int newvalue)
     {
         hpBar.value = currentHp.Value;
@@ -107,51 +118,23 @@ public class PlayerAttributes : NetworkBehaviour
     {
         // set health to 100%
         currentHp.Value = maxHP;
-        //hpBar.value = maxHP; //should be covered by ClientOnValueChanged
     }
 
     //tells each client to run this script on each client
     [ClientRpc]
     public void ReceivePlayerHealthChangeClientRpc(int health, ulong playerWhoTookDamageId)
     {
-        GameObject[] currentPlayers = GameObject.FindGameObjectsWithTag("Player");
-        GetComponent<PlayerHUDManager>().UpdatePlayersHealthUI(health, playerWhoTookDamageId);
-        /*foreach (GameObject playerObj in currentPlayers)
-        {
-            foreach (PlayerInfo playerInfo in GameData.Instance.allPlayers)
-            {
-                if (playerObj.GetComponent<NetworkBehaviour>().OwnerClientId == playerInfo.clientId)
-                {
-                    GetComponent<PlayerHUDManager>().UpdatePlayersHealthUI(health, playerWhoTookDamageId);
-                    Debug.Log("ReceivePlayerHealthChangeClientRPC ran");
-                }
-            }
-        }*/
+        //GameObject[] currentPlayers = GameObject.FindGameObjectsWithTag("Player");
         
-    }
+        //GetComponent<PlayerHUDManager>().UpdatePlayersHealthUI(health, playerWhoTookDamageId);
+        playerHudManager.UpdatePlayersHealthUI(health, playerWhoTookDamageId);
 
-    // public void SetHUD(PlayerHUDManager localHudManager)
-    // {
-    //     playerHudManager = localHudManager;
-    // }
+    }
 
     public void SetHpBar(Slider slider)
     {
         hpBar = slider;
     }
-    
-    // public void SetHpBar()
-    // {
-    //     // go through the different spawned player panels and see if their id's match this local client id
-    //
-    //     foreach (PlayerPanelDisplay panels in playerHudManager._playerPanelDisplays)
-    //     {
-    //         if (panels.personalClientId == NetworkManager.LocalClientId)
-    //         {
-    //             hpBar = panels.playerHealth;
-    //         }
-    //     }
-    // }
 
     // tell all the clients that a specific player has a new location
     [ClientRpc]

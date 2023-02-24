@@ -17,7 +17,7 @@ public class GameManager : NetworkBehaviour
     //public Dictionary<ulong, GameObject> allPlayersSpawned = new Dictionary<ulong, GameObject>();
 
     private int spawnIndex = 0;
-    private Camera _camera;
+    //private Camera _camera;
     private List<Vector3> availSpawnPos = new List<Vector3>();
     private PlayerHUDManager hudSpawn;
 
@@ -101,6 +101,7 @@ public class GameManager : NetworkBehaviour
         // }
 
         SendHuDsActivationClientRpc();
+        //SendAllPlayersSpawnedClientRpc();
 
     }
 
@@ -111,5 +112,12 @@ public class GameManager : NetworkBehaviour
         hudSpawn.SetUpPlayerHUD();
 
     }
+
+    // [ClientRpc]
+    // public void SendAllPlayersSpawnedClientRpc()
+    // {
+    //     PlayerAttributes[] allPlayerAttributes = FindObjectsOfType<PlayerAttributes>();
+    //     foreach()
+    // }
     
 }

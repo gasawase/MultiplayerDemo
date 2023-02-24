@@ -23,7 +23,7 @@ public class GameData : NetworkBehaviour {
         Color.magenta,
         Color.cyan
     };
-
+    
     public NetworkList<PlayerInfo> allPlayers;
     public TMP_InputField playerInputField;
     public string playerName = "";

@@ -37,4 +37,9 @@ public class PlayerPanelDisplay : MonoBehaviour
     {
         personalClientId = clientId;
     }
+
+    public ulong GetClientId()
+    {
+        return personalClientId;
+    }
 }
