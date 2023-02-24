@@ -27,6 +27,7 @@ public class PlayerHUDManager : NetworkBehaviour
     [SerializeField] public TMP_Text playerHealthHolder;
 
     [SerializeField] public GameObject blackScreen;
+    [SerializeField] public float fadeSpeed = 5;
     
     public GameObject playersContent;
     
@@ -43,25 +44,33 @@ public class PlayerHUDManager : NetworkBehaviour
 
     public void SetUpPlayerHUD()
     {
-        AssignCorrectName();
+        //AssignCorrectName();
         RefreshPlayerPanels();
         playerClientId.text = this.NetworkManager.LocalClientId.ToString();
+        GameData.Instance.allPlayers.OnListChanged += ClientOnAllPlayersChanged; 
         // get info for player name and such
         // disable the black screen
+        StartCoroutine(FadeBlackPanel());
     }
 
-    public override void OnNetworkSpawn()
+    public IEnumerator FadeBlackPanel()
     {
-        // SetUpPlayerHUD();
-        // _playerHUD.SetActive(IsOwner);
-        // if (_playerHUD.activeInHierarchy == false)
-        // {
-        //     Destroy(_playerHUD);
-        // }
-        // GameData.Instance.allPlayers.OnListChanged += ClientOnAllPlayersChanged; 
-        // RefreshPlayerPanels();
+        float alphaVal = 100;
+        Color objectColor;
+
+        while (blackScreen.GetComponent<Image>().color.a > 0)
+        {
+            objectColor = blackScreen.GetComponent<Image>().color;
+            float fadeAmount = objectColor.a - (fadeSpeed * Time.deltaTime);
+
+            objectColor = new Color(objectColor.r, objectColor.g, objectColor.b, fadeAmount);
+            blackScreen.GetComponent<Image>().color = objectColor;
+            yield return null;
+        }
+        
+        blackScreen.SetActive(false);
     }
-    
+
 
     private void RefreshPlayerPanels()
     {
@@ -75,6 +84,11 @@ public class PlayerHUDManager : NetworkBehaviour
         // for all players currently in the game data
         foreach (PlayerInfo pi in GameData.Instance.allPlayers)
         {
+            // if this pi is the local player then spawn it on the top right            
+            if (pi.clientId == NetworkManager.LocalClientId)
+            {
+                AddThisPlayerPanel(pi);
+            }
             // if the player id does not match the local client id of this specific player
             // then don't add the panel
             if (pi.clientId != NetworkManager.LocalClientId)
@@ -90,16 +104,29 @@ public class PlayerHUDManager : NetworkBehaviour
         newPanel.transform.SetParent(playersContent.transform, false);
         newPanel.SetName(info.m_PlayerName);
         newPanel.SetClientId(info.clientId);
-        Debug.Log($"newPanel client id: {newPanel.personalClientId}");
         //newPanel.SetSpriteLoc(info.);
         //newPanel.RefreshHealth(100); //is there a way to get the client health here? do i call a client rpc here?
         _playerPanelDisplays.Add(newPanel);
         listOfPlayerHealthIds.Add(info.clientId, newPanel.playerHealth.value);
-        
+
+
         // for each new panel, add an event listener that will track that players health
-        
+
         //newPanel.playerHealth.onValueChanged.AddListener(delegate { OtherPlayerHealthManager();  });
-        Debug.Log($"listOfPlayerHealthAndPanels info.clientId: {info.clientId}");
+    }
+    
+    private void AddThisPlayerPanel(PlayerInfo info)
+    {
+        //TODO: need to lock this and place this at the top right of the hud
+        
+        PlayerPanelDisplay newPanel = Instantiate(playerPanelPrefab);
+        newPanel.transform.SetParent(this.transform, false);
+        newPanel.SetName(info.m_PlayerName);
+        newPanel.SetClientId(info.clientId);
+        //newPanel.SetSpriteLoc(info.);
+        //newPanel.RefreshHealth(100); //is there a way to get the client health here? do i call a client rpc here?
+        _playerPanelDisplays.Add(newPanel);
+        listOfPlayerHealthIds.Add(info.clientId, newPanel.playerHealth.value);
     }
     
     private void ClientOnAllPlayersChanged(NetworkListEvent<PlayerInfo> changeEvent)
@@ -113,13 +140,8 @@ public class PlayerHUDManager : NetworkBehaviour
     {
         foreach (PlayerInfo pi in GameData.Instance.allPlayers)
         {
-            // if (pi.clientId == NetworkManager.LocalClientId)
-            // {
-            //     playerNameTxt.text = pi.m_PlayerName;
-            // }
-            
-            // where the clientID matches the networkobject.ownerclientid, assign the name here
-            if (pi.clientId == NetworkObject.OwnerClientId)
+            // where the clientID matches the NetworkManager.LocalClientId, assign the name here
+            if (pi.clientId == NetworkManager.LocalClientId)
             {
                 playerNameTxt.text = pi.m_PlayerName;
             }

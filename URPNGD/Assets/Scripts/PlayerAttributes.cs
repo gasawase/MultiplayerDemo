@@ -18,12 +18,26 @@ public class PlayerAttributes : NetworkBehaviour
     public int visibleHealth;
 
     private NetworkVariable<int> currentHp = new NetworkVariable<int>();
+    public ulong thisClientId;
+
+    public bool isHudAwake = false;
 
     private void Awake()
     {
         currentHp.Value = maxHP;
         currentHp.OnValueChanged += ClientOnValueChanged;
+        thisClientId = NetworkManager.LocalClientId;
+        
     }
+
+    private void Update()
+    {
+        if (isHudAwake)
+        {
+            playerHudManager = GameObject.FindGameObjectWithTag("HUD").GetComponent<PlayerHUDManager>();
+        }
+    }
+    
 
     private void ClientOnValueChanged(int previousvalue, int newvalue)
     {
@@ -115,7 +129,30 @@ public class PlayerAttributes : NetworkBehaviour
         }*/
         
     }
+
+    // public void SetHUD(PlayerHUDManager localHudManager)
+    // {
+    //     playerHudManager = localHudManager;
+    // }
+
+    public void SetHpBar(Slider slider)
+    {
+        hpBar = slider;
+    }
     
+    // public void SetHpBar()
+    // {
+    //     // go through the different spawned player panels and see if their id's match this local client id
+    //
+    //     foreach (PlayerPanelDisplay panels in playerHudManager._playerPanelDisplays)
+    //     {
+    //         if (panels.personalClientId == NetworkManager.LocalClientId)
+    //         {
+    //             hpBar = panels.playerHealth;
+    //         }
+    //     }
+    // }
+
     // tell all the clients that a specific player has a new location
     [ClientRpc]
     void ResetPlayerLocationClientRpc()

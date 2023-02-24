@@ -16,7 +16,7 @@ public class PlayerPanelDisplay : MonoBehaviour
     [SerializeField] public GameObject spriteImageGO;
     [SerializeField] public Slider playerHealth;
 
-    public ulong personalClientId = 9999999999; // setting a default number so we can check if this value has been set already
+    public ulong personalClientId;
 
     public void SetName(string newName)
     {
@@ -36,19 +36,5 @@ public class PlayerPanelDisplay : MonoBehaviour
     public void SetClientId(ulong clientId)
     {
         personalClientId = clientId;
-    }
-
-    private void Start()
-    {
-        // if this already exists and its parent is networked, get the network
-        // owner id of the parent and assign it to this
-        
-        //2_21_23 not working how i want it to; this is getting overwritten
-
-        if (GetComponentInParent<NetworkObject>() != null)
-        {
-            SetClientId(GetComponentInParent<NetworkObject>().OwnerClientId);
-        }
-        
     }
 }

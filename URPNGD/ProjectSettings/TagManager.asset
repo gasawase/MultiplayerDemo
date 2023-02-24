@@ -16,6 +16,7 @@ TagManager:
   - HealthSlider
   - ListOfPlayers
   - GameManager
+  - HUD
   layers:
   - Default
   - TransparentFX

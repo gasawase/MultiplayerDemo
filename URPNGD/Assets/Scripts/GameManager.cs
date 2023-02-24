@@ -84,15 +84,32 @@ public class GameManager : NetworkBehaviour
         // create HUDs here 
         // TODO: create a checking system to make sure that all players are actually in the scene
 
-        foreach (PlayerInfo pi in GameData.Instance.allPlayers)
-        {
-            if (GameData.Instance.allPlayersSpawned[pi.clientId].GetComponent<NetworkObject>().IsLocalPlayer)
-            {
-                hudSpawn = Instantiate(hudPrefab);
-                hudSpawn.GetComponent<NetworkObject>().SpawnAsPlayerObject(pi.clientId);
-            }
+        // foreach (PlayerInfo pi in GameData.Instance.allPlayers)
+        // {
+        //     // if the current playerInfo data matches this local player do this 
+        //     if (pi.clientId == GameData.Instance.allPlayersSpawned[pi.clientId].GetComponent<NetworkObject>().OwnerClientId)
+        //     {
+        //         if (hudSpawn != null)
+        //         {
+        //             Destroy(hudSpawn);
+        //         }
+        //         hudSpawn = Instantiate(hudPrefab);
+        //         hudSpawn.GetComponent<NetworkObject>().SpawnWithOwnership(pi.clientId);
+        //         Debug.Log($"{pi.clientId}");
+        //         //hudSpawn.SetUpPlayerHUD();
+        //     }
+        // }
 
-        }
+        SendHuDsActivationClientRpc();
+
+    }
+
+    [ClientRpc]
+    public void SendHuDsActivationClientRpc()
+    {
+        hudSpawn = Instantiate(hudPrefab);
+        hudSpawn.SetUpPlayerHUD();
+
     }
     
 }
